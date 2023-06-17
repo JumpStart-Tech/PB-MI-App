@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "PB-MI-App",
+    "slug": "PB-MI-App",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "PB-MI-App"
+}

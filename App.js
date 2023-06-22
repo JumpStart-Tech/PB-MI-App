@@ -2,14 +2,21 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Home from './views/Home';
+import NewLearner from './views/newLearner';
 
 export default function App() {
   return (
-    <>
-      <Home name="Jack"></Home>
-      <StatusBar style="auto" />
-    </>
-  );
+      <>
+        <NewLearner></NewLearner>
+        <StatusBar style="auto" />
+      </>
+    );
+  // return (
+  //   <>
+  //     <Home name="Jack"></Home>
+  //     <StatusBar style="auto" />
+  //   </>
+  // );
 }
 
 const styles = StyleSheet.create({

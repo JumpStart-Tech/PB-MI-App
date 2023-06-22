@@ -11,9 +11,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+/*
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import {Routes, useNavigate} from 'react-router-dom';
+*/
 
 //<Route path="./Registration" component={Registration} /> 
 import bg from './blue-bg.png';
@@ -22,12 +24,15 @@ import bg from './blue-bg.png';
 let w = window.innerWidth;
 let h = window.innerHeight;
 
-function Onboarding() {
+const Onboarding = ({ navigation }) => {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
 
   const [email, onChangeEmail] = React.useState('');
   const [pass, onChangePass] = React.useState('');
 
+  const handleButtonPress = () => {
+    navigation.navigate('Registration');
+  };
   return (  
     <div className="App">
       <View style={styles.container}>
@@ -48,7 +53,11 @@ function Onboarding() {
            </View>
           <View style={styles.buttons}>
             <LogIn />
-            <SignUp />
+            <Button style = {styles.buttons}
+              title="Sign up"
+              color="#00a69c"
+              onPress={handleButtonPress}
+            />
            </View>
         </ImageBackground>
       </View>     
@@ -72,20 +81,11 @@ function LogIn() {
   );
 }
 
+/*
 function SignUp() {
   function handleClick() {
-    //TODO: go to sign up screen
-    /*
-    navigate('/Registration');
-    <Routes>
-      <Route path="/contacts" element={<Contacts />} />
-      <Route path="/" element={<Home />} />
-     </Routes>
-    */
-    //Registration();
-    //<Registration />
-    //<Link reloadDocument to={"Registration"}>Registration</Link>
-    window.location.href = "/Registration";
+    navigation.navigate('Registration');
+    //window.location.href = "/Registration";
   }
   return (
     //<a href = {"Registration"}>
@@ -97,6 +97,7 @@ function SignUp() {
     //</a>
   );
 }
+*/
 
 function Forgot() { // Forgot password button
   function handleClick() {
@@ -132,25 +133,29 @@ const styles = StyleSheet.create({
     //backgroundColor: '#000000c0',
   },
   image: { //Background image formatting
+    flex: 1,
     width: w,
-    height: h,
+    //height: h,
     alignItems: 'right',
     justifyContent: 'center',
+    resizeMode: 'cover',
   },
   input: { // Take email and password formatting
+    flex: 1,
     color: 'white',
     fontSize: 16,
     lineHeight: 20,
     alignItems: 'center',
     textAlign: 'left',
-    marginHorizontal: (w*407/844 - 300)/2,
-    width: 300,
+    marginHorizontal: (w*407/844 - 350)/2,
+    width: 350,
     borderWidth: 0,
     borderBottomColor: 'white',
     borderBottomWidth: 1,
     padding: 10,
   },
   buttons: { // Log in and sign up button formatting
+    flex: 1,
     color: 'white',
     fontSize: 16,
     lineHeight: 20,

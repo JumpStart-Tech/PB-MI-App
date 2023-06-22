@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {Link } from "react-router-dom";
+//import {Link } from "react-router-dom";
 import bg from './blue-bg.png';
 
 // size to current window
@@ -77,6 +77,7 @@ function SignUp() {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -91,12 +92,13 @@ const styles = StyleSheet.create({
     width: 300,
     //arithmetic ensures that text is centered in the dark blue portion
     marginHorizontal: (w*407/844 - 300)/2,
-    marginVertical: h/4,
+    marginVertical: h/5,
     //backgroundColor: '#000000c0',
   },
   image: { //Background image formatting
+    flex: 1,
     width: w,
-    height: h,
+    //height: h,
     alignItems: 'right',
     justifyContent: 'center',
   },
@@ -106,8 +108,8 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     alignItems: 'center',
     textAlign: 'left',
-    marginHorizontal: (w*407/844 - 300)/2,
-    width: 300,
+    marginHorizontal: (w*407/844 - 350)/2,
+    width: 350,
     borderWidth: 0,
     borderBottomColor: 'white',
     borderBottomWidth: 1,

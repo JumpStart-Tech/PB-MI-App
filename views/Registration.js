@@ -7,7 +7,6 @@ import {
   View,
   SafeAreaView,
   Text,
-  Alert,
   ImageBackground,
   TextInput,
   TouchableOpacity,
@@ -22,7 +21,7 @@ let h = window.innerHeight;
 
 //TODO: improve the back button on this page
 
-const Registration = ({goBack}) => {
+const Registration = ({goBack, goFwd}) => {
   const [name, onChangeName] = React.useState('');
   const [email, onChangeEmail] = React.useState('');
   const [pass, onChangePass] = React.useState('');
@@ -63,6 +62,7 @@ const Registration = ({goBack}) => {
               <RoundButton 
                 buttonText="Sign Up"
                 buttonWidth="2"
+                onClick = {goFwd}
                 >
               </RoundButton>
            </View>

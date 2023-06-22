@@ -20,7 +20,7 @@ import bg from '../blue-bg.png';
 let w = window.innerWidth;
 let h = window.innerHeight;
 
-const Onboarding = ({signUp}) => {
+const Onboarding = ({signUp, logIn}) => {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
 
   const [email, onChangeEmail] = React.useState('');
@@ -50,6 +50,7 @@ const Onboarding = ({signUp}) => {
                 buttonText="Log In"
                 buttonWidth="2"
                 //onClick = {sendData({ name: 'Grace, age: 21, email: 'grace@gmail.com' })}
+                onClick = {logIn}
                 >
               </RoundButton>
            </View>

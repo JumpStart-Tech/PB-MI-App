@@ -16,7 +16,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import {Routes, useNavigate} from 'react-router-dom';
 
 //<Route path="./Registration" component={Registration} /> 
-import bg from './blue-bg.png';
+import bg from '../blue-bg.png';
 
 //size to current window
 let w = window.innerWidth;

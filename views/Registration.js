@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 import {Link } from "react-router-dom";
-import bg from './blue-bg.png';
+import bg from '../blue-bg.png';
 
 // size to current window
 let w = window.innerWidth;

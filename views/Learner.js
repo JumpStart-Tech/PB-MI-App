@@ -10,7 +10,7 @@ let h = window.innerHeight;
 function Learner(){
 
     return (
-        <View style={styles.page}>
+        <View style={styles.container}>
             <Header></Header>
             <Text style = {styles.title}>Learner</Text>
             <InputBox title = {"Participant ID"}></InputBox>
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-end',
     display: 'flex',
+    marginHorizontal: w/25,
     //justifyContent: 'center',
   },
   title: {
@@ -37,7 +38,6 @@ const styles = StyleSheet.create({
     //fontWeight: 'bold',
     textAlign: 'left',
     //arithmetic ensures that text is centered in the dark blue portion
-    marginHorizontal: w/25,
     marginVertical: h/9,
    },
   });

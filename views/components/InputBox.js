@@ -16,7 +16,7 @@ const InputBox  = ({title}) => {
     const [value, onChangeValue] = useState('');
 
     return (
-       <View>
+       <View style={styles.inputContainer}>
           <Text style = {styles.text}>{title}</Text>
           <TextInput
             placeholder="Enter text"
@@ -44,6 +44,9 @@ const styles = StyleSheet.create({
      width: 295,
      backgroundColor: '#eff7ff',
      padding: 10,
+   },
+   inputContainer: {
+    paddingVertical: '10%'
    }
   });
 

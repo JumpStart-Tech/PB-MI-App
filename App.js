@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Home from './views/Home';
-import NewLearner from './views/newLearner';
+import NewLearner from './views/NewLearner';
 
 export default function App() {
   return (

@@ -22,9 +22,6 @@ export default function ForgotPassword(){
 
 const styles = StyleSheet.create({
     page: {
-        borderColor: 'red',
-        borderWidth: 2,
-        borderStyle: 'solid',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -34,9 +31,6 @@ const styles = StyleSheet.create({
         lineHeight: 30,
     },
     dialogue: {
-        borderColor: 'blue',
-        borderWidth: 2,
-        borderStyle: 'solid',
         height: 400,
         justifyContent: 'space-between',
         alignItems: 'center',

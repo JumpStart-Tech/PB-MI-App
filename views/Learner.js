@@ -27,7 +27,7 @@ const Learner = ({next}) =>{
             </View>
             <View style = {styles.rightContainer}>
                 <View>
-                  <DropDown />
+                  <DropDown title = {""} />
                 </View>
 
                 <View>

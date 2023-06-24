@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Image, Text } from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 
-const DropDown = () => { 
+const DropDown = ({title}) => { 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -13,6 +13,8 @@ const DropDown = () => {
   ]);
 
   return (
+    <View>
+    <Text style = {styles.text}>{title}</Text>
     <View style = {styles.dropDownMenu}>
       <DropDownPicker
         multiple = 'true'
@@ -31,11 +33,20 @@ const DropDown = () => {
         mode="BADGE"
        />
     </View>
+    </View>
   );
 
 }
 
 const styles = StyleSheet.create({
+  text: {
+     color: 'black',
+     fontSize: 14,
+     lineHeight: 16,
+     alignItems: 'left',
+     textAlign: 'left',
+     padding: 10,
+   },
    dropDownItems: {
      textAlign: 'left',
      padding: 10,
@@ -44,7 +55,6 @@ const styles = StyleSheet.create({
     width: 300,
     borderRadius: 10,
     color: '#eff7ff',
-    marginVertical: 100,
    },
 });
 

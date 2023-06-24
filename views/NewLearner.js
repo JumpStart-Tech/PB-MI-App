@@ -36,7 +36,7 @@ export default function NewLearner(){
     return (
         <SafeAreaView style={styles.page}>
             <Header></Header>
-            <ScrollView style={styles.body}>
+            <View style={styles.body}>
                 <View style={styles.topHalfContainer}>
                     <Text style={styles.titleText}>Learner</Text>
                     <View style={styles.topFourInputsContainer}>
@@ -57,8 +57,10 @@ export default function NewLearner(){
                         <RoundButton buttonText='Add Key' style={{'justifyContent': 'flex-end'}} onClick={buttonPress}></RoundButton>
                     </View>
                     <KeyTable inputs={inputs} removeRow={removeRow}></KeyTable>
+                    
                 </View>
-            </ScrollView>
+                <RoundButton buttonText='Submit' buttonWidth='2'></RoundButton>
+            </View>
         </SafeAreaView>
     )
 }
@@ -120,9 +122,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     topHalfContainer: {
-        borderColor: 'red',
-        borderStyle: 'solid',
-        borderWidth: 2,
         width: '100%',
         alignItems: 'center',
     },
@@ -132,42 +131,24 @@ const styles = StyleSheet.create({
         padding: '6%',
     },
     topFourInputsContainer: {
-        borderColor: 'blue',
-        borderStyle: 'solid',
-        borderWidth: 2,
         flexDirection: 'row',
         justifyContent: 'center',
         width: '100%',
     },
     topHalfInput: {
         paddingVertical: '10%',
-        borderColor: 'red',
-        borderStyle: 'solid',
-        borderWidth: 2,
     },
     leftTwoInputsContainer: {
-        borderColor: 'green',
-        borderStyle: 'solid',
-        borderWidth: 2,
         paddingHorizontal: '8%',
     },
     rightTwoInputsContainer: {
-        borderColor: 'purple',
-        borderStyle: 'solid',
-        borderWidth: 2,
         paddingHorizontal: '8%',
     },
     keyInputContainer: {
-        borderColor: 'purple',
-        borderStyle: 'solid',
-        borderWidth: 2,
         paddingRight: '8%',
     },
     keyInputsHolder: {
         flexDirection: 'row',
-        borderColor: 'yellow',
-        borderStyle: 'solid',
-        borderWidth: 3,
         justifyContent: 'center',
         paddingVertical: 30,
     },
@@ -198,5 +179,6 @@ const styles = StyleSheet.create({
     },
     bottomHalfContainer: {
         alignItems: 'center',
+        paddingVertical: '5%',
     },
 });

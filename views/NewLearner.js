@@ -1,5 +1,5 @@
 import { StyleSheet, View, Image, Text, ScrollView, FlatList, Pressable, SafeAreaView } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
@@ -20,6 +20,18 @@ export default function NewLearner(){
         setChosenKey('')
         setBehavior('')
     }
+
+    function removeRow(index){
+        let tempKey = structuredClone(inputs)
+        tempKey.splice(index, 1)
+        setInputs(tempKey)
+    }
+
+    // useEffect(()=>{
+    //     fetch('http://localhost:3000/1541')
+    //         .then(response => response.json())
+    //         .then(response => console.log(response))
+    // }, [])
 
     return (
         <SafeAreaView style={styles.page}>
@@ -44,14 +56,14 @@ export default function NewLearner(){
                         <View style={styles.rightTwoInputsContainer}><InputBox title={'Target Behavior'} value={behavior} setValue={setBehavior}></InputBox></View>
                         <RoundButton buttonText='Add Key' style={{'justifyContent': 'flex-end'}} onClick={buttonPress}></RoundButton>
                     </View>
-                    <KeyTable inputs={inputs}></KeyTable>
+                    <KeyTable inputs={inputs} removeRow={removeRow}></KeyTable>
                 </View>
             </ScrollView>
         </SafeAreaView>
     )
 }
 
-function KeyTable({inputs}){
+function KeyTable({inputs, removeRow}){
     
     return(
         <>
@@ -59,22 +71,26 @@ function KeyTable({inputs}){
             style={styles.table}
             data={inputs}
             keyExtractor={(item, index) => item.chosenKey + index}
-            renderItem={({item})=>{
-                    return <TableRow chosenKey={item.chosenKey} behavior={item.behavior}></TableRow>
+            renderItem={({item, index})=>{
+                    return <TableRow chosenKey={item.chosenKey} 
+                    behavior={item.behavior}
+                    onClose={()=>{removeRow(index)}}>
+                    </TableRow>
                 }
             }
-            ListHeaderComponent={<TableRow chosenKey='Key' behavior='Target Behavior' isHeader={true}></TableRow>}
+            ListHeaderComponent={<TableRow chosenKey='Key' behavior='Target Behavior' 
+                isHeader={true} listIsEmpty={inputs.length == 0}></TableRow>}
         />
         </>
     )
 
 }
 
-function TableRow({chosenKey, behavior, isHeader=false}){
+function TableRow({chosenKey, behavior, isHeader=false, onClose, listIsEmpty}){
 
     return (
         <View style={{...styles.tableRow, borderTopLeftRadius: isHeader ? 8 : 0, 
-        borderTopRightRadius: isHeader ? 8 : 0, borderTopWidth: isHeader ? 2 : 0,}}>
+        borderTopRightRadius: isHeader ? 8 : 0, borderTopWidth: isHeader ? 2 : 0, display: (listIsEmpty) ? 'none' : 'flex'}}>
             <View style={styles.keySide}>
                 <Text style={styles.rowText}>{chosenKey}</Text>
             </View>
@@ -84,10 +100,11 @@ function TableRow({chosenKey, behavior, isHeader=false}){
             <View style={styles.buttonHolder}>
                 { isHeader 
                     ? <View>
-                        <Text style={{...styles.rowText, color: 'white'}}>X</Text>
+                        <Text style={{...styles.rowText, 
+                            color: 'white', cursor: 'default'}}>X</Text>
                     </View>
-                    : <Pressable>
-                        <Text style={styles.rowText}>X</Text>
+                    : <Pressable onPress={onClose}>
+                        <Text style={{...styles.rowText, color: 'red' }} selectable={false}>X</Text>
                     </Pressable>
                 }
             </View>
@@ -156,20 +173,20 @@ const styles = StyleSheet.create({
     },
     tableRow : {
         width: 1000,
-        borderColor: 'orange',
+        borderColor: 'black',
         borderStyle: 'solid',
         borderWidth: 2,
         flexDirection: 'row',
     },
     keySide: {
-        borderRightColor: 'pink',
+        borderRightColor: 'grey',
         borderRightWidth: 1,
         borderRightStyle: 'solid',
         flex: 1,
     },
     behaviorSide: {
         flex: 8,
-        borderRightColor: 'pink',
+        borderRightColor: 'grey',
         borderRightWidth: 1,
         borderRightStyle: 'solid',
     },

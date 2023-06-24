@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image, Text, ScrollView, SectionList } from "react-native";
+import { StyleSheet, View, Image, Text, ScrollView, FlatList, Pressable, SafeAreaView } from "react-native";
 import { useState } from "react";
 import Header from "./components/Header";
 import RoundButton from "./components/RoundButton";
@@ -7,33 +7,65 @@ import InputBox from "./components/InputBox";
 export default function NewLearner(){
 
     return (
-        <View style={styles.page}>
+        <SafeAreaView style={styles.page}>
             <Header></Header>
             <ScrollView style={styles.body}>
                 <View style={styles.topHalfContainer}>
                     <Text style={styles.titleText}>Learner</Text>
                     <View style={styles.topFourInputsContainer}>
                         <View style={styles.leftTwoInputsContainer}>
-                            <InputBox title={'Participant Id'}></InputBox>
-                            <InputBox title={'Behavior Analysis Name'}></InputBox>
+                            <InputBox title={'Participant Id'} style={styles.topHalfInput}></InputBox>
+                            <InputBox title={'Behavior Analysis Name'} style={styles.topHalfInput}></InputBox>
                         </View>
                         <View style={styles.rightTwoInputsContainer}>
-                            <InputBox title={'Session Name'}></InputBox>
-                            <InputBox title={'HRE Time'}></InputBox>
+                            <InputBox title={'Session Name'} style={styles.topHalfInput}></InputBox>
+                            <InputBox title={'HRE Time'} style={styles.topHalfInput}></InputBox>
                         </View>
                     </View>
                 </View>
-                <View>
-                    <TableRow chosenKey="V" behavior="yells"></TableRow>
+                <View style={styles.bottomHalfContainer}>
+                    <View style={styles.keyInputsHolder}>
+                        <View style={styles.keyInputContainer}><InputBox title={'Key'} ></InputBox></View>
+                        <View style={styles.rightTwoInputsContainer}><InputBox title={'Target Behavior'} ></InputBox></View>
+                        <RoundButton buttonText='Add Key' style={{'justifyContent': 'flex-end'}}></RoundButton>
+                    </View>
+                    <KeyTable></KeyTable>
                 </View>
             </ScrollView>
-        </View>
+        </SafeAreaView>
     )
 }
 
-function KeyBehavior(){
-    [inputs, setInputs] = useState({})
+function KeyTable(){
+    const [inputs, setInputs] = useState([
+        {
+            chosenKey: 'L',
+            behavior: 'behavior 1'
+        },
+        {
+            chosenKey: 'M',
+            behavior: 'loooooooooooooooooooooooong string'
+        },
+        {
+            chosenKey: 'G',
+            behavior: 'bhv 3'
+        }
+    ])
 
+    return(
+        <>
+        <FlatList 
+            style={styles.table}
+            data={inputs}
+            keyExtractor={(item, index) => item.chosenKey + index}
+            renderItem={({item})=>{
+                    return <TableRow chosenKey={item.chosenKey} behavior={item.behavior}></TableRow>
+                }
+            }
+            ListHeaderComponent={<TableRow chosenKey='Key' behavior='Target Behavior'></TableRow>}
+        />
+        </>
+    )
 
 }
 
@@ -46,6 +78,11 @@ function TableRow({chosenKey, behavior}){
             </View>
             <View style={styles.behaviorSide}>
                 <Text style={styles.rowText}>{behavior}</Text>
+            </View>
+            <View style={styles.buttonHolder}>
+                <Pressable>
+                    <Text style={styles.rowText}>X</Text>
+                </Pressable>
             </View>
         </View>
     )
@@ -78,6 +115,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
     },
+    topHalfInput: {
+        paddingVertical: '10%',
+        borderColor: 'red',
+        borderStyle: 'solid',
+        borderWidth: 2,
+    },
     leftTwoInputsContainer: {
         borderColor: 'green',
         borderStyle: 'solid',
@@ -90,6 +133,20 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         paddingHorizontal: '8%',
     },
+    keyInputContainer: {
+        borderColor: 'purple',
+        borderStyle: 'solid',
+        borderWidth: 2,
+        paddingRight: '8%',
+    },
+    keyInputsHolder: {
+        flexDirection: 'row',
+        borderColor: 'yellow',
+        borderStyle: 'solid',
+        borderWidth: 3,
+        justifyContent: 'center',
+        paddingVertical: 30,
+    },
     tableRow : {
         width: 1000,
         borderColor: 'orange',
@@ -101,9 +158,13 @@ const styles = StyleSheet.create({
         borderRightColor: 'pink',
         borderRightWidth: 1,
         borderRightStyle: 'solid',
+        flex: 1,
     },
     behaviorSide: {
-        flex: 1,
+        flex: 8,
+        borderRightColor: 'pink',
+        borderRightWidth: 1,
+        borderRightStyle: 'solid',
     },
     rowText: {
         padding: 10,
@@ -111,4 +172,10 @@ const styles = StyleSheet.create({
         lineHeight: 30,
         alignSelf: 'center',
     },
+    bottomHalfContainer: {
+        alignItems: 'center',
+    },
+    button: {
+
+    }
 });

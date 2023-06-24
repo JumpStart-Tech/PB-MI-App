@@ -4,7 +4,7 @@ export default function RoundButton({buttonText, buttonWidth='1', style, onClick
 
     return(
         <View style={{...style}}>
-            <Pressable style={[styles.buttonSelf, {width: 148 * parseInt(buttonWidth)}]}
+            <Pressable style={[styles.buttonSelf, {width: 148 * parseFloat(buttonWidth)}]}
             onPress={onClick}>
                 <Text style={styles.buttonText}>
                     {buttonText}

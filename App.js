@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Home from './views/Home';
-import NewLearner from './views/NewLearner';
+import ForgotPassword from './views/ForgotPassword';
 
 export default function App() {
   return (
       <>
-        <NewLearner></NewLearner>
+        <ForgotPassword>
+        </ForgotPassword>
         <StatusBar style="auto" />
       </>
     );

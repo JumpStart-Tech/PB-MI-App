@@ -1,44 +1,73 @@
+import React, { useState } from 'react';
 import { StyleSheet, View, Image, Text } from "react-native";
+
 import Header from "./components/Header";
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
+import DropDown from "./components/DropDown";
 
 //size to current window
 let w = window.innerWidth;
 let h = window.innerHeight;
 
-function Learner(){
 
+const Learner = ({next}) =>{
     return (
-        <View style={styles.container}>
-            <Header></Header>
-            <Text style = {styles.title}>Learner</Text>
-            <InputBox title = {"Participant ID"}></InputBox>
-            <InputBox title = {"Session Name"}></InputBox>
-            <InputBox title = {"Behavior Analysis Name"}></InputBox>
-            <InputBox title = {"HRE Time"}></InputBox>
+      <View>
+        <View styles = {styles.topContainer}>
+              <Header></Header>
+              <Text style = {styles.title}>Learner</Text>
         </View>
+        <View style={styles.container}>
+            <View style={styles.leftContainer}>
+                <InputBox title = {"Participant ID"}></InputBox>
+                <InputBox title = {"Session Name"}></InputBox>
+                <InputBox title = {"Behavior Analysis Name"}></InputBox>
+                <InputBox title = {"HRE Time"}></InputBox>
+            </View>
+            <View style = {styles.rightContainer}>
+                <View>
+                  <DropDown />
+                </View>
+
+                <View>
+                  <RoundButton 
+                  buttonText="Next"
+                  buttonWidth="1"
+                  onClick = {next}
+                  >
+                  </RoundButton>
+                </View>
+          </View>
+        </View>
+      </View>
     )
 }
 
 const styles = StyleSheet.create({
   container: { // General formatting
     flex: 1,
+    flexDirection: 'row',
     backgroundColor: '#fff',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-end',
-    display: 'flex',
+  },
+  topContainer: {
+    flex: 1,
+    width: '100%',
+  },
+  leftContainer: {
+    width: w/3,
+    justifyContent: 'top',
     marginHorizontal: w/25,
-    //justifyContent: 'center',
+  },
+  rightContainer: {
+    justifyContent: 'top',
   },
   title: {
     color: 'black',
     fontSize: 36,
-    //alignItems: 'left',
-    //fontWeight: 'bold',
     textAlign: 'left',
-    //arithmetic ensures that text is centered in the dark blue portion
     marginVertical: h/9,
+    marginHorizontal: w/25,
    },
   });
 

@@ -8,9 +8,7 @@ import {
 } from 'react-native';
 
 
-const InputBox  = ({title, style}) => {
-
-    const [value, onChangeValue] = React.useState('');
+const InputBox  = ({title, style, value, setValue}) => {
 
     return (
        <View style={style}>
@@ -18,7 +16,7 @@ const InputBox  = ({title, style}) => {
           <View style = {styles.input}>
              <TextInput
                 placeholder="Enter text"
-                onChangeText={onChangeValue}
+                onChangeText={setValue}
                 value={value}
                 style={styles.textInput}
              />

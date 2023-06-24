@@ -5,6 +5,16 @@ import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 
 export default function NewLearner(){
+    const [id, setId] = useState('');
+    const [analysisName, setAnalysisName] = useState('')
+    const [sessionName, setSessionName] = useState('')
+    const [hreTime, setHreTime] = useState('')
+    const [key, setKey] = useState('')
+    const [behavior, setBehavior] = useState('')
+
+    function buttonPress(){
+        console.log('key:' + key)
+    }
 
     return (
         <SafeAreaView style={styles.page}>
@@ -14,20 +24,20 @@ export default function NewLearner(){
                     <Text style={styles.titleText}>Learner</Text>
                     <View style={styles.topFourInputsContainer}>
                         <View style={styles.leftTwoInputsContainer}>
-                            <InputBox title={'Participant Id'} style={styles.topHalfInput}></InputBox>
-                            <InputBox title={'Behavior Analysis Name'} style={styles.topHalfInput}></InputBox>
+                            <InputBox title={'Participant Id'} style={styles.topHalfInput} value={id} setValue={setId}></InputBox>
+                            <InputBox title={'Behavior Analysis Name'} style={styles.topHalfInput} value={analysisName} setValue={setAnalysisName}></InputBox>
                         </View>
                         <View style={styles.rightTwoInputsContainer}>
-                            <InputBox title={'Session Name'} style={styles.topHalfInput}></InputBox>
-                            <InputBox title={'HRE Time'} style={styles.topHalfInput}></InputBox>
+                            <InputBox title={'Session Name'} style={styles.topHalfInput}value={sessionName} setValue={setSessionName}></InputBox>
+                            <InputBox title={'HRE Time'} style={styles.topHalfInput} value={hreTime} setValue={setHreTime}></InputBox>
                         </View>
                     </View>
                 </View>
                 <View style={styles.bottomHalfContainer}>
                     <View style={styles.keyInputsHolder}>
-                        <View style={styles.keyInputContainer}><InputBox title={'Key'} ></InputBox></View>
-                        <View style={styles.rightTwoInputsContainer}><InputBox title={'Target Behavior'} ></InputBox></View>
-                        <RoundButton buttonText='Add Key' style={{'justifyContent': 'flex-end'}}></RoundButton>
+                        <View style={styles.keyInputContainer}><InputBox title={'Key'} value={key} setValue={setKey}></InputBox></View>
+                        <View style={styles.rightTwoInputsContainer}><InputBox title={'Target Behavior'} value={behavior} setValue={setBehavior}></InputBox></View>
+                        <RoundButton buttonText='Add Key' style={{'justifyContent': 'flex-end'}} onClick={buttonPress}></RoundButton>
                     </View>
                     <KeyTable></KeyTable>
                 </View>

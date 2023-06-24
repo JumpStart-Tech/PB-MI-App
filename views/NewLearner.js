@@ -9,11 +9,16 @@ export default function NewLearner(){
     const [analysisName, setAnalysisName] = useState('')
     const [sessionName, setSessionName] = useState('')
     const [hreTime, setHreTime] = useState('')
-    const [key, setKey] = useState('')
+    const [chosenKey, setChosenKey] = useState('')
     const [behavior, setBehavior] = useState('')
+    const [inputs, setInputs] = useState([])
 
     function buttonPress(){
-        console.log('key:' + key)
+        let tempKey = structuredClone(inputs)
+        tempKey.push({chosenKey, behavior})
+        setInputs(tempKey)
+        setChosenKey('')
+        setBehavior('')
     }
 
     return (
@@ -35,33 +40,19 @@ export default function NewLearner(){
                 </View>
                 <View style={styles.bottomHalfContainer}>
                     <View style={styles.keyInputsHolder}>
-                        <View style={styles.keyInputContainer}><InputBox title={'Key'} value={key} setValue={setKey}></InputBox></View>
+                        <View style={styles.keyInputContainer}><InputBox title={'Key'} value={chosenKey} setValue={setChosenKey}></InputBox></View>
                         <View style={styles.rightTwoInputsContainer}><InputBox title={'Target Behavior'} value={behavior} setValue={setBehavior}></InputBox></View>
                         <RoundButton buttonText='Add Key' style={{'justifyContent': 'flex-end'}} onClick={buttonPress}></RoundButton>
                     </View>
-                    <KeyTable></KeyTable>
+                    <KeyTable inputs={inputs}></KeyTable>
                 </View>
             </ScrollView>
         </SafeAreaView>
     )
 }
 
-function KeyTable(){
-    const [inputs, setInputs] = useState([
-        {
-            chosenKey: 'L',
-            behavior: 'behavior 1'
-        },
-        {
-            chosenKey: 'M',
-            behavior: 'loooooooooooooooooooooooong string'
-        },
-        {
-            chosenKey: 'G',
-            behavior: 'bhv 3'
-        }
-    ])
-
+function KeyTable({inputs}){
+    
     return(
         <>
         <FlatList 
@@ -72,17 +63,18 @@ function KeyTable(){
                     return <TableRow chosenKey={item.chosenKey} behavior={item.behavior}></TableRow>
                 }
             }
-            ListHeaderComponent={<TableRow chosenKey='Key' behavior='Target Behavior'></TableRow>}
+            ListHeaderComponent={<TableRow chosenKey='Key' behavior='Target Behavior' isHeader={true}></TableRow>}
         />
         </>
     )
 
 }
 
-function TableRow({chosenKey, behavior}){
+function TableRow({chosenKey, behavior, isHeader=false}){
 
     return (
-        <View style={styles.tableRow}>
+        <View style={{...styles.tableRow, borderTopLeftRadius: isHeader ? 8 : 0, 
+        borderTopRightRadius: isHeader ? 8 : 0, borderTopWidth: isHeader ? 2 : 0,}}>
             <View style={styles.keySide}>
                 <Text style={styles.rowText}>{chosenKey}</Text>
             </View>
@@ -90,9 +82,14 @@ function TableRow({chosenKey, behavior}){
                 <Text style={styles.rowText}>{behavior}</Text>
             </View>
             <View style={styles.buttonHolder}>
-                <Pressable>
-                    <Text style={styles.rowText}>X</Text>
-                </Pressable>
+                { isHeader 
+                    ? <View>
+                        <Text style={{...styles.rowText, color: 'white'}}>X</Text>
+                    </View>
+                    : <Pressable>
+                        <Text style={styles.rowText}>X</Text>
+                    </Pressable>
+                }
             </View>
         </View>
     )
@@ -185,7 +182,4 @@ const styles = StyleSheet.create({
     bottomHalfContainer: {
         alignItems: 'center',
     },
-    button: {
-
-    }
 });

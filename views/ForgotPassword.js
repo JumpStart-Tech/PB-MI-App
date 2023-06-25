@@ -2,7 +2,7 @@ import { StyleSheet, View, Image, Text, ScrollView, FlatList, Pressable, SafeAre
 import { useState, useEffect } from "react";
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
-import signUp from "../viewModels/userData";
+import signUp from "../models/userData";
 
 export default function ForgotPassword(){
 

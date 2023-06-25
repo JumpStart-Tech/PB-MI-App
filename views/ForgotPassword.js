@@ -7,7 +7,7 @@ import signUp from "../viewModels/userData";
 export default function ForgotPassword(){
 
     useEffect(()=>{
-        signUp('test4@gmail.com', 'password')
+        signUp('newu2@gmail.cm', 'password')
     },[])
 
     return(

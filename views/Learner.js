@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Image, Text } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Image, Text, ScrollView, FlatList, Pressable, SafeAreaView } from "react-native";
+import DropDownPicker from 'react-native-dropdown-picker';
 
 import Header from "./components/Header";
 import RoundButton from "./components/RoundButton";
@@ -10,27 +11,80 @@ import DropDown from "./components/DropDown";
 let w = window.innerWidth;
 let h = window.innerHeight;
 
-
 const Learner = ({next}) =>{
+
+    const [id, setId] = useState('');
+    const [analysisName, setAnalysisName] = useState('')
+    const [sessionName, setSessionName] = useState('')
+    const [hreTime, setHreTime] = useState('')
+    const [chosenKey, setChosenKey] = useState('')
+    const [behavior, setBehavior] = useState('')
+
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        //TODO: can't get select all button to work
+
+        /*
+        { label: 'Select All', value: ['one', 'two', 'three', 'four'] },
+        { label: 'Option 1', value: 'one' },
+        { label: 'Option 2', value: 'two' },
+        { label: 'Option 3', value: 'three' },
+        { label: 'Option 4', value: 'four' },
+        */
+    ]);
+
+    //allows new key and behavior to be added
+    const handleAddToDropdown = () => {
+      if (chosenKey !== '') {
+        setItems([...items, {label: chosenKey, value: behavior}]);
+        setChosenKey('');
+        setBehavior('');
+      }
+    };
+
     return (
       <View>
-        <View styles = {styles.topContainer}>
-              <Header></Header>
-              <Text style = {styles.title}>Learner</Text>
+        <View styles = {styles.header}>
+          <Header></Header>
         </View>
+        <Text style = {styles.title}>Learner</Text>
         <View style={styles.container}>
             <View style={styles.leftContainer}>
-                <InputBox title = {"Participant ID"}></InputBox>
-                <InputBox title = {"Session Name"}></InputBox>
-                <InputBox title = {"Behavior Analysis Name"}></InputBox>
-                <InputBox title = {"HRE Time"}></InputBox>
+                <InputBox title={'Participant ID'} value={id} setValue={setId}></InputBox>
+                <InputBox title={'Behavior Analysis Name'} value={analysisName} setValue={setAnalysisName}></InputBox>
+                <InputBox title={'Session Name'} value={sessionName} setValue={setSessionName}></InputBox>
+                <InputBox title={'HRE Time'} value={hreTime} setValue={setHreTime}></InputBox>
             </View>
             <View style = {styles.rightContainer}>
-                <View>
-                  <DropDown title = {""} />
+                <View style={styles.inputHolder}>
+                    <View><InputBox title={'Key'} value={chosenKey} setValue={setChosenKey}></InputBox></View>
+                    <View style={styles.rightInput}><InputBox title={'Target Behavior'} value={behavior} setValue={setBehavior}></InputBox></View>
                 </View>
-
+                <RoundButton buttonText='Add Key' onClick={handleAddToDropdown}></RoundButton>
                 <View>
+                  <View style = {styles.dropDownMenu}>
+                    <DropDownPicker
+                      multiple = 'true'
+                      open={open}
+                      value={value}
+                      items={items}
+                      setOpen={setOpen}
+                      setValue={setValue}
+                      setItems={setItems}
+                      placeholder="Select an option"
+                      placeholderStyle={ { color: 'gray' }}
+                      searchable={true}
+                      addCustomItem={true}
+                      searchPlaceholder="Search:"
+                      dropDownDirection="BOTTOM"
+                      mode="BADGE"
+                    />
+                  </View>
+                </View>
+            </View>
+            <View style={styles.nextButton}>
+               <View style = {styles.button}>
                   <RoundButton 
                   buttonText="Next"
                   buttonWidth="1"
@@ -38,7 +92,7 @@ const Learner = ({next}) =>{
                   >
                   </RoundButton>
                 </View>
-          </View>
+            </View>
         </View>
       </View>
     )
@@ -50,24 +104,70 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#fff',
   },
-  topContainer: {
+  header: {
     flex: 1,
     width: '100%',
   },
+  topContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    width: '100%',
+    paddingVertical: '8%'
+  },
   leftContainer: {
-    width: w/3,
+    flex: 1,
     justifyContent: 'top',
     marginHorizontal: w/25,
   },
   rightContainer: {
+    flex: 1,
     justifyContent: 'top',
+  },
+  dropdown: {
+      //marginHorizontal: w/4,
+      //marginVertical: 100,
+      justifyContent: 'center',
+      //paddingVertical: '20%',
+      alignSelf: 'center',
+  },
+  rightInput: {
+        marginHorizontal: 20,
   },
   title: {
     color: 'black',
     fontSize: 36,
+    justifyContent: 'top',
     textAlign: 'left',
     marginVertical: h/9,
     marginHorizontal: w/25,
+   },
+   button: {
+     paddingVertical: '15%',
+   },
+   inputHolder: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      //paddingVertical: '2%',
+      paddingHorizontal: '8%',
+      paddingRight: '8%',
+  },
+   nextButton: {
+     flexDirection: 'column-reverse',
+   },
+   text: {
+     color: 'black',
+     fontSize: 14,
+     lineHeight: 16,
+     alignItems: 'left',
+     textAlign: 'left',
+     padding: 10,
+   },
+   dropDownItems: {
+     textAlign: 'left',
+     padding: 10,
+   },
+   dropDownMenu: {
+     borderRadius: 10,
    },
   });
 

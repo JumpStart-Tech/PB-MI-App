@@ -5,41 +5,45 @@ import DropDownPicker from 'react-native-dropdown-picker';
 const DropDown = ({title}) => { 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
+
   const [items, setItems] = useState([
-    { label: 'Option 1', value: 'One' },
-    { label: 'Option 2', value: 'Two' },
-    { label: 'Option 3', value: 'Three' },
-    { label: 'Option 4', value: 'Four' },
+    //TODO: can't get select all button to work
+    { label: 'Select All', value: ['one', 'two', 'three', 'four'] },
+    { label: 'Option 1', value: 'one' },
+    { label: 'Option 2', value: 'two' },
+    { label: 'Option 3', value: 'three' },
+    { label: 'Option 4', value: 'four' },
   ]);
+
 
   return (
     <View>
-    <Text style = {styles.text}>{title}</Text>
-    <View style = {styles.dropDownMenu}>
-      <DropDownPicker
-        multiple = 'true'
-        open={open}
-        value={value}
-        items={items}
-        setOpen={setOpen}
-        setValue={setValue}
-        setItems={setItems}
-        placeholder="Select an option"
-        placeholderStyle={ { color: 'gray' }}
-        searchable={true}
-        addCustomItem={true}
-        searchPlaceholder="Search:"
-        dropDownDirection="BOTTOM"
-        mode="BADGE"
-       />
-    </View>
+      <Text style = {styles.text}>{title}</Text>
+      <View style = {styles.dropDownMenu}>
+        <DropDownPicker
+          multiple = 'true'
+          open={open}
+          value={value}
+          items={items}
+          setOpen={setOpen}
+          setValue={setValue}
+          //setValue={(itemValue) => handleChange(itemValue)}
+          setItems={setItems}
+          placeholder="Select an option"
+          placeholderStyle={ { color: 'gray' }}
+          searchable={true}
+          addCustomItem={true}
+          searchPlaceholder="Search:"
+          dropDownDirection="BOTTOM"
+          mode="BADGE"
+        />
+      </View>
     </View>
   );
-
 }
 
 const styles = StyleSheet.create({
-  text: {
+   text: {
      color: 'black',
      fontSize: 14,
      lineHeight: 16,
@@ -52,21 +56,9 @@ const styles = StyleSheet.create({
      padding: 10,
    },
    dropDownMenu: {
-    width: 300,
-    borderRadius: 10,
-    color: '#eff7ff',
+     width: 300,
+     borderRadius: 10,
    },
 });
-
-/*
-itemStyle = {styles.dropDownItems}
-                    defaultValue = {selectedValue}
-                    onChangeItem = {(item) => setSelectedValue(item.value)}
-                   dropDownStyle = {styles.dropDownMenu}
-                    labelStyle= {{ color: 'blue' }}
-                    arrowStyle= {{ marginRight: 10 }}
-                    customArrowUp = {() => <Icon name="chevron-up" size={20} />}
-                    customArrowDown = {() => <Icon name="chevron-down" size={20} />}
-                    */
 
 export default(DropDown);

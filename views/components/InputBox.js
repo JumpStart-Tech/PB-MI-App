@@ -8,18 +8,17 @@ import {
 } from 'react-native';
 
 
-const InputBox  = ({title}) => {
-
-    const [value, onChangeValue] = React.useState('');
+const InputBox  = ({title, style, value, setValue}) => {
 
     return (
-       <View>
+       <View style={style}>
           <Text style = {styles.text}>{title}</Text>
           <View style = {styles.input}>
              <TextInput
                 placeholder="Enter text"
-                onChangeText={onChangeValue}
+                onChangeText={setValue}
                 value={value}
+                style={styles.textInput}
              />
           </View>
        </View>
@@ -31,7 +30,6 @@ const styles = StyleSheet.create({
      color: 'black',
      fontSize: 16,
      lineHeight: 24,
-     alignItems: 'left',
      textAlign: 'left',
    },
   input: {
@@ -39,11 +37,13 @@ const styles = StyleSheet.create({
      fontSize: 16,
      lineHeight: 30,
      alignSelf: 'left',
-     width: 295,
-     marginVertical: 15,
-     backgroundColor: '#eff7ff',
-     padding: 10,
+     width: 265,
+     backgroundColor: '#eff7ff',  
+     marginVertical: 10,
    },
+  textInput: {
+    padding: 10,
+  },
   });
 
 export default(InputBox);

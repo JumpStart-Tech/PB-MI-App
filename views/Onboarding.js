@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Button,
@@ -12,9 +12,12 @@ import {
   Pressable
 } from 'react-native';
 
-import RoundButton from "./components/RoundButton";
-//import sendData from "../sendData.js"; // this file is currently not functional
+//import background image
 import bg from '../blue-bg.png';
+//import standard teal button component
+import RoundButton from "./components/RoundButton";
+//import view model to take data and interface server
+import ViewModel from "../viewmodel/Onboarding";
 
 //size to current window
 let w = window.innerWidth;
@@ -23,8 +26,7 @@ let h = window.innerHeight;
 const Onboarding = ({signUp, logIn}) => {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
 
-  const [email, onChangeEmail] = React.useState('');
-  const [pass, onChangePass] = React.useState('');
+  const viewModel = ViewModel();
 
   return (  
     <div className="App">
@@ -33,28 +35,28 @@ const Onboarding = ({signUp, logIn}) => {
           <Text style={styles.title}>PB.MI</Text>
           <TextInput style={styles.input}
               placeholder="Email *"
-              onChangeText={onChangeEmail}
-              value={email}
+              onChangeText={viewModel.handleEmailChange}
+              value={viewModel.email}
            />
            <TextInput style={styles.input}
               placeholder="Password *"
-              onChangeText={onChangePass}
-              value={pass}
+              secureTextEntry={true}
+              onChangeText={viewModel.handlePassChange}
+              value={viewModel.pass}
            />
            <View style={styles.link}>
              <Forgot />
            </View>
            <Text style={styles.link}></Text>
-           <View style = {[styles.buttons, {marginVertical: 0}]}>
+           <View style = {styles.buttons}>
               <RoundButton 
                 buttonText="Log In"
                 buttonWidth="2"
-                //onClick = {sendData({ name: 'Grace, age: 21, email: 'grace@gmail.com' })}
-                onClick = {logIn}
+                onClick = {viewModel.handleSubmit, logIn}
                 >
               </RoundButton>
            </View>
-           <View style = {[styles.buttons, {marginVertical: 0}]}>
+           <View style = {styles.buttons}>
               <RoundButton 
                 buttonText="Sign Up"
                 buttonWidth="2"

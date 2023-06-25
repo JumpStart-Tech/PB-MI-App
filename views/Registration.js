@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Button,
@@ -12,25 +12,36 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+//import background image
 import bg from '../blue-bg.png';
+//import standard teal button component
 import RoundButton from "./components/RoundButton";
+//import view model to take data and interface server
+import ViewModel from "../viewmodel/Registration";
 
 // size to current window
 let w = window.innerWidth;
 let h = window.innerHeight;
 
-//TODO: improve the back button on this page
 
 const Registration = ({goBack, goFwd}) => {
-  const [name, onChangeName] = React.useState('');
-  const [email, onChangeEmail] = React.useState('');
-  const [pass, onChangePass] = React.useState('');
-  const [passC, onChangePassC] = React.useState('');
+
+  const viewModel = ViewModel();
+
+  function checkPass(viewModel) {
+                if (viewModel.passwordError == 'true') {
+                  <Text style={styles.error}>{"Passwords do not match."}</Text>
+                  return null;
+                } else {
+                  //return ({viewModel.handleSubmit, goFwd});
+                }
+  }
+
   return (
       <View style={styles.container}>
         <ImageBackground source={bg} resizeMode="cover" style={styles.image} className="App-bg" alt="bg">
-           <View style = {[styles.buttons, {marginVertical: 0, alignItems: 'left'}]}>
-              <RoundButton 
+           <View style = {[styles.buttons, {marginVertical: 0, marginHorizontal: 0}]}>
+             <RoundButton 
                 buttonText="Go Back"
                 buttonWidth="1"
                 onClick = {goBack}
@@ -40,30 +51,31 @@ const Registration = ({goBack, goFwd}) => {
           <Text style={styles.title}>Create Account</Text> 
           <TextInput style={styles.input}
               placeholder="Name *"
-              onChangeText={onChangeName}
-              value={name}
+              onChangeText={viewModel.handleNameChange}
+              value={viewModel.name}
            /> 
           <TextInput style={styles.input}
               placeholder="Email *"
-              onChangeText={onChangeEmail}
-              value={email}
+              onChangeText={viewModel.handleEmailChange}
+              value={viewModel.email}
            />
            <TextInput style={styles.input}
               placeholder="Password *"
-              onChangeText={onChangePass}
-              value={pass}
+              secureTextEntry={true}
+              onChangeText={viewModel.handlePassChange}
+              value={viewModel.pass}
            />
            <TextInput style={styles.input}
               placeholder="Confirm Password *"
-              onChangeText={onChangePassC}
-              value={passC}
+              secureTextEntry={true}
+              onChangeText={viewModel.handlePassCChange}
+              value={viewModel.passC}
            />
            <View style={styles.buttons}>
               <RoundButton 
                 buttonText="Sign Up"
                 buttonWidth="2"
-                onClick = {goFwd}
-                >
+                onClick = {viewModel.handleSubmit, goFwd}
               </RoundButton>
            </View>
         </ImageBackground>
@@ -129,6 +141,8 @@ const styles = StyleSheet.create({
     width: 300,
     marginHorizontal: (w*407/844 - 300)/2,
     marginVertical: 10,
+    marginBottom: 10,
+  },
   },
 });
 

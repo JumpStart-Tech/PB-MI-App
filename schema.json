@@ -1,6 +1,22 @@
 {
     "type": "object",
     "properties": {
+        "authData": {
+            "type": "object",
+            "properties": {
+                "filleremail@gmail.com": {
+                    "type": "object",
+                    "properties": {
+                        "password": {
+                            "type": "str"
+                        },
+                        "identifier": {
+                            "type": "str"
+                        }
+                    }
+                }
+            }
+        },
         "6607": {
             "type": "object",
             "properties": {

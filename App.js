@@ -52,7 +52,7 @@ export default function App() {
       {currentPage === 'Registration' && <Registration goBack = {goBack} goFwd = {register} />}
       {currentPage === 'Learner' && <Learner next = {session}/>}
       {currentPage === 'NewLearner' && <NewLearner next = {session}/>}
-      {currentPage === 'ForgotPassword' && <ForgotPassword goBack = {goBack} />}
+      {currentPage === 'ForgotPassword' && <ForgotPassword goBack = {goBack} signUp = {signUp} />}
     </>
   );
 

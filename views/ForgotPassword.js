@@ -1,10 +1,10 @@
-import { StyleSheet, View, Image, Text, ScrollView, FlatList, Pressable, SafeAreaView } from "react-native";
+import { StyleSheet, View, Image, Text, ScrollView, FlatList, TouchableOpacity, SafeAreaView } from "react-native";
 import { useState, useEffect } from "react";
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 import { signIn, signUp } from "../viewModels/auth";
 
-export default function ForgotPassword({goBack}){
+export default function ForgotPassword({goBack, signUp}){
 
     useEffect(()=>{
         signIn('realEMAIL2@GMAIL.COM', 'testpass')
@@ -25,7 +25,7 @@ export default function ForgotPassword({goBack}){
                 <InputBox title='Email*'></InputBox>
                 <RoundButton buttonText='Continue' buttonWidth='1.8'></RoundButton>
                 <Text>Don't have an account?
-                    <Pressable><Text style={styles.signUpText}> Sign up</Text></Pressable>
+                    <TouchableOpacity onPress = {signUp}><Text style={styles.signUpText}> Sign up</Text></TouchableOpacity>
                 </Text>
             </View>
             

@@ -1,4 +1,4 @@
-import { StyleSheet, Pressable, Text, View, Alert } from 'react-native';
+import { StyleSheet, Pressable, Text, View} from 'react-native';
 
 
 export default function RoundButton({buttonText, buttonWidth='1', onClick}){

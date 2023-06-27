@@ -17,13 +17,16 @@ import bg from '../blue-bg.png';
 //import standard teal button component
 import RoundButton from "./components/RoundButton";
 //import view model to take data and interface server
-import ViewModel from "../viewmodel/Onboarding";
+import ViewModel from "../viewModels/Onboarding";
+
+import {signIn} from "../viewModels/auth"
+import {forgot} from "../App.js"
 
 //size to current window
 let w = window.innerWidth;
 let h = window.innerHeight;
 
-const Onboarding = ({signUp, logIn}) => {
+const Onboarding = ({signUp, logIn, forgotPass}) => {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
 
   const viewModel = ViewModel();
@@ -32,37 +35,39 @@ const Onboarding = ({signUp, logIn}) => {
     <div className="App">
       <View style={styles.container}>
         <ImageBackground source={bg} resizeMode="cover" style={styles.image} className="App-bg" alt="bg">
-          <Text style={styles.title}>PB.MI</Text>
-          <TextInput style={styles.input}
-              placeholder="Email *"
-              onChangeText={viewModel.handleEmailChange}
-              value={viewModel.email}
-           />
-           <TextInput style={styles.input}
-              placeholder="Password *"
-              secureTextEntry={true}
-              onChangeText={viewModel.handlePassChange}
-              value={viewModel.pass}
-           />
-           <View style={styles.link}>
-             <Forgot />
-           </View>
-           <Text style={styles.link}></Text>
-           <View style = {styles.buttons}>
-              <RoundButton 
-                buttonText="Log In"
-                buttonWidth="2"
-                onClick = {viewModel.handleSubmit, logIn}
-                >
-              </RoundButton>
-           </View>
-           <View style = {styles.buttons}>
-              <RoundButton 
-                buttonText="Sign Up"
-                buttonWidth="2"
-                onClick = {signUp}
-                >
-              </RoundButton>
+          <View style = {styles.insideBlue}>
+              <Text style={styles.title}>PB.MI</Text>
+              <TextInput style={styles.input}
+                  placeholder="Email *"
+                  onChangeText={viewModel.handleEmailChange}
+                  value={viewModel.email}
+               />
+               <TextInput style={styles.input}
+                  placeholder="Password *"
+                  secureTextEntry={true}
+                  onChangeText={viewModel.handlePassChange}
+                  value={viewModel.pass}
+               />
+               <View style={styles.link}>
+                 <TouchableOpacity onPress={forgotPass}>
+                   <Text style = {{color: 'white', fontSize: 14}}> Forgot password? </Text>
+                 </TouchableOpacity>
+               </View>
+               <Text style={styles.link}></Text>
+               <View style = {[styles.endButton, {marginBottom: 8}]}>
+                  <RoundButton 
+                    buttonText="Sign Up"
+                    buttonWidth="2"
+                    onClick = {signUp}
+                    >
+                  </RoundButton>
+                  <RoundButton 
+                    buttonText="Log In"
+                    buttonWidth="2"
+                    onClick = {viewModel.handleSubmit, logIn}
+                    >
+                  </RoundButton>
+               </View>
           </View>
         </ImageBackground>
       </View>     
@@ -70,71 +75,56 @@ const Onboarding = ({signUp, logIn}) => {
   );
 }
 
-function Forgot() { // Forgot password button
-  function handleClick() {
-    //TODO: go to forgot password screen
-    alert('You clicked me!');
-  }
-  return (
-    <TouchableOpacity onPress={handleClick}>
-      <Text style = {{color: 'white', fontSize: 14}}> Forgot password? </Text>
-    </TouchableOpacity>
-  );
-}
-
 const styles = StyleSheet.create({
-  container: { // General formatting
+  container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'left',
-    justifyContent: 'center',
+    flexDirection: 'row',
   },
-  title: { // PB.MI title format
+  insideBlue: {
+    //portion of background that is blue to center content into:
+     width: '48%',
+  },
+  title: { // Create account format
     color: 'white',
     fontSize: 42,
     lineHeight: 84,
     alignItems: 'center',
     fontWeight: 'bold',
     textAlign: 'center',
-    width: 300,
-    //arithmetic ensures that text is centered in the dark blue portion
-    marginHorizontal: (w*407/844 - 300)/2,
-    marginVertical: h/7,
+    lineHeight: 84,
+    textAlign: 'center',
+    marginVertical: h/8,
   },
   image: { //Background image formatting
     width: w,
     height: h,
-    alignItems: 'right',
-    justifyContent: 'center',
-    resizeMode: 'cover',
   },
   input: { // Take email and password formatting
     color: 'white',
     fontSize: 16,
     lineHeight: 20,
-    alignItems: 'center',
-    textAlign: 'left',
-    marginHorizontal: (w*407/844 - 350)/2,
     width: 350,
+    alignSelf: 'center',
     borderWidth: 0,
     borderBottomColor: 'white',
     borderBottomWidth: 1,
     padding: 10,
   },
-  buttons: { // Log in and sign up button formatting
-    justifyContent: 'left',
-    alignItems: 'left',
-    width: 250,
-    marginHorizontal:(w*407/844 - 250)/2,
-  },
   link: { // Forgot password link formatting
     lineHeight: 12,
     textAlign: 'right',
-    justifyContent: 'right',
-    alignItems: 'right',
+    alignSelf: 'right',
     width: 200,
-    marginHorizontal: (w*407/844 - 250 + 200)/2,
+    marginHorizontal: 350,
     marginVertical: 20,
+  },
+  endButton: {
+    flexDirection: 'column-reverse',
+    justifyContent: 'flex-start',
+    padding: 2,
+    marginTop: 50,
+    alignItems: 'center',
   },
 });
 

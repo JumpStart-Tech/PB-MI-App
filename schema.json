@@ -1,0 +1,11 @@
+{
+    "type": "object",
+    "properties": {
+        "therapists": {
+            "type": "list"
+        },
+        "authdata": {
+            "type": "list"
+        }
+    }
+}

@@ -22,17 +22,7 @@ const Learner = ({next}) =>{
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
-    const [items, setItems] = useState([
-        //TODO: can't get select all button to work
-
-        /*
-        { label: 'Select All', value: ['one', 'two', 'three', 'four'] },
-        { label: 'Option 1', value: 'one' },
-        { label: 'Option 2', value: 'two' },
-        { label: 'Option 3', value: 'three' },
-        { label: 'Option 4', value: 'four' },
-        */
-    ]);
+    const [items, setItems] = useState([]);
 
     //allows new key and behavior to be added
     const handleAddToDropdown = () => {
@@ -147,7 +137,6 @@ const styles = StyleSheet.create({
    inputHolder: {
       flexDirection: 'row',
       justifyContent: 'center',
-      //paddingVertical: '2%',
       paddingHorizontal: '8%',
       paddingRight: '8%',
   },

@@ -39,7 +39,6 @@ export default function App() {
 
   const forgot = () => {
     setCurrentPage('ForgotPassword');
-    //todo: change to Session
   }
   const session = () => {
     setCurrentPage('Onboarding');

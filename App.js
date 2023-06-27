@@ -7,6 +7,7 @@ import Onboarding from './views/Onboarding';
 import Registration from './views/Registration';
 import Learner from './views/Learner';
 import NewLearner from './views/NewLearner';
+import ForgotPassword from './views/ForgotPassword';
 
 
 export default function App() {
@@ -36,6 +37,10 @@ export default function App() {
     setCurrentPage('Learner');
   }
 
+  const forgot = () => {
+    setCurrentPage('ForgotPassword');
+    //todo: change to Session
+  }
   const session = () => {
     setCurrentPage('Onboarding');
     //todo: change to Session
@@ -43,10 +48,11 @@ export default function App() {
 
   return (
     <>
-      {currentPage === 'Onboarding' && <Onboarding signUp = {signUp} logIn = {logIn} />}
+      {currentPage === 'Onboarding' && <Onboarding signUp = {signUp} logIn = {logIn} forgotPass = {forgot} />}
       {currentPage === 'Registration' && <Registration goBack = {goBack} goFwd = {register} />}
       {currentPage === 'Learner' && <Learner next = {session}/>}
       {currentPage === 'NewLearner' && <NewLearner next = {session}/>}
+      {currentPage === 'ForgotPassword' && <ForgotPassword goBack = {goBack} />}
     </>
   );
 

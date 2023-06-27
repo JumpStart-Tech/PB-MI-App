@@ -17,9 +17,9 @@ import bg from '../blue-bg.png';
 //import standard teal button component
 import RoundButton from "./components/RoundButton";
 //import view model to take data and interface server
-import ViewModel from "../viewModels/Onboarding";
-
 import {signIn} from "../viewModels/auth"
+
+//forgotPassword navigation
 import {forgot} from "../App.js"
 
 //size to current window
@@ -27,9 +27,8 @@ let w = window.innerWidth;
 let h = window.innerHeight;
 
 const Onboarding = ({signUp, logIn, forgotPass}) => {
-  const [isLoggedIn, setLoggedIn] = React.useState(false);
-
-  const viewModel = ViewModel();
+  const [email, setEmail] = React.useState('');
+  const [pass, setPass] = React.useState('');
 
   return (  
     <div className="App">
@@ -39,14 +38,15 @@ const Onboarding = ({signUp, logIn, forgotPass}) => {
               <Text style={styles.title}>PB.MI</Text>
               <TextInput style={styles.input}
                   placeholder="Email *"
-                  onChangeText={viewModel.handleEmailChange}
-                  value={viewModel.email}
+                  keyboardType= 'email-address'
+                  onChangeText={setEmail}
+                  value={email}
                />
                <TextInput style={styles.input}
                   placeholder="Password *"
                   secureTextEntry={true}
-                  onChangeText={viewModel.handlePassChange}
-                  value={viewModel.pass}
+                  onChangeText={setPass}
+                  value={pass}
                />
                <View style={styles.link}>
                  <TouchableOpacity onPress={forgotPass}>
@@ -64,7 +64,7 @@ const Onboarding = ({signUp, logIn, forgotPass}) => {
                   <RoundButton 
                     buttonText="Log In"
                     buttonWidth="2"
-                    onClick = {viewModel.handleSubmit, logIn}
+                    onClick = {signIn(email, pass), logIn}
                     >
                   </RoundButton>
                </View>

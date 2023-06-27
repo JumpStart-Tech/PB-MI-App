@@ -7,6 +7,7 @@ import {
   View,
   SafeAreaView,
   Text,
+  Alert,
   ImageBackground,
   TextInput,
   TouchableOpacity,
@@ -17,8 +18,6 @@ import bg from '../blue-bg.png';
 //import standard teal button component
 import RoundButton from "./components/RoundButton";
 //import view model to take data and interface server
-import ViewModel from "../viewModels/Registration";
-
 import {signUp} from "../viewModels/auth"
 
 
@@ -27,64 +26,83 @@ let w = window.innerWidth;
 let h = window.innerHeight;
 
 const Registration = ({goBack, goFwd}) => {
+  const currPass = '';
+  const currPassC = 'x';
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [pass, setPass] = React.useState('');
+  const [passC, setPassC] = React.useState('');
+  const [validPass, setValidPass] = React.useState('false');
+  const [disabled, setDisabled] = React.useState('false');
 
-  const viewModel = ViewModel();
-
-  //todo: not working
-  /*
-  function checkPass(viewModel) {
-                if (viewModel.passwordError == 'true') {
-                  <Text style={styles.error}>{"Passwords do not match."}</Text>
-                  return null;
-                } else {
-                  //return ({viewModel.handleSubmit, goFwd});
-                }
+  const isValid = () => {
+    if (currPass === currPassC) {
+      setValidPass('true');
+      setDisabled('false');
+    } else {
+      setDisabled('true');
+    }
   }
-  */
+
+  const checkPassword = (passC) => {
+    setPassC(passC);
+    //isValid();
+  }
+
+  const handlePress = () => {
+    if (isValid) {
+      Alert.alert('valid');
+    } else {
+        alert('invalid');
+    }
+  }
 
   return (
       <View style={styles.container}>
         <ImageBackground source={bg} resizeMode="cover" style={styles.image} className="App-bg" alt="bg">
            <View style = {styles.insideBlue}>
-               <View style = {{alignItems: 'flex-start', alignSelf: 'auto', marginVertical: 0, padding: 10}}>
-                 <RoundButton 
-                    buttonText="Go Back"
-                    buttonWidth="1"
-                    onClick = {goBack}
-                    >
-                  </RoundButton>
+             <View style = {{alignItems: 'flex-start', alignSelf: 'auto', marginVertical: 0, padding: 10}}>
+               <RoundButton 
+                  buttonText="Go Back"
+                  buttonWidth="1"
+                  onClick = {goBack}
+                  >
+                </RoundButton>
               </View>  
               <Text style={styles.title}>Create Account</Text> 
               <TextInput style={styles.input}
                   placeholder="Name *"
-                  onChangeText={viewModel.handleNameChange}
-                  value={viewModel.name}
+                  onChangeText={setName}
+                  value = {name}
                /> 
               <TextInput style={styles.input}
                   placeholder="Email *"
-                  onChangeText={viewModel.handleEmailChange}
-                  value={viewModel.email}
+                  onChangeText={setEmail}
+                  keyboardType = 'email-address'
+                  value = {email}
                />
                <TextInput style={styles.input}
                   placeholder="Password *"
                   secureTextEntry={true}
-                  onChangeText={viewModel.handlePassChange}
-                  value={viewModel.pass}
+                  onChangeText={setPass}
+                  value = {pass}
+                  currPass = {pass}
                />
                <TextInput style={[styles.input, {marginBottom: 10}]}
                   placeholder="Confirm Password *"
                   secureTextEntry={true}
-                  onChangeText={viewModel.handlePassCChange}
-                  value={viewModel.passC}
+                  onChangeText={checkPassword}
+                  value={passC}
+                  currPassC = {passC}
                />
                <View style={styles.endButton}>
-                   <RoundButton
-                        buttonText="Sign Up"
-                        buttonWidth="2"
-                        //onClick = {viewModel.handleSubmit, goFwd}
-                        //onClick = {signUp(viewModel.email, viewModel.pass)}
-                        onClick = {viewModel.handleSubmit}
-                        >
+                 <RoundButton
+                    buttonText="Sign Up"
+                    buttonWidth="2"
+                    disabled={disabled}
+                    onClick = {signUp(email,pass), goFwd}
+                    //onClick = {handlePress}
+                    >
                    </RoundButton>
                </View>
            </View>

@@ -2,12 +2,12 @@ import { StyleSheet, View, Image, Text, ScrollView, FlatList, Pressable, SafeAre
 import { useState, useEffect } from "react";
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
-import { signUp } from "../viewModels/auth";
+import { signIn, signUp } from "../viewModels/auth";
 
 export default function ForgotPassword(){
 
     useEffect(()=>{
-        signUp('teSTEMAIL2@GMAIL.COM', 'password')
+        signIn('realEMAIL2@GMAIL.COM', 'testpass')
     },[])
 
     return(

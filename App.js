@@ -13,6 +13,7 @@ import Registration from './views/Registration';
 import Learner from './views/Learner';
 import NewLearner from './views/NewLearner';
 import ForgotPassword from './views/ForgotPassword';
+import Home from './views/Home';
 
 const App = () =>  {
   return (
@@ -27,6 +28,7 @@ const App = () =>  {
         <Stack.Screen name="Learner" component={Learner} />
         <Stack.Screen name="NewLearner" component={NewLearner} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );

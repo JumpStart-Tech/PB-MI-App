@@ -35,7 +35,9 @@ export default function NewLearner({navigation}){
 
     return (
         <SafeAreaView style={styles.page}>
-            <Header></Header>
+            <View>
+                <Header></Header>
+            </View>
             <View style={styles.body}>
                 <View style={styles.topHalfContainer}>
                     <Text style={styles.titleText}>Learner</Text>

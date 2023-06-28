@@ -13,9 +13,11 @@ export default function ForgotPassword({navigation}){
 
     return(
         <SafeAreaView style={styles.page}>
-             <View style = {{alignItems: 'flex-start', justifyContent: 'flex-start', marginBottom: 50, padding: 10}}>
+             <View>
                  <Header></Header>
-                 <RoundButton 
+             </View>
+             <View style = {{marginBottom: 50, alignItems: 'flex-start', padding: 10}}>
+                 <RoundButton style = {{alignSelf: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start'}}
                     buttonText="Go Back"
                     buttonWidth="1"
                     onClick = {() => navigation.goBack()}

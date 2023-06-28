@@ -11,7 +11,7 @@ import DropDown from "./components/DropDown";
 let w = window.innerWidth;
 let h = window.innerHeight;
 
-const Learner = ({next}) =>{
+const Learner = ({navigation}) =>{
 
     const [id, setId] = useState('');
     const [analysisName, setAnalysisName] = useState('')
@@ -34,7 +34,7 @@ const Learner = ({next}) =>{
     };
 
     return (
-      <View>
+      <View style = {{backgroundColor: '#fff', flex: 1}}>
         <View styles = {styles.header}>
           <Header></Header>
         </View>
@@ -78,7 +78,7 @@ const Learner = ({next}) =>{
                   <RoundButton 
                   buttonText="Next"
                   buttonWidth="1"
-                  onClick = {next}
+                  onClick = {() => navigation.navigate('Onboarding')}
                   >
                   </RoundButton>
                 </View>
@@ -92,7 +92,6 @@ const styles = StyleSheet.create({
   container: { // General formatting
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#fff',
   },
   header: {
     flex: 1,
@@ -102,7 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     width: '100%',
-    paddingVertical: '8%'
+    paddingVertical: '8%',
   },
   leftContainer: {
     flex: 1,
@@ -142,6 +141,7 @@ const styles = StyleSheet.create({
   },
    nextButton: {
      flexDirection: 'column-reverse',
+     padding: 20,
    },
    text: {
      color: 'black',

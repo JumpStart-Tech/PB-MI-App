@@ -36,9 +36,9 @@ const styles = StyleSheet.create({
      color: 'black',
      fontSize: 16,
      lineHeight: 30,
-     alignSelf: 'left',
-     width: 295,
-     backgroundColor: '#eff7ff',
+     width: 265,
+     backgroundColor: '#eff7ff',  
+     marginVertical: 10,
    },
   textInput: {
     padding: 10,

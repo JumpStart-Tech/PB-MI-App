@@ -24,7 +24,7 @@ import {signUp} from "../viewModels/auth"
 let w = window.innerWidth;
 let h = window.innerHeight;
 
-const Registration = ({goBack, goFwd}) => {
+const Registration = ({navigation}) => {
   //const currPass = '';
   //const currPassC = 'x';
   const [name, setName] = React.useState('');
@@ -70,7 +70,7 @@ const Registration = ({goBack, goFwd}) => {
                <RoundButton 
                   buttonText="Go Back"
                   buttonWidth="1"
-                  onClick = {goBack}
+                  onClick ={() => navigation.goBack()}
                   >
                 </RoundButton>
               </View>  
@@ -105,9 +105,7 @@ const Registration = ({goBack, goFwd}) => {
                     buttonText="Sign Up"
                     buttonWidth="2"
                     disabled={disabled}
-                    onClick = {()=>signUp(email,pass), goFwd}
-                    //onClick = {signUp(email,pass), goFwd}
-                    //onClick = {handlePress}
+                    onClick = {signUp(email,pass), () => navigation.navigate('NewLearner')}
                     >
                    </RoundButton>
                </View>
@@ -120,7 +118,6 @@ const Registration = ({goBack, goFwd}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     flexDirection: 'row',
   },
   insideBlue: {

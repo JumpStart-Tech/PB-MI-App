@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 
-export default function NewLearner(){
+export default function NewLearner({navigation}){
     const [id, setId] = useState('');
     const [analysisName, setAnalysisName] = useState('')
     const [sessionName, setSessionName] = useState('')
@@ -59,7 +59,7 @@ export default function NewLearner(){
                     <KeyTable inputs={inputs} removeRow={removeRow}></KeyTable>
                     
                 </View>
-                <RoundButton buttonText='Submit' buttonWidth='2'></RoundButton>
+                <RoundButton onClick = {() => navigation.navigate('Onboarding')} buttonText='Submit' buttonWidth='2'></RoundButton>
             </View>
         </SafeAreaView>
     )
@@ -117,6 +117,7 @@ function TableRow({chosenKey, behavior, isHeader=false, onClose, listIsEmpty}){
 const styles = StyleSheet.create({
     page: {
         flex: 1,
+        backgroundColor: '#fff',
     },
     body: {
         flex: 1,

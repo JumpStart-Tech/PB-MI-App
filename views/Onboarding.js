@@ -26,7 +26,7 @@ import {forgot} from "../App.js"
 let w = window.innerWidth;
 let h = window.innerHeight;
 
-const Onboarding = ({register, logIn, forgotPass}) => {
+const Onboarding = ({navigation}) => {
   const [email, setEmail] = React.useState('');
   const [pass, setPass] = React.useState('');
 
@@ -49,7 +49,7 @@ const Onboarding = ({register, logIn, forgotPass}) => {
                   value={pass}
                />
                <View style={styles.link}>
-                 <TouchableOpacity onPress={forgotPass}>
+                 <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
                    <Text style = {{color: 'white', fontSize: 14}}> Forgot password? </Text>
                  </TouchableOpacity>
                </View>
@@ -58,14 +58,13 @@ const Onboarding = ({register, logIn, forgotPass}) => {
                   <RoundButton 
                     buttonText="Sign Up"
                     buttonWidth="2"
-                    onClick = {signUp(email, pass), register}
+                    onClick = {signUp(email, pass), () => navigation.navigate('Registration')}
                     >
                   </RoundButton>
                   <RoundButton 
                     buttonText="Log In"
                     buttonWidth="2"
-                    onClick = {signIn(email, pass), logIn}
-                    //onClick = {logIn}
+                    onClick = {signIn(email, pass), () => navigation.navigate('Learner')}
                     >
                   </RoundButton>
                </View>
@@ -79,7 +78,6 @@ const Onboarding = ({register, logIn, forgotPass}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     flexDirection: 'row',
   },
   insideBlue: {

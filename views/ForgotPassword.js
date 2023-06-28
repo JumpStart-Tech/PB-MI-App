@@ -4,7 +4,7 @@ import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 import { signIn, signUp } from "../viewModels/auth";
 
-export default function ForgotPassword({goBack, makeAccount}){
+export default function ForgotPassword({navigation}){
 
     useEffect(()=>{
         signIn('realEMAIL2@GMAIL.COM', 'testpass')
@@ -16,16 +16,16 @@ export default function ForgotPassword({goBack, makeAccount}){
                  <RoundButton 
                     buttonText="Go Back"
                     buttonWidth="1"
-                    onClick = {goBack}
+                    onClick = {() => navigation.goBack()}
                     >
                   </RoundButton>
               </View>  
             <View style={styles.dialogue}>
                 <Text style={styles.titleText}>Forgot Password</Text>
                 <InputBox title='Email*'></InputBox>
-                <RoundButton onClick = {goBack} buttonText='Continue' buttonWidth='1.8'></RoundButton>
+                <RoundButton onClick = {() => navigation.navigate('Onboarding')} buttonText='Continue' buttonWidth='1.8'></RoundButton>
                 <Text>Don't have an account?
-                    <TouchableOpacity onPress = {makeAccount}><Text style={styles.signUpText}> Sign up</Text></TouchableOpacity>
+                    <TouchableOpacity onPress = {() => navigation.navigate('Registration')}><Text style={styles.signUpText}> Sign up</Text></TouchableOpacity>
                 </Text>
             </View>
             
@@ -36,6 +36,7 @@ export default function ForgotPassword({goBack, makeAccount}){
 const styles = StyleSheet.create({
     page: {
         flex: 1,
+        backgroundColor: '#fff',
     },
     titleText: {
         fontSize: 35,

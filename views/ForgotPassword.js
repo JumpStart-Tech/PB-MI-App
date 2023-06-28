@@ -2,6 +2,7 @@ import { StyleSheet, View, Image, Text, ScrollView, FlatList, TouchableOpacity, 
 import { useState, useEffect } from "react";
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
+import Header from "./components/Header";
 import { signIn, signUp } from "../viewModels/auth";
 
 export default function ForgotPassword({navigation}){
@@ -13,6 +14,7 @@ export default function ForgotPassword({navigation}){
     return(
         <SafeAreaView style={styles.page}>
              <View style = {{alignItems: 'flex-start', justifyContent: 'flex-start', marginBottom: 50, padding: 10}}>
+                 <Header></Header>
                  <RoundButton 
                     buttonText="Go Back"
                     buttonWidth="1"

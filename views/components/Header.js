@@ -1,14 +1,20 @@
-import { StyleSheet, View, Image, Text } from "react-native";
-import HeaderButton from "./HeaderButton";
-
+import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 
 function HeaderButtons(){
     return (
         <View style={styles.headerButtonContainer}>
-            <HeaderButton buttonText={'Home'}></HeaderButton>
-            <HeaderButton buttonText={'History'}></HeaderButton>
-            <HeaderButton buttonText={"Profile"}></HeaderButton>
-            <HeaderButton buttonText={"Logout"}></HeaderButton>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                <Text style = {styles.text}> Home </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Onboarding')}>
+                <Text style = {styles.text}> History </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Onboarding')}>
+                <Text style = {styles.text}> Profile </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style = {{borderWidth: 2, borderColor: 'blue', borderRadius: 5,}} onPress={() => navigation.navigate('Onboarding')}>
+                <Text style = {styles.text}> Logout </Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -18,7 +24,10 @@ export default function Header(){
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <HeaderButtons></HeaderButtons>
+                <View style = {styles.logo}>
+                  <Image style={styles.image} source={require('./temporary.png')}  />
+                </View>
+                <HeaderButtons style = {{flex: 0.5, flexDirection: 'row',}}></HeaderButtons>
             </View>
         </View>
     )
@@ -26,28 +35,42 @@ export default function Header(){
 
 const styles = StyleSheet.create({
     headerButtonContainer: {
+        flex: 1,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        alignSelf: 'center',
+        alignItems: 'center',
         marginRight: 13,
     },
+    text: {
+        color: 'black',
+        fontSize: 16,
+        lineHeight: 18.75,
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 26,
+        paddingRight: 26,
+        borderRadius: 5,
+    },
     header: {
+        flex: 1,
+        display: 'flex',
         height: 48,
+        flexDirection: 'row',
+    },
+    logo: {
+        flex: 0.5,
         flexDirection: 'row',
     },
     image: {
         height: 43,
         width: undefined,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
         aspectRatio: 512 / 297,
         marginTop: 5,
         marginLeft: 5,
     },
     container: {
-        //flex: 1,
+        flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'flex-start',
      },
 })

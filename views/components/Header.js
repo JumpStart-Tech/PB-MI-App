@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 function HeaderButtons(){
     return (
         <View style={styles.headerButtonContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('Onboarding')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
                 <Text style = {styles.text}> Home </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('Onboarding')}>
@@ -24,8 +24,10 @@ export default function Header(){
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Image style={styles.image} source={require('./temporary.png')}  />
-                <HeaderButtons style = {{justifyContent: 'flex-end'}}></HeaderButtons>
+                <View style = {styles.logo}>
+                  <Image style={styles.image} source={require('./temporary.png')}  />
+                </View>
+                <HeaderButtons style = {{flex: 0.5, flexDirection: 'row',}}></HeaderButtons>
             </View>
         </View>
     )
@@ -51,15 +53,18 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     header: {
+        flex: 1,
+        display: 'flex',
         height: 48,
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+    },
+    logo: {
+        flex: 0.5,
+        flexDirection: 'row',
     },
     image: {
         height: 43,
         width: undefined,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
         aspectRatio: 512 / 297,
         marginTop: 5,
         marginLeft: 5,

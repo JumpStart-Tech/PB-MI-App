@@ -35,6 +35,7 @@ const Registration = ({goBack, goFwd}) => {
   const [validPass, setValidPass] = React.useState('false');
   const [disabled, setDisabled] = React.useState('false');
 
+  /*
   const isValid = () => {
     if (currPass === currPassC) {
       setValidPass('true');
@@ -56,6 +57,8 @@ const Registration = ({goBack, goFwd}) => {
         alert('invalid');
     }
   }
+
+  */
 
   return (
       <View style={styles.container}>

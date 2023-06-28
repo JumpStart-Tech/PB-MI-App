@@ -26,7 +26,7 @@ import {forgot} from "../App.js"
 let w = window.innerWidth;
 let h = window.innerHeight;
 
-const Onboarding = ({signUp, logIn, forgotPass}) => {
+const Onboarding = ({register, logIn, forgotPass}) => {
   const [email, setEmail] = React.useState('');
   const [pass, setPass] = React.useState('');
 
@@ -58,13 +58,14 @@ const Onboarding = ({signUp, logIn, forgotPass}) => {
                   <RoundButton 
                     buttonText="Sign Up"
                     buttonWidth="2"
-                    onClick = {signUp}
+                    onClick = {register}
                     >
                   </RoundButton>
                   <RoundButton 
                     buttonText="Log In"
                     buttonWidth="2"
                     onClick = {signIn(email, pass), logIn}
+                    onClick = {logIn}
                     >
                   </RoundButton>
                </View>

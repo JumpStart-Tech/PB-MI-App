@@ -47,7 +47,7 @@ export default function App() {
 
   return (
     <>
-      {currentPage === 'Onboarding' && <Onboarding signUp = {signUp} logIn = {logIn} forgotPass = {forgot} />}
+      {currentPage === 'Onboarding' && <Onboarding register = {signUp} logIn = {logIn} forgotPass = {forgot} />}
       {currentPage === 'Registration' && <Registration goBack = {goBack} goFwd = {register} />}
       {currentPage === 'Learner' && <Learner next = {session}/>}
       {currentPage === 'NewLearner' && <NewLearner next = {session}/>}

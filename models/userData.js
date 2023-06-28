@@ -1,4 +1,5 @@
 export {userIsNew, saveUserAuthInfo, validateCreds}
+import {Alert,} from 'react-native';
 
 async function userIsNew(email){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
@@ -29,6 +30,7 @@ async function saveUserAuthInfo(email, password){
     }
     const {id} = await response.json()
     console.log('user created. identifier: ' + id);
+    alert("user created!");
     return {status: 'Success', message: 'User created', id};
 }
 

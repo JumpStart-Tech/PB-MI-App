@@ -1,4 +1,4 @@
-import { userIsNew, saveUserAuthInfo, validateCreds } from "../models/userData";
+import { userIsNew, saveUserAuthInfo, validateCreds } from "../models/userData.js";
 export {signUp, signIn}
 
 async function signUp(email, password){

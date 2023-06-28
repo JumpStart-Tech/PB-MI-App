@@ -1,6 +1,7 @@
 import { StyleSheet, View, Image, Text } from "react-native";
 import HeaderButton from "./HeaderButton";
 
+
 function HeaderButtons(){
     return (
         <View style={styles.headerButtonContainer}>
@@ -15,11 +16,10 @@ function HeaderButtons(){
 export default function Header(){
 
     return (
-        <View style={styles.header}>
-            <View style={styles.container}>
-                <Image style={styles.image} source={require('./temporary.png')}  />
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <HeaderButtons></HeaderButtons>
             </View>
-            <HeaderButtons></HeaderButtons>
         </View>
     )
 }
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
         marginLeft: 5,
     },
     container: {
-        flex: 1,
+        //flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'flex-start'
-      },
+        alignItems: 'flex-start',
+     },
 })

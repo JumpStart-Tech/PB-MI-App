@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Button,
@@ -9,168 +9,122 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  Pressable
 } from 'react-native';
 
-import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import {Routes, useNavigate} from 'react-router-dom';
-
-//<Route path="./Registration" component={Registration} /> 
+//import background image
 import bg from '../blue-bg.png';
+//import standard teal button component
+import RoundButton from "./components/RoundButton";
+//import view model to take data and interface server
+import {signIn} from "../viewModels/auth"
+
+//forgotPassword navigation
+import {forgot} from "../App.js"
 
 //size to current window
 let w = window.innerWidth;
 let h = window.innerHeight;
 
-function Onboarding() {
-  const [isLoggedIn, setLoggedIn] = React.useState(false);
-
-  const [email, onChangeEmail] = React.useState('');
-  const [pass, onChangePass] = React.useState('');
+const Onboarding = ({signUp, logIn, forgotPass}) => {
+  const [email, setEmail] = React.useState('');
+  const [pass, setPass] = React.useState('');
 
   return (  
     <div className="App">
       <View style={styles.container}>
         <ImageBackground source={bg} resizeMode="cover" style={styles.image} className="App-bg" alt="bg">
-          <Text style={styles.title}>PB.MI</Text>
-          <TextInput style={styles.input}
-              placeholder="Email *"
-              onChangeText={onChangeEmail}
-              value={email}
-           />
-           <TextInput style={styles.input}
-              placeholder="Password *"
-              onChangeText={onChangePass}
-              value={pass}
-           />
-           <View style={styles.link}>
-             <Forgot />
-           </View>
-          <View style={styles.buttons}>
-            <LogIn />
-            <SignUp />
-           </View>
+          <View style = {styles.insideBlue}>
+              <Text style={styles.title}>PB.MI</Text>
+              <TextInput style={styles.input}
+                  placeholder="Email *"
+                  keyboardType= 'email-address'
+                  onChangeText={setEmail}
+                  value={email}
+               />
+               <TextInput style={styles.input}
+                  placeholder="Password *"
+                  secureTextEntry={true}
+                  onChangeText={setPass}
+                  value={pass}
+               />
+               <View style={styles.link}>
+                 <TouchableOpacity onPress={forgotPass}>
+                   <Text style = {{color: 'white', fontSize: 14}}> Forgot password? </Text>
+                 </TouchableOpacity>
+               </View>
+               <Text style={styles.link}></Text>
+               <View style = {[styles.endButton, {marginBottom: 8}]}>
+                  <RoundButton 
+                    buttonText="Sign Up"
+                    buttonWidth="2"
+                    onClick = {signUp}
+                    >
+                  </RoundButton>
+                  <RoundButton 
+                    buttonText="Log In"
+                    buttonWidth="2"
+                    onClick = {signIn(email, pass), logIn}
+                    >
+                  </RoundButton>
+               </View>
+          </View>
         </ImageBackground>
       </View>     
     </div>
-
-  );
-}
-
-function LogIn() {
-  function handleClick() {
-    alert('You clicked me!');
-    isLoggedIn = true; // is this working?
-    //TODO: go to home screen if valid credentials
-  }
-  return (
-    <Button
-      title="Log In"
-      color="#00a69c"
-      onPress={handleClick}
-    />
-  );
-}
-
-function SignUp() {
-  function handleClick() {
-    //TODO: go to sign up screen
-    /*
-    navigate('/Registration');
-    <Routes>
-      <Route path="/contacts" element={<Contacts />} />
-      <Route path="/" element={<Home />} />
-     </Routes>
-    */
-    //Registration();
-    //<Registration />
-    //<Link reloadDocument to={"Registration"}>Registration</Link>
-    window.location.href = "/Registration";
-  }
-  return (
-    //<a href = {"Registration"}>
-    <Button
-      title="Sign Up"
-      color="#00a69c"
-      onPress={handleClick}
-    />
-    //</a>
-  );
-}
-
-function Forgot() { // Forgot password button
-  function handleClick() {
-    //TODO: go to forgot password screen
-    alert('You clicked me!');
-  }
-  return (
-    <TouchableOpacity onPress={handleClick}>
-    <Text style = {{color: 'white', fontSize: 14}}> Forgot password? </Text>
-    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { // General formatting
+  container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'left',
-    justifyContent: 'center',
+    flexDirection: 'row',
   },
-  title: { // PB.MI title format
-    flex: 1,
+  insideBlue: {
+    //portion of background that is blue to center content into:
+     width: '48%',
+  },
+  title: { // Create account format
     color: 'white',
     fontSize: 42,
     lineHeight: 84,
     alignItems: 'center',
     fontWeight: 'bold',
     textAlign: 'center',
-    width: 300,
-    //arithmetic ensures that text is centered in the dark blue portion
-    marginHorizontal: (w*407/844 - 300)/2,
-    marginVertical: h/5,
-    //backgroundColor: '#000000c0',
+    lineHeight: 84,
+    textAlign: 'center',
+    marginVertical: h/8,
   },
   image: { //Background image formatting
     width: w,
     height: h,
-    alignItems: 'right',
-    justifyContent: 'center',
   },
   input: { // Take email and password formatting
     color: 'white',
     fontSize: 16,
     lineHeight: 20,
-    alignItems: 'center',
-    textAlign: 'left',
-    marginHorizontal: (w*407/844 - 300)/2,
-    width: 300,
+    width: 350,
+    alignSelf: 'center',
     borderWidth: 0,
     borderBottomColor: 'white',
     borderBottomWidth: 1,
     padding: 10,
   },
-  buttons: { // Log in and sign up button formatting
-    color: 'white',
-    fontSize: 16,
-    lineHeight: 20,
-    justifyContent: 'left',
-    alignItems: 'left',
-    width: 250,
-    height: 100,
-    marginHorizontal:(w*407/844 - 250)/2, 
-    marginVertical: h/9,
-    borderWidth: 0,
-    borderRadius: 10
-  },
   link: { // Forgot password link formatting
     lineHeight: 12,
     textAlign: 'right',
-    justifyContent: 'right',
-    alignItems: 'right',
+    alignSelf: 'right',
     width: 200,
-    marginHorizontal: (w*407/844 - 300 + 200)/2,
+    marginHorizontal: 350,
     marginVertical: 20,
+  },
+  endButton: {
+    flexDirection: 'column-reverse',
+    justifyContent: 'flex-start',
+    padding: 2,
+    marginTop: 50,
+    alignItems: 'center',
   },
 });
 

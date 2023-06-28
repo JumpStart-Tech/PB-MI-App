@@ -1,10 +1,10 @@
-import { StyleSheet, View, Image, Text, ScrollView, FlatList, Pressable, SafeAreaView } from "react-native";
+import { StyleSheet, View, Image, Text, ScrollView, FlatList, TouchableOpacity, SafeAreaView } from "react-native";
 import { useState, useEffect } from "react";
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 import { signIn, signUp } from "../viewModels/auth";
 
-export default function ForgotPassword(){
+export default function ForgotPassword({goBack, signUp}){
 
     useEffect(()=>{
         signIn('realEMAIL2@GMAIL.COM', 'testpass')
@@ -12,12 +12,20 @@ export default function ForgotPassword(){
 
     return(
         <SafeAreaView style={styles.page}>
+             <View style = {{alignItems: 'flex-start', justifyContent: 'flex-start', marginBottom: 50, padding: 10}}>
+                 <RoundButton 
+                    buttonText="Go Back"
+                    buttonWidth="1"
+                    onClick = {goBack}
+                    >
+                  </RoundButton>
+              </View>  
             <View style={styles.dialogue}>
                 <Text style={styles.titleText}>Forgot Password</Text>
                 <InputBox title='Email*'></InputBox>
                 <RoundButton buttonText='Continue' buttonWidth='1.8'></RoundButton>
                 <Text>Don't have an account?
-                    <Pressable><Text style={styles.signUpText}> Sign up</Text></Pressable>
+                    <TouchableOpacity onPress = {signUp}><Text style={styles.signUpText}> Sign up</Text></TouchableOpacity>
                 </Text>
             </View>
             
@@ -28,8 +36,6 @@ export default function ForgotPassword(){
 const styles = StyleSheet.create({
     page: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     titleText: {
         fontSize: 35,

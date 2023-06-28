@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Button,
@@ -13,133 +13,154 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {Link } from "react-router-dom";
+//import background image
 import bg from '../blue-bg.png';
+//import standard teal button component
+import RoundButton from "./components/RoundButton";
+//import view model to take data and interface server
+import {signUp} from "../viewModels/auth"
+
 
 // size to current window
 let w = window.innerWidth;
 let h = window.innerHeight;
 
-function Registration() {
-  const [name, onChangeName] = React.useState('');
-  const [email, onChangeEmail] = React.useState('');
-  const [pass, onChangePass] = React.useState('');
-  const [passC, onChangePassC] = React.useState('');
+const Registration = ({goBack, goFwd}) => {
+  const currPass = '';
+  const currPassC = 'x';
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [pass, setPass] = React.useState('');
+  const [passC, setPassC] = React.useState('');
+  const [validPass, setValidPass] = React.useState('false');
+  const [disabled, setDisabled] = React.useState('false');
+
+  const isValid = () => {
+    if (currPass === currPassC) {
+      setValidPass('true');
+      setDisabled('false');
+    } else {
+      setDisabled('true');
+    }
+  }
+
+  const checkPassword = (passC) => {
+    setPassC(passC);
+    //isValid();
+  }
+
+  const handlePress = () => {
+    if (isValid) {
+      Alert.alert('valid');
+    } else {
+        alert('invalid');
+    }
+  }
+
   return (
       <View style={styles.container}>
         <ImageBackground source={bg} resizeMode="cover" style={styles.image} className="App-bg" alt="bg">
-          <Text style={styles.title}>Create Account</Text> 
-          <TextInput style={styles.input}
-              placeholder="Name *"
-              onChangeText={onChangeName}
-              value={name}
-           /> 
-          <TextInput style={styles.input}
-              placeholder="Email *"
-              onChangeText={onChangeEmail}
-              value={email}
-           />
-           <TextInput style={styles.input}
-              placeholder="Password *"
-              onChangeText={onChangePass}
-              value={pass}
-           />
-           <TextInput style={styles.input}
-              placeholder="Confirm Password *"
-              onChangeText={onChangePassC}
-              value={passC}
-           />
-           <View style={styles.buttons}>
-             <SignUp />
+           <View style = {styles.insideBlue}>
+             <View style = {{alignItems: 'flex-start', alignSelf: 'auto', marginVertical: 0, padding: 10}}>
+               <RoundButton 
+                  buttonText="Go Back"
+                  buttonWidth="1"
+                  onClick = {goBack}
+                  >
+                </RoundButton>
+              </View>  
+              <Text style={styles.title}>Create Account</Text> 
+              <TextInput style={styles.input}
+                  placeholder="Name *"
+                  onChangeText={setName}
+                  value = {name}
+               /> 
+              <TextInput style={styles.input}
+                  placeholder="Email *"
+                  onChangeText={setEmail}
+                  keyboardType = 'email-address'
+                  value = {email}
+               />
+               <TextInput style={styles.input}
+                  placeholder="Password *"
+                  secureTextEntry={true}
+                  onChangeText={setPass}
+                  value = {pass}
+                  currPass = {pass}
+               />
+               <TextInput style={[styles.input, {marginBottom: 10}]}
+                  placeholder="Confirm Password *"
+                  secureTextEntry={true}
+                  onChangeText={checkPassword}
+                  value={passC}
+                  currPassC = {passC}
+               />
+               <View style={styles.endButton}>
+                 <RoundButton
+                    buttonText="Sign Up"
+                    buttonWidth="2"
+                    disabled={disabled}
+                    onClick = {signUp(email,pass), goFwd}
+                    //onClick = {handlePress}
+                    >
+                   </RoundButton>
+               </View>
            </View>
         </ImageBackground>
       </View>  
   );
 };
 
-function SignUp() {
-  function handleClick() {
-    //TODO: move to home screen
-    if (pass != passC) {
-      <Text style={styles.error}>Passwords don't match</Text>
-    } else {
-      window.location.href = "/App";
-    }
-  }
-  return (
-    <Button
-      title="Sign Up"
-      color="#00a69c"
-      onPress={handleClick}
-    />
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  insideBlue: {
+    //portion of background that is blue to center content into:
+     width: '48%',
   },
   title: { // Create account format
-    flex: 1,
     color: 'white',
     fontSize: 36,
     lineHeight: 84,
-    alignItems: 'center',
     textAlign: 'center',
-    width: 300,
-    //arithmetic ensures that text is centered in the dark blue portion
-    marginHorizontal: (w*407/844 - 300)/2,
-    marginVertical: h/4,
-    //backgroundColor: '#000000c0',
+    marginVertical: h/9,
   },
   image: { //Background image formatting
     width: w,
     height: h,
-    alignItems: 'right',
-    justifyContent: 'center',
   },
   input: { // Take email and password formatting
     color: 'white',
     fontSize: 16,
     lineHeight: 20,
-    alignItems: 'center',
-    textAlign: 'left',
-    marginHorizontal: (w*407/844 - 300)/2,
-    width: 300,
+    alignSelf: 'center',
+    width: 350,
     borderWidth: 0,
     borderBottomColor: 'white',
     borderBottomWidth: 1,
     padding: 10,
   },
-  buttons: { // sign up button formatting
-    color: 'white',
-    fontSize: 16,
-    lineHeight: 20,
-    justifyContent: 'left',
-    alignItems: 'left',
-    width: 260,
-    height: 100,
-    marginHorizontal: (w*407/844 - 250)/2, 
-    marginVertical: h/9,
-    borderWidth: 0,
-    borderRadius: 10
-  },
   buttonText: {
     color: '#fff',
     fontSize: 18,
+  },
+  endButton: { //starts at bottom of page
+    flexDirection: 'column-reverse',
+    justifyContent: 'flex-start',
+    padding: 2,
+    marginTop: 50,
   },
   error: {
     flex: 1,
     color: 'red',
     fontSize: 20,
     lineHeight: 44,
-    alignItems: 'center',
     textAlign: 'center',
-    width: 300,
-    marginHorizontal: (w*407/844 - 300)/2,
     marginVertical: 10,
+    marginBottom: 10,
   },
 });
 

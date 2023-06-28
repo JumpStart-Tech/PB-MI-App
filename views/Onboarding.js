@@ -17,7 +17,7 @@ import bg from '../blue-bg.png';
 //import standard teal button component
 import RoundButton from "./components/RoundButton";
 //import view model to take data and interface server
-import {signIn} from "../viewModels/auth"
+import {signIn, signUp} from "../viewModels/auth"
 
 //forgotPassword navigation
 import {forgot} from "../App.js"
@@ -58,14 +58,14 @@ const Onboarding = ({register, logIn, forgotPass}) => {
                   <RoundButton 
                     buttonText="Sign Up"
                     buttonWidth="2"
-                    onClick = {register}
+                    onClick = {signUp(email, pass), register}
                     >
                   </RoundButton>
                   <RoundButton 
                     buttonText="Log In"
                     buttonWidth="2"
                     onClick = {signIn(email, pass), logIn}
-                    onClick = {logIn}
+                    //onClick = {logIn}
                     >
                   </RoundButton>
                </View>

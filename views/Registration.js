@@ -20,14 +20,13 @@ import RoundButton from "./components/RoundButton";
 //import view model to take data and interface server
 import {signUp} from "../viewModels/auth"
 
-
 // size to current window
 let w = window.innerWidth;
 let h = window.innerHeight;
 
 const Registration = ({goBack, goFwd}) => {
-  const currPass = '';
-  const currPassC = 'x';
+  //const currPass = '';
+  //const currPassC = 'x';
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [pass, setPass] = React.useState('');
@@ -44,12 +43,15 @@ const Registration = ({goBack, goFwd}) => {
       setDisabled('true');
     }
   }
+  */
 
+  //TODO: need to check passwords are the same
   const checkPassword = (passC) => {
     setPassC(passC);
     //isValid();
   }
 
+  /*
   const handlePress = () => {
     if (isValid) {
       Alert.alert('valid');
@@ -103,7 +105,8 @@ const Registration = ({goBack, goFwd}) => {
                     buttonText="Sign Up"
                     buttonWidth="2"
                     disabled={disabled}
-                    onClick = {signUp(email,pass), goFwd}
+                    onClick = {()=>signUp(email,pass), goFwd}
+                    //onClick = {signUp(email,pass), goFwd}
                     //onClick = {handlePress}
                     >
                    </RoundButton>

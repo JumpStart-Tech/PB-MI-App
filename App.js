@@ -17,7 +17,7 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState('Onboarding');
 
   //clicking the sign up button on Onboarding takes you to Registration
-  const signUp = () => {
+  const makeAccount = () => {
     setCurrentPage('Registration');
   };
 
@@ -47,11 +47,11 @@ export default function App() {
 
   return (
     <>
-      {currentPage === 'Onboarding' && <Onboarding signUp = {signUp} logIn = {logIn} forgotPass = {forgot} />}
+      {currentPage === 'Onboarding' && <Onboarding register = {makeAccount} logIn = {logIn} forgotPass = {forgot} />}
       {currentPage === 'Registration' && <Registration goBack = {goBack} goFwd = {register} />}
       {currentPage === 'Learner' && <Learner next = {session}/>}
       {currentPage === 'NewLearner' && <NewLearner next = {session}/>}
-      {currentPage === 'ForgotPassword' && <ForgotPassword goBack = {goBack} signUp = {signUp} />}
+      {currentPage === 'ForgotPassword' && <ForgotPassword goBack = {goBack} makeAccount = {makeAccount} />}
     </>
   );
 

@@ -105,7 +105,19 @@ const Registration = ({navigation}) => {
                     buttonText="Sign Up"
                     buttonWidth="2"
                     disabled={disabled}
-                    onClick = {signUp(email,pass), () => navigation.navigate('NewLearner')}
+                    onClick = {() => {
+                      signUp(email,pass)
+                        .then(res => {
+                          console.log(JSON.stringify(res));
+                          let status = res.status;
+                          if(status != 'Error'){
+                            navigation.navigate('NewLearner');
+                          }
+                          else{
+                            console.log('Navigation blocked')
+                          }
+                        })
+                      }}
                     >
                    </RoundButton>
                </View>

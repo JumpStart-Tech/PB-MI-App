@@ -58,13 +58,24 @@ const Onboarding = ({navigation}) => {
                   <RoundButton 
                     buttonText="Sign Up"
                     buttonWidth="2"
-                    onClick = {signUp(email, pass), () => navigation.navigate('Registration')}
+                    onClick = {() => navigation.navigate('Registration')}
                     >
                   </RoundButton>
                   <RoundButton 
                     buttonText="Log In"
                     buttonWidth="2"
-                    onClick = {signIn(email, pass), () => navigation.navigate('Learner')}
+                    onClick = {() => {
+                      signIn(email, pass)
+                        .then(res =>{
+                          let status = res.status;
+                          if(status != 'Error'){
+                            navigation.navigate('Learner');
+                          }
+                          else{
+                            console.log('navigation blocked');
+                          }
+                        });
+                    }}
                     >
                   </RoundButton>
                </View>

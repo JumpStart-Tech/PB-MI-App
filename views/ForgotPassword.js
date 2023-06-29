@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 import Header from "./components/Header";
-import { signIn, signUp } from "../viewModels/auth";
+import { usePatients } from "../viewModels/learnerData";
 
 export default function ForgotPassword({navigation}){
-
+    let patientsArr = usePatients(7012);
     useEffect(()=>{
-        signIn('realEMAIL2@GMAIL.COM', 'testpass')
-    },[])
+        console.log('patientsArr: ' + patientsArr);
+    },[patientsArr])
 
     return(
         <SafeAreaView style={styles.page}>

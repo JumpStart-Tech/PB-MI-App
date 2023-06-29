@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     marginVertical: h/9,
   },
   image: { //Background image formatting
-    width: w,
+    flex: 1,
     height: h,
   },
   input: { // Take email and password formatting
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 20,
     alignSelf: 'center',
-    width: 350,
+    width: '60%',
     borderWidth: 0,
     borderBottomColor: 'white',
     borderBottomWidth: 1,

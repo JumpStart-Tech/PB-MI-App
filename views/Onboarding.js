@@ -36,6 +36,7 @@ const Onboarding = ({navigation}) => {
         <ImageBackground source={bg} resizeMode="cover" style={styles.image} className="App-bg" alt="bg">
           <View style = {styles.insideBlue}>
               <Text style={styles.title}>PB.MI</Text>
+              <View style = {styles.textBox}>
               <TextInput style={styles.input}
                   placeholder="Email *"
                   keyboardType= 'email-address'
@@ -52,6 +53,7 @@ const Onboarding = ({navigation}) => {
                  <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
                    <Text style = {{color: 'white', fontSize: 14}}> Forgot password? </Text>
                  </TouchableOpacity>
+               </View>
                </View>
                <Text style={styles.link}></Text>
                <View style = {[styles.endButton, {marginBottom: 8}]}>
@@ -96,27 +98,33 @@ const styles = StyleSheet.create({
     marginVertical: h/8,
   },
   image: { //Background image formatting
-    width: w,
+    flex: 1,
     height: h,
   },
+  textBox: {
+    flex: 1,
+    width: '60%',
+    alignSelf: 'center',
+    //justifyContent: 'center',
+  },
   input: { // Take email and password formatting
+    flex: 1,
+    width: '100%',
     color: 'white',
     fontSize: 16,
     lineHeight: 20,
-    width: 350,
     alignSelf: 'center',
     borderWidth: 0,
     borderBottomColor: 'white',
     borderBottomWidth: 1,
-    padding: 10,
+    marginBottom: 10,
+    marginTop: 10,
   },
   link: { // Forgot password link formatting
+    flex: 1,
     lineHeight: 12,
     textAlign: 'right',
-    alignSelf: 'right',
-    width: 200,
-    marginHorizontal: 350,
-    marginVertical: 20,
+    marginVertical: 10,
   },
   endButton: {
     flexDirection: 'column-reverse',

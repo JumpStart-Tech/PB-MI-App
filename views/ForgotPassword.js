@@ -2,13 +2,13 @@ import { StyleSheet, View, Image, Text, ScrollView, FlatList, Pressable, SafeAre
 import { useState, useEffect } from "react";
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
-import { signIn, signUp } from "../viewModels/auth";
+import { usePatients } from "../viewModels/learnerData";
 
 export default function ForgotPassword(){
-
+    let patientsArr = usePatients(7012);
     useEffect(()=>{
-        signIn('realEMAIL2@GMAIL.COM', 'testpass')
-    },[])
+        console.log('patientsArr: ' + patientsArr);
+    },[patientsArr])
 
     return(
         <SafeAreaView style={styles.page}>

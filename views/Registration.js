@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     lineHeight: 84,
     textAlign: 'center',
-    marginVertical: h/9,
+    marginVertical: '10%',
   },
   image: { //Background image formatting
     flex: 1,

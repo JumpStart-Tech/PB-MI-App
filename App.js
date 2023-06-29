@@ -14,6 +14,7 @@ import Learner from './views/Learner';
 import NewLearner from './views/NewLearner';
 import ForgotPassword from './views/ForgotPassword';
 import Home from './views/Home';
+import Profile from './views/Profile';
 
 const App = () =>  {
   return (
@@ -29,10 +30,10 @@ const App = () =>  {
         <Stack.Screen name="NewLearner" component={NewLearner} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-
 }
 
 export default App;

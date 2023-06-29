@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 84,
     textAlign: 'center',
-    marginVertical: h/8,
+    marginVertical: '16%',
   },
   image: { //Background image formatting
     flex: 1,

@@ -7,10 +7,6 @@ import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 import DropDown from "./components/DropDown";
 
-//size to current window
-let w = window.innerWidth;
-let h = window.innerHeight;
-
 const Learner = ({navigation}) =>{
 
     const [id, setId] = useState('');
@@ -106,7 +102,7 @@ const styles = StyleSheet.create({
   leftContainer: {
     flex: 1,
     justifyContent: 'top',
-    marginHorizontal: w/25,
+    marginHorizontal: '4%',
   },
   rightContainer: {
     flex: 1,
@@ -127,8 +123,8 @@ const styles = StyleSheet.create({
     fontSize: 36,
     justifyContent: 'top',
     textAlign: 'left',
-    marginVertical: h/9,
-    marginHorizontal: w/25,
+    marginVertical: '6%',
+    marginHorizontal: '4%',
    },
    button: {
      paddingVertical: '15%',

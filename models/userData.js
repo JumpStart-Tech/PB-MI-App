@@ -1,5 +1,5 @@
-export {userIsNew, saveUserAuthInfo, validateCreds}
 import {Alert,} from 'react-native';
+export {userIsNew, saveUserAuthInfo, validateCreds, getLearnerArray}
 
 async function userIsNew(email){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
@@ -50,4 +50,13 @@ async function validateCreds(email, password){
         return {status: 'Error', message: 'Incorrect password'};
     }
     return {status: 'Success', message: 'User credentials authenticated', id: responseObj.id}
+}
+
+async function getLearnerArray(therapistId){
+    const response = await fetch(`http://localhost:3000/therapists?id=${therapistId}`);
+    if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
+        throw new Error(`HTTP error in pullLearnerInfo. status: ${response.status}`);
+    }
+    const responseArr = await response.json();
+    return responseArr[0]['patients'];
 }

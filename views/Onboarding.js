@@ -31,8 +31,7 @@ const Onboarding = ({navigation}) => {
   const [pass, setPass] = React.useState('');
 
   return (  
-    <div className="App">
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <ImageBackground source={bg} resizeMode="cover" style={styles.image} className="App-bg" alt="bg">
           <View style = {styles.insideBlue}>
               <Text style={styles.title}>PB.MI</Text>
@@ -60,20 +59,31 @@ const Onboarding = ({navigation}) => {
                   <RoundButton 
                     buttonText="Sign Up"
                     buttonWidth="2"
-                    onClick = {signUp(email, pass), () => navigation.navigate('Registration')}
+                    onClick = {() => navigation.navigate('Registration')}
                     >
                   </RoundButton>
                   <RoundButton 
                     buttonText="Log In"
                     buttonWidth="2"
-                    onClick = {signIn(email, pass), () => navigation.navigate('Home')}
+                    onClick = {() => {
+                      signIn(email,pass)
+                        .then(res => {
+                          console.log(JSON.stringify(res));
+                          let status = res.status;
+                          if(status != 'Error'){
+                            navigation.navigate('Home');
+                          }
+                          else{
+                            console.log('Navigation blocked')
+                          }
+                        })
+                      }}
                     >
                   </RoundButton>
                </View>
           </View>
         </ImageBackground>
-      </View>     
-    </div>
+      </SafeAreaView>     
   );
 }
 
@@ -85,16 +95,16 @@ const styles = StyleSheet.create({
   insideBlue: {
     //portion of background that is blue to center content into:
      width: '48%',
+     justifyContent: 'center',
+     alignItems: 'center',
   },
   title: { // Create account format
     color: 'white',
     fontSize: 42,
     lineHeight: 84,
-    alignItems: 'center',
     fontWeight: 'bold',
     textAlign: 'center',
     lineHeight: 84,
-    textAlign: 'center',
     marginVertical: '16%',
   },
   image: { //Background image formatting
@@ -104,8 +114,6 @@ const styles = StyleSheet.create({
   textBox: {
     flex: 1,
     width: '60%',
-    alignSelf: 'center',
-    //justifyContent: 'center',
   },
   input: { // Take email and password formatting
     flex: 1,
@@ -113,7 +121,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     lineHeight: 20,
-    alignSelf: 'center',
     borderWidth: 0,
     borderBottomColor: 'white',
     borderBottomWidth: 1,

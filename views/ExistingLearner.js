@@ -6,7 +6,7 @@ import Header from "./components/Header";
 import { usePatients } from "../viewModels/learnerData";
 
 export default function ExistingLearner(){
-    let patientsArr = usePatients(7012);
+    let patientsArr = usePatients(5827);
 
     return (
         <SafeAreaView style={styles.page}>
@@ -17,14 +17,36 @@ export default function ExistingLearner(){
                 <View style={styles.titleHolder}>
                     <Text style={styles.titleText}>Existing Learners</Text>
                 </View>
-                <TableRow learnerId={'Learner ID'} lastUsed={'Last Time Used'} compSessions={'Completed Sessions'} isHeader={true} listIsEmpty={false}></TableRow>
-                <TableRow learnerId={5544} lastUsed={'05/23/2023'} compSessions={'13'} isHeader={false} listIsEmpty={false}></TableRow>
+                <Table inputs={patientsArr}></Table>
+                {/* <TableRow learnerId={'Learner ID'} lastUsed={'Last Time Used'} compSessions={'Completed Sessions'} isHeader={true} listIsEmpty={false}></TableRow>
+                <TableRow learnerId={5544} lastUsed={'05/23/2023'} compSessions={'13'} isHeader={false} listIsEmpty={false}></TableRow> */}
             </View>
         </SafeAreaView>
     )
 }
 
+function Table({inputs}){
+    
+    return(
+        <>
+        <FlatList 
+            style={styles.table}
+            data={inputs}
+            keyExtractor={(item) => item.id}
+            renderItem={({item})=>{
+                    return <TableRow learnerId={item.id} 
+                    lastUsed={item.last_time_used}
+                    compSessions={item.number_of_sessions}>
+                    </TableRow>
+                }
+            }
+            ListHeaderComponent={<TableRow learnerId={'Learner ID'} lastUsed={'Last Time Used'} 
+                compSessions={'Completed Sessions'} isHeader={true} listIsEmpty={false}></TableRow>}
+        />
+        </>
+    )
 
+}
 
 function TableRow({learnerId, lastUsed, compSessions, isHeader=false, listIsEmpty}){
 

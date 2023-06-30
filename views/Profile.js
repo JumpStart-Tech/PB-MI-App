@@ -6,29 +6,41 @@ import pic from "./components/temporary.png";
 const Profile = ({navigation}) =>{
   const [affiliation, setAffiliation] = React.useState('');
   const [title, setTitle] = React.useState('');
-  const [color1, setColor1] = useState('white');
-  /*
-  const [isSelected2, setIsSelected2] = useState(false);
-  const [isSelected3, setIsSelected3] = useState(false);
-  const [isSelected4, setIsSelected4] = useState(false);
-  */
 
+  // tracks colors of buttons depending on whether they are selected
+  const [color1, setColor1] = useState('#04A69D');
+  const [color2, setColor2] = useState('#bee8e6');
+  const [color3, setColor3] = useState('#bee8e6');
+  const [color4, setColor4] = useState('#bee8e6');
   
-  /*
-  const darkColor = () => {
-        setColor1('#04A69D');
-  };
+  const CircularButton = ({number, name, color, setColor}) => {
+      // prevents more than one option from being selected at the same time
+      const limitSelection = () => {
+        // allows no option to be selected
+        if (!(color1 === '#bee8e6' && color2 === '#bee8e6' && color3 === '#bee8e6' && color4 === '#bee8e6')) {
+          // prevents two options from being selected at once
+          if (color === '#bee8e6') {
+                setColor1('#bee8e6');
+                setColor2('#bee8e6');
+                setColor3('#bee8e6');
+                setColor4('#bee8e6');
+          }
+        }
+      }
 
-  const lightColor = () => {
-    setColor1('white');
-  };
-  */
-  
-  const CircularButton = ({number, name}) => {
+      const changeColor = (color, setColor) => {
+         limitSelection();
+         if (color === '#04A69D') {
+            setColor('#bee8e6');
+         } else {
+            setColor('#04A69D');
+         }
+      }
+
       return (
         <View style = {{padding: 10}}>
-        <TouchableOpacity style={styles.buttonContainer}>
-          <View style={styles.button}>
+        <TouchableOpacity style={styles.buttonContainer} onPress = {() => changeColor(color, setColor)}>
+          <View style={[styles.button, {backgroundColor: color}]}>
             <Text style={styles.buttonText}>{number}</Text>
           </View>
         </TouchableOpacity>
@@ -36,23 +48,7 @@ const Profile = ({navigation}) =>{
         </View>
       );
   };
-  
-  
-  /*
-            <View style={{flexDirection: 'row', marginHorizontal: '8%',}}>
-            <View style = {{padding: 10}}>
-            <button style={[styles.buttonContainer, {color: color1}]} onClick={darkColor}>
-              <View style={[styles.button, {color: color1}]}>
-                <Text style={styles.buttonText}>1</Text>
-              </View>
-            </button>
-              <Text style={[styles.text2, {alignSelf: 'center'}]}>Beginner</Text>
-            </View>
-            <CircularButton number = '1' name = 'Beginner'></CircularButton>
-            <CircularButton number = '2' name = 'Novice'></CircularButton>
-            <CircularButton number = '3' name = 'Skilled'></CircularButton>
-            <CircularButton number = '4' name = 'Expert'></CircularButton>
-*/
+ 
 
   return (
       <View style = {{backgroundColor: '#fff', flex: 1,}}>
@@ -85,10 +81,10 @@ const Profile = ({navigation}) =>{
             value={title}
            />
            <View style = {{flexDirection: 'row', marginHorizontal: '8%'}}>
-             <CircularButton number = '1' name = 'Beginner'></CircularButton>
-             <CircularButton number = '2' name = 'Novice'></CircularButton>
-             <CircularButton number = '3' name = 'Skilled'></CircularButton>
-             <CircularButton number = '4' name = 'Expert'></CircularButton>
+             <CircularButton number = '1' name = 'Beginner' color = {color1} setColor = {setColor1}></CircularButton>
+             <CircularButton number = '2' name = 'Novice' color = {color2} setColor = {setColor2}></CircularButton>
+             <CircularButton number = '3' name = 'Skilled' color = {color3} setColor = {setColor3}></CircularButton>
+             <CircularButton number = '4' name = 'Expert' color = {color4} setColor = {setColor4}></CircularButton>
            </View>
           <Text>' '</Text>
         </View>

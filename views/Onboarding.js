@@ -66,11 +66,13 @@ const Onboarding = ({navigation}) => {
                     buttonText="Log In"
                     buttonWidth="2"
                     onClick = {() => {
-                      signIn(email,pass)
+                      signIn(email, pass)
                         .then(res => {
                           console.log(JSON.stringify(res));
                           let status = res.status;
                           if(status != 'Error'){
+                            setEmail('');
+                            setPass('');
                             navigation.navigate('Home');
                           }
                           else{

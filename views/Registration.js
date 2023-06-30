@@ -73,6 +73,10 @@ const Registration = ({navigation}) => {
                           console.log(JSON.stringify(res));
                           let status = res.status;
                           if(status != 'Error'){
+                            setName('')
+                            setEmail('')
+                            setPass('')
+                            setPassC('')
                             navigation.navigate('NewLearner');
                           }
                           else{

@@ -16,7 +16,8 @@ export default function ForgotPassword({navigation}){
                 <View style={styles.dialogue}>
                     <Text style={styles.titleText}>Forgot Password</Text>
                     <InputLine 
-                        style={{marginVertical: 80, color: '#04A69D', borderBottomColor: 'black', width: '70%'}} 
+                        style={{color: '#04A69D', borderBottomColor: 'black'}} 
+                        viewStyle={{marginVertical: 80, width: '70%'}}
                         placeholder='Email*'>
                     </InputLine>
                     <RoundButton onClick = {() => navigation.navigate('Onboarding')} buttonText='Continue' buttonWidth='2'></RoundButton>

@@ -1,18 +1,27 @@
 import {
+    View,
     StyleSheet,
     TextInput,
+    Text
   } from 'react-native';
 
-export default function InputLine({style, placeholder, secureTextEntry=false, value, setValue, keyboardType='default'}){
+export default function InputLine({style, viewStyle, placeholder, secureTextEntry=false, value, setValue, keyboardType='default', errorMessage=''}){
 
     return(
-        <TextInput style={{...styles.input, ...style}}
-            placeholder={placeholder}
-            secureTextEntry={secureTextEntry}
-            keyboardType={keyboardType}
-            onChangeText={setValue}
-            value={value}
-        />)
+        <View style={viewStyle}>
+            <TextInput style={{...styles.input, ...style, 
+                    marginBottom: (errorMessage != '') ? 5 : 10,
+                    ...((errorMessage != '') ? {borderBottomColor: '#DB0F27', color: '#DB0F27'} : {})
+            }}
+                placeholder={placeholder}
+                secureTextEntry={secureTextEntry}
+                keyboardType={keyboardType}
+                onChangeText={setValue}
+                value={value}
+            />
+            <Text style={styles.errorText}>{errorMessage}</Text>
+        </View>
+        )
 }
 
 const styles = StyleSheet.create({
@@ -25,7 +34,13 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         borderBottomColor: 'white',
         borderBottomWidth: 1,
-        marginVertical: 10,
+        marginTop: 10,
+        marginBottom: 10,
         padding: 10,
       },
+    errorText: {
+        // color: '#BA110C',
+        color: '#DB0F27',
+        marginBottom: 5,
+    }
 })

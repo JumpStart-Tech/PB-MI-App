@@ -27,12 +27,6 @@ export default function NewLearner({navigation}){
         setInputs(tempKey)
     }
 
-    // useEffect(()=>{
-    //     fetch('http://localhost:3000/1541')
-    //         .then(response => response.json())
-    //         .then(response => console.log(response))
-    // }, [])
-
     return (
         <SafeAreaView style={styles.page}>
             <View>
@@ -56,7 +50,7 @@ export default function NewLearner({navigation}){
                     <View style={styles.keyInputsHolder}>
                         <View style={styles.keyInputContainer}><InputBox title={'Key'} value={chosenKey} setValue={setChosenKey}></InputBox></View>
                         <View style={styles.rightTwoInputsContainer}><InputBox title={'Target Behavior'} value={behavior} setValue={setBehavior}></InputBox></View>
-                        <RoundButton buttonText='Add Key' style={{'justifyContent': 'flex-end'}} onClick={buttonPress}></RoundButton>
+                        <RoundButton buttonText='Add Key' onClick={buttonPress}></RoundButton>
                     </View>
                     <KeyTable inputs={inputs} removeRow={removeRow}></KeyTable>
                     
@@ -153,6 +147,7 @@ const styles = StyleSheet.create({
     keyInputsHolder: {
         flexDirection: 'row',
         justifyContent: 'center',
+        alignItems: 'center',
         paddingVertical: 30,
     },
     tableRow : {

@@ -23,12 +23,10 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
     },
     buttonSelf: {
-        flex: 1,
         borderRadius: 100,
         alignItems: 'center',  
         backgroundColor: '#04A69D',
         alignSelf: 'center',
         marginVertical: 5,
-        
     },
 })

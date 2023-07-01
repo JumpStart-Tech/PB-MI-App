@@ -18,13 +18,11 @@ import bg from '../blue-bg.png';
 //import standard teal button component
 import RoundButton from "./components/RoundButton";
 //import view model to take data and interface server
-import {signUp} from "../viewModels/auth"
+import { signUp } from "../viewModels/auth"
 
-// size to current window
-let w = window.innerWidth;
-let h = window.innerHeight;
+import InputLine from './components/InputLine';
 
-const Registration = ({navigation}) => {
+const Registration = ({ navigation }) => {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [pass, setPass] = React.useState('');
@@ -33,63 +31,65 @@ const Registration = ({navigation}) => {
   const [disabled, setDisabled] = React.useState('false');
 
   return (
-      <SafeAreaView style={styles.container}>
-        <ImageBackground source={bg} resizeMode="cover" style={styles.image} className="App-bg" alt="bg">
-           <View style = {styles.insideBlue}> 
-              <Text style={styles.title}>Create Account</Text> 
-              <TextInput style={styles.input}
-                  placeholder="Name *"
-                  onChangeText={setName}
-                  value = {name}
-               /> 
-              <TextInput style={styles.input}
-                  placeholder="Email *"
-                  onChangeText={setEmail}
-                  keyboardType = 'email-address'
-                  value = {email}
-               />
-               <TextInput style={styles.input}
-                  placeholder="Password *"
-                  secureTextEntry={true}
-                  onChangeText={setPass}
-                  value = {pass}
-                  currPass = {pass}
-               />
-               <TextInput style={[styles.input, {marginBottom: 10}]}
-                  placeholder="Confirm Password *"
-                  secureTextEntry={true}
-                  onChangeText={setPassC}
-                  value={passC}
-                  currPassC = {passC}
-               />
-               <View style={styles.endButton}>
-                 <RoundButton
-                    buttonText="Sign Up"
-                    buttonWidth="2"
-                    disabled={disabled}
-                    onClick = {() => {
-                      signUp(email,pass)
-                        .then(res => {
-                          console.log(JSON.stringify(res));
-                          let status = res.status;
-                          if(status != 'Error'){
-                            setName('')
-                            setEmail('')
-                            setPass('')
-                            setPassC('')
-                            navigation.navigate('NewLearner');
-                          }
-                          else{
-                            console.log('Navigation blocked')
-                          }
-                        })
-                      }}
-                    >
-                   </RoundButton>
-               </View>
-           </View>
-        </ImageBackground>
-      </SafeAreaView>  
+    <SafeAreaView style={styles.container}>
+      <ImageBackground source={bg} resizeMode="cover" style={styles.image} className="App-bg" alt="bg">
+        <View style={styles.insideBlue}>
+          <Text style={styles.title}>Create Account</Text>
+          <InputLine style={{width: '70%'}}
+            placeholder="Name *"
+            setValue={setName}
+            value={name}
+          >
+          </InputLine>
+          <InputLine style={{width: '70%'}}
+            placeholder="Email *"
+            setValue={setEmail}
+            keyboardType='email-address'
+            value={email}
+          >
+          </InputLine>
+          <InputLine style={{width: '70%'}}
+            placeholder="Password *"
+            secureTextEntry={true}
+            setValue={setPass}
+            value={pass}
+          >
+          </InputLine>
+          <InputLine style={{width: '70%'}}
+            placeholder="Confirm Password *"
+            secureTextEntry={true}
+            setValue={setPassC}
+            value={passC}
+          >
+          </InputLine>
+          <View style={styles.endButton}>
+            <RoundButton
+              buttonText="Sign Up"
+              buttonWidth="2"
+              disabled={disabled}
+              onClick={() => {
+                signUp(email, pass)
+                  .then(res => {
+                    console.log(JSON.stringify(res));
+                    let status = res.status;
+                    if (status != 'Error') {
+                      setName('')
+                      setEmail('')
+                      setPass('')
+                      setPassC('')
+                      navigation.navigate('NewLearner');
+                    }
+                    else {
+                      console.log('Navigation blocked')
+                    }
+                  })
+              }}
+            >
+            </RoundButton>
+          </View>
+        </View>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 
@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
   },
   insideBlue: {
     //portion of background that is blue to center content into:
-     width: '48%',
+    width: '48%',
+    alignItems: 'center',
   },
   title: { // Create account format
     color: 'white',
@@ -112,18 +113,7 @@ const styles = StyleSheet.create({
   },
   image: { //Background image formatting
     flex: 1,
-    height: h,
-  },
-  input: { // Take email and password formatting
-    color: 'white',
-    fontSize: 16,
-    lineHeight: 20,
-    alignSelf: 'center',
-    width: '60%',
-    borderWidth: 0,
-    borderBottomColor: 'white',
-    borderBottomWidth: 1,
-    padding: 10,
+    height: '100%',
   },
   buttonText: {
     color: '#fff',

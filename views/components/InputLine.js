@@ -6,7 +6,7 @@ import {
 export default function InputLine({style, placeholder, secureTextEntry=false, value, setValue, keyboardType='default'}){
 
     return(
-        <TextInput style={{...styles.input, style}}
+        <TextInput style={{...styles.input, ...style}}
             placeholder={placeholder}
             secureTextEntry={secureTextEntry}
             keyboardType={keyboardType}

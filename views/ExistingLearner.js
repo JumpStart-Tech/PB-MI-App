@@ -83,9 +83,6 @@ const styles = StyleSheet.create({
     },
     body: {
         flex: 1,
-        borderColor: 'red',
-        borderWidth: 2,
-        borderStyle: 'solid',
     },
     titleText: {
         fontSize: 35,
@@ -95,7 +92,6 @@ const styles = StyleSheet.create({
     tableHolder: {
         alignSelf: 'center',
         width: '80%',
-
     },
     tableRow : {
         borderColor: '#E9EDF5',
@@ -125,5 +121,8 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 16,
         lineHeight: 30,
+    },
+    addLearnerHolder: {
+        padding: '4%',
     },
 })

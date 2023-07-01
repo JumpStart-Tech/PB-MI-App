@@ -4,6 +4,7 @@ import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 import Header from "./components/Header";
 import { usePatients } from "../viewModels/learnerData";
+import ArrowSvg from "./components/ArrowSvg";
 
 export default function ExistingLearner(){
     let patientsArr = usePatients(5827);
@@ -14,12 +15,12 @@ export default function ExistingLearner(){
                 <Header></Header>
             </View>
             <View style={styles.body}>
-                <View style={styles.titleHolder}>
+                <View>
                     <Text style={styles.titleText}>Existing Learners</Text>
                 </View>
-                <Table inputs={patientsArr}></Table>
-                {/* <TableRow learnerId={'Learner ID'} lastUsed={'Last Time Used'} compSessions={'Completed Sessions'} isHeader={true} listIsEmpty={false}></TableRow>
-                <TableRow learnerId={5544} lastUsed={'05/23/2023'} compSessions={'13'} isHeader={false} listIsEmpty={false}></TableRow> */}
+                <View style={styles.tableHolder}>
+                    <Table inputs={patientsArr} style={styles.table}>
+                </Table></View>
             </View>
         </SafeAreaView>
     )
@@ -53,14 +54,17 @@ function TableRow({learnerId, lastUsed, compSessions, isHeader=false, listIsEmpt
     return (
         <View style={{...styles.tableRow, borderTopLeftRadius: (isHeader) ? 8 : 0, 
         borderTopRightRadius: isHeader ? 8 : 0, borderTopWidth: (isHeader) ? 2 : 0, display: (listIsEmpty) ? 'none' : 'flex'}}>
+            <View style={styles.arrow}>
+                {!isHeader && <ArrowSvg></ArrowSvg>}
+            </View>
             <View style={styles.learnerId}>
-                <Text style={styles.rowText}>{learnerId}</Text>
+                <Text style={{...styles.rowText, color: (isHeader) ? '#687182': ''}}>{learnerId}</Text>
             </View>
             <View style={styles.lastUsed}>
-                <Text style={styles.rowText}>{lastUsed}</Text>
+                <Text style={{...styles.rowText, color: (isHeader) ? '#687182': ''}}>{lastUsed}</Text>
             </View>
             <View style={styles.sessions}>
-                <Text style={styles.rowText}>{compSessions}</Text>
+                <Text style={{...styles.rowText, color: (isHeader) ? '#687182': ''}}>{compSessions}</Text>
             </View>
         </View>
     )
@@ -77,25 +81,29 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderStyle: 'solid',
     },
-    titleHolder: {
-        borderColor: 'blue',
-        borderWidth: 2,
-        borderStyle: 'solid',
-    },
     titleText: {
         fontSize: 35,
         lineHeight: 30,
         padding: '4%',
     },
-    tableRow : {
+    tableHolder: {
+        alignSelf: 'center',
         width: '80%',
-        borderColor: 'black',
+        borderColor: 'green',
+        borderStyle: 'solid',
+        borderWidth: 2,
+    },
+    tableRow : {
+        borderColor: '#E9EDF5',
         borderStyle: 'solid',
         borderWidth: 2,
         flexDirection: 'row',
     },
+    arrow: {
+        justifyContent: 'center',
+    },
     learnerId: {
-        borderRightColor: 'grey',
+        borderRightColor: '#E9EDF5',
         borderRightWidth: 1,
         borderRightStyle: 'solid',
         flex: 8,
@@ -103,7 +111,7 @@ const styles = StyleSheet.create({
     },
     lastUsed: {
         flex: 2,
-        borderRightColor: 'grey',
+        borderRightColor: '#E9EDF5',
         borderRightWidth: 1,
         borderRightStyle: 'solid',
         alignItems: 'center',

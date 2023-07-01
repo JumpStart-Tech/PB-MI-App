@@ -1,34 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Image, Text, ScrollView, FlatList, Pressable, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Image, Text, SafeAreaView, TextInput, TouchableOpacity} from "react-native";
 import Header from "./components/Header";
 import pic from "./components/temporary.png";
 
 const Profile = ({navigation}) =>{
   const [affiliation, setAffiliation] = React.useState('');
   const [title, setTitle] = React.useState('');
-  const [color1, setColor1] = useState('white');
-  /*
-  const [isSelected2, setIsSelected2] = useState(false);
-  const [isSelected3, setIsSelected3] = useState(false);
-  const [isSelected4, setIsSelected4] = useState(false);
-  */
 
+  // tracks colors of buttons depending on whether they are selected
+  const [color1, setColor1] = useState('#04A69D');
+  const [color2, setColor2] = useState('#04A69D40'); // color at 25% opacity
+  const [color3, setColor3] = useState('#04A69D40');
+  const [color4, setColor4] = useState('#04A69D40');
   
-  /*
-  const darkColor = () => {
-        setColor1('#04A69D');
-  };
+  const CircularButton = ({number, name, color, setColor}) => {
+      // prevents more than one option from being selected at the same time
+      const limitSelection = () => {
+        // allows no option to be selected
+        if (!(color1 === '#04A69D40' && color2 === '#04A69D40' && color3 === '#04A69D40' && color4 === '#04A69D40')) {
+          // prevents two options from being selected at once
+          if (color === '#04A69D40') {
+                setColor1('#04A69D40');
+                setColor2('#04A69D40');
+                setColor3('#04A69D40');
+                setColor4('#04A69D40');
+          }
+        }
+      }
 
-  const lightColor = () => {
-    setColor1('white');
-  };
-  */
-  
-  const CircularButton = ({number, name}) => {
+      const changeColor = (color, setColor) => {
+         limitSelection();
+         if (color === '#04A69D') {
+            setColor('#04A69D40');
+         } else {
+            setColor('#04A69D');
+         }
+      }
+
       return (
         <View style = {{padding: 10}}>
-        <TouchableOpacity style={styles.buttonContainer}>
-          <View style={styles.button}>
+        <TouchableOpacity style={styles.buttonContainer} onPress = {() => changeColor(color, setColor)}>
+          <View style={[styles.button, {backgroundColor: color}]}>
             <Text style={styles.buttonText}>{number}</Text>
           </View>
         </TouchableOpacity>
@@ -36,40 +48,25 @@ const Profile = ({navigation}) =>{
         </View>
       );
   };
-  
-  
-  /*
-            <View style={{flexDirection: 'row', marginHorizontal: '8%',}}>
-            <View style = {{padding: 10}}>
-            <button style={[styles.buttonContainer, {color: color1}]} onClick={darkColor}>
-              <View style={[styles.button, {color: color1}]}>
-                <Text style={styles.buttonText}>1</Text>
-              </View>
-            </button>
-              <Text style={[styles.text2, {alignSelf: 'center'}]}>Beginner</Text>
-            </View>
-            <CircularButton number = '1' name = 'Beginner'></CircularButton>
-            <CircularButton number = '2' name = 'Novice'></CircularButton>
-            <CircularButton number = '3' name = 'Skilled'></CircularButton>
-            <CircularButton number = '4' name = 'Expert'></CircularButton>
-*/
+ 
 
   return (
-      <View style = {{backgroundColor: '#fff', flex: 1,}}>
+      <SafeAreaView style = {{backgroundColor: '#fff', flex: 1,}}>
         <View styles = {styles.header}>
           <Header></Header>
         </View>
         <Text style = {styles.title}>Profile</Text>
         <View style = {styles.box}>
           <View style = {{flexDirection: 'row'}}>
-          <View style = {styles.logo}>
-            <Image style={styles.image} source={pic} />
+            <View style = {styles.logo}>
+              <Image style={styles.image} source={pic} />
+            </View>
+            <View>
+              <Text style = {[styles.text, {fontWeight: 'bold'}]}>First Name Last Name</Text>
+              <Text style = {[styles.text, {color: '#CBE1FF'}]}>Professional Title</Text>
+            </View>
           </View>
-          <View>
-            <Text style = {[styles.text, {fontWeight: 'bold'}]}>First Name Last Name</Text>
-            <Text style = {styles.text}>Professional Title</Text>
-          </View>
-          </View>
+          <View style={styles.line}></View>
         </View>
         <View>
           <Text style = {styles.text2}>Affiliation</Text>
@@ -84,15 +81,16 @@ const Profile = ({navigation}) =>{
             onChangeText={setTitle}
             value={title}
            />
-           <View style = {{flexDirection: 'row', marginHorizontal: '8%'}}>
-             <CircularButton number = '1' name = 'Beginner'></CircularButton>
-             <CircularButton number = '2' name = 'Novice'></CircularButton>
-             <CircularButton number = '3' name = 'Skilled'></CircularButton>
-             <CircularButton number = '4' name = 'Expert'></CircularButton>
+           <Text style = {styles.text2}>Confidence in Scoring</Text>
+           <View style = {{flexDirection: 'row', marginHorizontal: '8%', marginBottom: '2%'}}>
+             <CircularButton number = '1' name = 'Beginner' color = {color1} setColor = {setColor1}></CircularButton>
+             <CircularButton number = '2' name = 'Novice' color = {color2} setColor = {setColor2}></CircularButton>
+             <CircularButton number = '3' name = 'Skilled' color = {color3} setColor = {setColor3}></CircularButton>
+             <CircularButton number = '4' name = 'Expert' color = {color4} setColor = {setColor4}></CircularButton>
            </View>
           <Text>' '</Text>
         </View>
-      </View>
+      </SafeAreaView>
   );
 }
 
@@ -106,7 +104,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     justifyContent: 'top',
     textAlign: 'left',
-    marginTop: '6%',
+    marginTop: '4%',
     marginBottom: '2%',
     marginHorizontal: '4%',
    },
@@ -121,6 +119,14 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     padding: 20,
   },
+  line: {
+    flexDirection: 'row',
+    width: '95%',
+    height: 1,
+    borderRadius: 1,
+    backgroundColor: '#ffffff26',
+    marginVertical: 10, 
+  },
   logo: {
   
   },
@@ -133,15 +139,15 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-    fontSize: 20,
-    lineHeight: 24,
+    fontSize: 18,
+    lineHeight: 20,
     textAlign: 'left',
     padding: 10,
   },
   text2: {
     color: 'black',
     fontSize: 16,
-    lineHeight: 20,
+    lineHeight: 18,
     textAlign: 'left',
     marginTop: 10,
     marginHorizontal: '8%',
@@ -150,8 +156,8 @@ const styles = StyleSheet.create({
   input: {
     color: 'black',
     fontSize: 16,
-    lineHeight: 30,
-    height: 40,
+    lineHeight: 25,
+    height: 35,
     width: '25%',
     marginHorizontal: '8%',
     backgroundColor: '#eff7ff',  

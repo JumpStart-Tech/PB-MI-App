@@ -6,13 +6,15 @@ export default function Home({name}){
 
     return (
         <View style={styles.page}>
-            <Header></Header>
+            <View>
+              <Header></Header>
+            </View>
             <View style={styles.body}>
                 <View style={styles.bodyItemsContainer}>
                     <Image style={styles.image} source={require('./components/temporary.png')} resizeMode="center" />
                     <Text style={styles.welcomeText}>Welcome Back, {name}</Text>
                     <View>
-                        <RoundButton buttonText="Start" buttonWidth="2"></RoundButton>
+                        <RoundButton buttonText="Start" buttonWidth="2" onClick = {() => navigation.navigate('Learner')}></RoundButton>
                     </View>
                 </View>
             </View>
@@ -23,6 +25,7 @@ export default function Home({name}){
 const styles = StyleSheet.create({
     page: {
         flex: 1,
+        backgroundColor: '#fff',
     },
     body: {
         flex: 1,

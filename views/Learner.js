@@ -30,7 +30,7 @@ const Learner = ({navigation}) =>{
     };
 
     return (
-      <View style = {{backgroundColor: '#fff', flex: 1}}>
+      <SafeAreaView style = {{backgroundColor: '#fff', flex: 1}}>
         <View styles = {styles.header}>
           <Header></Header>
         </View>
@@ -80,7 +80,7 @@ const Learner = ({navigation}) =>{
                 </View>
             </View>
         </View>
-      </View>
+      </SafeAreaView>
     )
 }
 

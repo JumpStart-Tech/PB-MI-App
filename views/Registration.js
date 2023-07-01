@@ -25,8 +25,6 @@ let w = window.innerWidth;
 let h = window.innerHeight;
 
 const Registration = ({navigation}) => {
-  //const currPass = '';
-  //const currPassC = 'x';
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [pass, setPass] = React.useState('');
@@ -34,46 +32,10 @@ const Registration = ({navigation}) => {
   const [validPass, setValidPass] = React.useState('false');
   const [disabled, setDisabled] = React.useState('false');
 
-  /*
-  const isValid = () => {
-    if (currPass === currPassC) {
-      setValidPass('true');
-      setDisabled('false');
-    } else {
-      setDisabled('true');
-    }
-  }
-  */
-
-  //TODO: need to check passwords are the same
-  const checkPassword = (passC) => {
-    setPassC(passC);
-    //isValid();
-  }
-
-  /*
-  const handlePress = () => {
-    if (isValid) {
-      Alert.alert('valid');
-    } else {
-        alert('invalid');
-    }
-  }
-
-  */
-
   return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <ImageBackground source={bg} resizeMode="cover" style={styles.image} className="App-bg" alt="bg">
-           <View style = {styles.insideBlue}>
-             <View style = {{alignItems: 'flex-start', alignSelf: 'auto', marginVertical: 0, padding: 10}}>
-               <RoundButton 
-                  buttonText="Go Back"
-                  buttonWidth="1"
-                  onClick ={() => navigation.goBack()}
-                  >
-                </RoundButton>
-              </View>  
+           <View style = {styles.insideBlue}> 
               <Text style={styles.title}>Create Account</Text> 
               <TextInput style={styles.input}
                   placeholder="Name *"
@@ -96,7 +58,7 @@ const Registration = ({navigation}) => {
                <TextInput style={[styles.input, {marginBottom: 10}]}
                   placeholder="Confirm Password *"
                   secureTextEntry={true}
-                  onChangeText={checkPassword}
+                  onChangeText={setPassC}
                   value={passC}
                   currPassC = {passC}
                />
@@ -111,6 +73,10 @@ const Registration = ({navigation}) => {
                           console.log(JSON.stringify(res));
                           let status = res.status;
                           if(status != 'Error'){
+                            setName('')
+                            setEmail('')
+                            setPass('')
+                            setPassC('')
                             navigation.navigate('NewLearner');
                           }
                           else{
@@ -123,7 +89,7 @@ const Registration = ({navigation}) => {
                </View>
            </View>
         </ImageBackground>
-      </View>  
+      </SafeAreaView>  
   );
 };
 
@@ -141,7 +107,8 @@ const styles = StyleSheet.create({
     fontSize: 36,
     lineHeight: 84,
     textAlign: 'center',
-    marginVertical: '10%',
+    marginTop: '20%',
+    marginBottom: '10%'
   },
   image: { //Background image formatting
     flex: 1,
@@ -166,16 +133,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column-reverse',
     justifyContent: 'flex-start',
     padding: 2,
-    marginTop: 50,
-  },
-  error: {
-    flex: 1,
-    color: 'red',
-    fontSize: 20,
-    lineHeight: 44,
-    textAlign: 'center',
-    marginVertical: 10,
-    marginBottom: 10,
+    marginTop: '8%',
   },
 });
 

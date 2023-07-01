@@ -6,7 +6,7 @@ function HeaderButtons(){
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
                 <Text style = {styles.text}> Home </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Onboarding')}>
+            <TouchableOpacity onPress={() => navigation.navigate('History')}>
                 <Text style = {styles.text}> History </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>

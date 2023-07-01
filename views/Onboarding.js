@@ -19,12 +19,9 @@ import RoundButton from "./components/RoundButton";
 //import view model to take data and interface server
 import {signIn, signUp} from "../viewModels/auth"
 
-//forgotPassword navigation
-import {forgot} from "../App.js"
+import InputLine from './components/InputLine';
 
-//size to current window
-let w = window.innerWidth;
-let h = window.innerHeight;
+
 
 const Onboarding = ({navigation}) => {
   const [email, setEmail] = React.useState('');
@@ -36,18 +33,16 @@ const Onboarding = ({navigation}) => {
           <View style = {styles.insideBlue}>
               <Text style={styles.title}>PB.MI</Text>
               <View style = {styles.textBox}>
-              <TextInput style={styles.input}
-                  placeholder="Email *"
-                  keyboardType= 'email-address'
-                  onChangeText={setEmail}
-                  value={email}
-               />
-               <TextInput style={styles.input}
-                  placeholder="Password *"
-                  secureTextEntry={true}
-                  onChangeText={setPass}
-                  value={pass}
-               />
+               <InputLine placeholder={'Email *'}
+                keyboardType={'email-address'}
+                setValue={setEmail}
+                value={email}>
+               </InputLine>
+               <InputLine placeholder={'Password *'}
+                secureTextEntry={true}
+                setValue={setPass}
+                value={pass}>
+               </InputLine>
                <View style={styles.link}>
                  <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
                    <Text style = {{color: 'white', fontSize: 14}}> Forgot password? </Text>
@@ -111,7 +106,7 @@ const styles = StyleSheet.create({
   },
   image: { //Background image formatting
     flex: 1,
-    height: h,
+    height: '100%',
   },
   textBox: {
     flex: 1,
@@ -128,6 +123,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 10,
     marginTop: 10,
+    padding: 10,
   },
   link: { // Forgot password link formatting
     flex: 1,

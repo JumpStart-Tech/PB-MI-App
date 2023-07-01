@@ -1,5 +1,6 @@
-import { StyleSheet, View, Image, Text, ScrollView, FlatList, TouchableOpacity, SafeAreaView } from "react-native";
-import { useState, useEffect } from "react";
+import { StyleSheet, View, Image, Text, ScrollView, FlatList, TouchableOpacity, SafeAreaView, Pressable } from "react-native";
+import { useState, useEffect, useRef } from "react";
+import { useHover, useFocus, useActive } from 'react-native-web-hooks';
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 import Header from "./components/Header";
@@ -21,6 +22,10 @@ export default function ExistingLearner(){
                 <View style={styles.tableHolder}>
                     <Table inputs={patientsArr} style={styles.table}>
                 </Table></View>
+            </View>
+            <View style={styles.addLearnerHolder}>
+                <RoundButton buttonText={'Add New Learner'} buttonWidth={2}>
+                </RoundButton>
             </View>
         </SafeAreaView>
     )
@@ -50,13 +55,14 @@ function Table({inputs}){
 }
 
 function TableRow({learnerId, lastUsed, compSessions, isHeader=false, listIsEmpty}){
+    const ref = useRef(null);
+    const isHovered = useHover(ref);
+    const PressableOrView = (isHeader) ? View : Pressable;
 
     return (
-        <View style={{...styles.tableRow, borderTopLeftRadius: (isHeader) ? 8 : 0, 
-        borderTopRightRadius: isHeader ? 8 : 0, borderTopWidth: (isHeader) ? 2 : 0, display: (listIsEmpty) ? 'none' : 'flex'}}>
-            <View style={styles.arrow}>
-                {!isHeader && <ArrowSvg></ArrowSvg>}
-            </View>
+        <PressableOrView ref={ref} style={[{...styles.tableRow, borderTopLeftRadius: (isHeader) ? 8 : 0, 
+        borderTopRightRadius: isHeader ? 8 : 0, borderTopWidth: (isHeader) ? 2 : 0, display: (listIsEmpty) ? 'none' : 'flex'},
+        (!isHeader) ? isHovered && { backgroundColor: '#E9EDF5'} : '']}>
             <View style={styles.learnerId}>
                 <Text style={{...styles.rowText, color: (isHeader) ? '#687182': ''}}>{learnerId}</Text>
             </View>
@@ -66,7 +72,7 @@ function TableRow({learnerId, lastUsed, compSessions, isHeader=false, listIsEmpt
             <View style={styles.sessions}>
                 <Text style={{...styles.rowText, color: (isHeader) ? '#687182': ''}}>{compSessions}</Text>
             </View>
-        </View>
+        </PressableOrView>
     )
 }
 
@@ -89,18 +95,13 @@ const styles = StyleSheet.create({
     tableHolder: {
         alignSelf: 'center',
         width: '80%',
-        borderColor: 'green',
-        borderStyle: 'solid',
-        borderWidth: 2,
+
     },
     tableRow : {
         borderColor: '#E9EDF5',
         borderStyle: 'solid',
         borderWidth: 2,
         flexDirection: 'row',
-    },
-    arrow: {
-        justifyContent: 'center',
     },
     learnerId: {
         borderRightColor: '#E9EDF5',

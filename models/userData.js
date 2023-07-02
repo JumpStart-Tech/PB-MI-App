@@ -1,4 +1,3 @@
-import {Alert,} from 'react-native';
 export {userIsNew, saveUserAuthInfo, validateCreds, getLearnerArray}
 
 async function userIsNew(email){
@@ -30,7 +29,6 @@ async function saveUserAuthInfo(email, password){
     }
     const {id} = await response.json()
     console.log('user created. identifier: ' + id);
-    alert("user created!");
     return {status: 'Success', message: 'User created', id};
 }
 
@@ -42,12 +40,12 @@ async function validateCreds(email, password){
     const responseArray = await response.json(); //the db query returns an array
     if(responseArray.length == 0){
         console.log(`User with email ${email} doesn't exist.`);
-        return {status: 'Error', message: "Email doesn't exist"};
+        return {status: 'Error', message: "Email doesn't exist", field: 'Email'};
     }
     const responseObj = responseArray[0]; //array should always have 1 element at this point b/c only 1 account can be created per email
     if(responseObj.password != password){
         console.log('User entered incorrect password');
-        return {status: 'Error', message: 'Incorrect password'};
+        return {status: 'Error', message: 'Incorrect password', field: 'Password'};
     }
     return {status: 'Success', message: 'User credentials authenticated', id: responseObj.id}
 }

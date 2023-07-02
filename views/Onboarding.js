@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   StyleSheet,
-  Button,
   View,
   SafeAreaView,
   Text,
-  Alert,
   ImageBackground,
-  TextInput,
   TouchableOpacity,
-  Pressable
 } from 'react-native';
 
 //import background image
@@ -21,11 +17,14 @@ import {signIn, signUp} from "../viewModels/auth"
 
 import InputLine from './components/InputLine';
 
+import { useSignInControls } from '../viewModels/onboardingLogic';
+
 
 
 const Onboarding = ({navigation}) => {
-  const [email, setEmail] = React.useState('');
-  const [pass, setPass] = React.useState('');
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+  const {emailError, passwordError, signInClick} = useSignInControls(navigation);
 
   return (  
       <SafeAreaView style={styles.container}>
@@ -35,11 +34,13 @@ const Onboarding = ({navigation}) => {
               <View style = {styles.textBox}>
                <InputLine placeholder={'Email *'}
                 keyboardType={'email-address'}
+                errorMessage={emailError}
                 setValue={setEmail}
                 value={email}>
                </InputLine>
                <InputLine placeholder={'Password *'}
                 secureTextEntry={true}
+                errorMessage={passwordError}
                 setValue={setPass}
                 value={pass}>
                </InputLine>
@@ -60,21 +61,22 @@ const Onboarding = ({navigation}) => {
                   <RoundButton 
                     buttonText="Log In"
                     buttonWidth="2"
-                    onClick = {() => {
-                      signIn(email, pass)
-                        .then(res => {
-                          console.log(JSON.stringify(res));
-                          let status = res.status;
-                          if(status != 'Error'){
-                            setEmail('');
-                            setPass('');
-                            navigation.navigate('Home');
-                          }
-                          else{
-                            console.log('Navigation blocked')
-                          }
-                        })
-                      }}
+                    onClick = {() => signInClick(email, pass)}
+                    // {() => {
+                    //   signIn(email, pass)
+                    //     .then(res => {
+                    //       console.log(JSON.stringify(res));
+                    //       let status = res.status;
+                    //       if(status != 'Error'){
+                    //         setEmail('');
+                    //         setPass('');
+                    //         navigation.navigate('Home');
+                    //       }
+                    //       else{
+                    //         console.log('Navigation blocked')
+                    //       }
+                    //     })
+                    //   }}
                     >
                   </RoundButton>
                </View>

@@ -1,5 +1,5 @@
 import { userIsNew, saveUserAuthInfo, validateCreds } from "../models/userData.js";
-export {signUp, signIn}
+export {signUp}
 
 async function signUp(email, password){
     try{
@@ -9,7 +9,7 @@ async function signUp(email, password){
             return temp;
         }
         else{
-            return {status: 'Error', message: 'User already exists'};
+            return {status: 'Error', message: 'User already exists', field: 'Email'};
         }
     }
     catch(e){
@@ -17,13 +17,3 @@ async function signUp(email, password){
     }
 }
 
-async function signIn(email, password){
-    try{
-        const response = await validateCreds(email, password);
-        console.log('response: ' + JSON.stringify(response));
-        return response;
-    }
-    catch(e){
-        console.log('signIn error: ' + e)
-    }
-}

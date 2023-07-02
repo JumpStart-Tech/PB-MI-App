@@ -18,7 +18,7 @@ import bg from '../blue-bg.png';
 //import standard teal button component
 import RoundButton from "./components/RoundButton";
 //import view model to take data and interface server
-import { signUp } from "../viewModels/auth"
+import { useSignUpControls } from "../viewModels/registrationLogic"
 
 import InputLine from './components/InputLine';
 
@@ -29,6 +29,7 @@ const Registration = ({ navigation }) => {
   const [passC, setPassC] = React.useState('');
   const [validPass, setValidPass] = React.useState('false');
   const [disabled, setDisabled] = React.useState('false');
+  const {nameError, emailError, passwordError, confirmPasswordError, signUp} = useSignUpControls(navigation);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -37,12 +38,14 @@ const Registration = ({ navigation }) => {
           <Text style={styles.title}>Create Account</Text>
           <InputLine viewStyle={{width: 400}}
             placeholder="Name *"
+            errorMessage={nameError}
             setValue={setName}
             value={name}
           >
           </InputLine>
           <InputLine viewStyle={{width: 400}}
             placeholder="Email *"
+            errorMessage={emailError}
             setValue={setEmail}
             keyboardType='email-address'
             value={email}
@@ -51,6 +54,7 @@ const Registration = ({ navigation }) => {
           <InputLine viewStyle={{width: 400}}
             placeholder="Password *"
             secureTextEntry={true}
+            errorMessage={passwordError}
             setValue={setPass}
             value={pass}
           >
@@ -58,6 +62,7 @@ const Registration = ({ navigation }) => {
           <InputLine viewStyle={{width: 400}}
             placeholder="Confirm Password *"
             secureTextEntry={true}
+            errorMessage={confirmPasswordError}
             setValue={setPassC}
             value={passC}
           >
@@ -67,23 +72,7 @@ const Registration = ({ navigation }) => {
               buttonText="Sign Up"
               buttonWidth="2"
               disabled={disabled}
-              onClick={() => {
-                signUp(email, pass)
-                  .then(res => {
-                    console.log(JSON.stringify(res));
-                    let status = res.status;
-                    if (status != 'Error') {
-                      setName('')
-                      setEmail('')
-                      setPass('')
-                      setPassC('')
-                      navigation.navigate('NewLearner');
-                    }
-                    else {
-                      console.log('Navigation blocked')
-                    }
-                  })
-              }}
+              onClick={() => signUp(name, email, pass, passC)}
             >
             </RoundButton>
           </View>

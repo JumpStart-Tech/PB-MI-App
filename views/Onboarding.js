@@ -13,7 +13,7 @@ import bg from '../blue-bg.png';
 //import standard teal button component
 import RoundButton from "./components/RoundButton";
 //import view model to take data and interface server
-import {signIn, signUp} from "../viewModels/auth"
+import {signIn, signUp} from "../viewModels/registrationLogic"
 
 import InputLine from './components/InputLine';
 
@@ -63,21 +63,6 @@ const Onboarding = ({navigation}) => {
                     buttonText="Log In"
                     buttonWidth="2"
                     onClick = {() => signInClick(email, pass)}
-                    // {() => {
-                    //   signIn(email, pass)
-                    //     .then(res => {
-                    //       console.log(JSON.stringify(res));
-                    //       let status = res.status;
-                    //       if(status != 'Error'){
-                    //         setEmail('');
-                    //         setPass('');
-                    //         navigation.navigate('Home');
-                    //       }
-                    //       else{
-                    //         console.log('Navigation blocked')
-                    //       }
-                    //     })
-                    //   }}
                     >
                   </RoundButton>
                </View>

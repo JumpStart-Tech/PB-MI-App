@@ -4,20 +4,20 @@ import { useUser } from './userContext.js';
 export {useSignUpControls}
 
 function useSignUpControls(navigation){
-    const {setUser} = useUser();
-    const [nameError, setNameError] = useState('');
+    const {setUser} = useUser(); //setUser lets you update the user context which can be accessed by every component
+    const [nameError, setNameError] = useState(''); //These are returned and control the error message on each text input
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     
-    function signUp(name, email, password, passwordC){
+    function signUp(name, email, password, passwordC){ //This function is returned and is used in the sign up button onClick
         try{
-            let nameErrorLocal = '';
-            let emailErrorLocal = '';
+            let nameErrorLocal = ''; //Error messages must be first put into these local variables rather than updating the state variables directly, because
+            let emailErrorLocal = '';     //  state gets updated asynchronously and this function has an if statement which checks if the error messages are empty
             let passwordErrorLocal = '';
             let confirmPasswordErrorLocal = '';
 
-            setNameError('');
+            setNameError(''); //All the error state must be reset in case the user fixed an error that they had previously
             setEmailError('');
             setPasswordError('');
             setConfirmPasswordError('');
@@ -32,7 +32,7 @@ function useSignUpControls(navigation){
                     if(!res){
                         emailErrorLocal = 'User already exists';
                     }
-                    if(nameErrorLocal === ''
+                    if(nameErrorLocal === '' //if all error messages are empty, no errors so we can save the user and go to next screen
                     && emailErrorLocal === ''
                     && passwordErrorLocal === ''
                     && confirmPasswordErrorLocal === ''){
@@ -55,6 +55,6 @@ function useSignUpControls(navigation){
             console.log('signUp error: ' + e);
         }
     }
-    return {nameError, emailError, passwordError, confirmPasswordError, signUp};
+    return {nameError, emailError, passwordError, confirmPasswordError, signUp}; //all these get used in the registration component itself
 }
 

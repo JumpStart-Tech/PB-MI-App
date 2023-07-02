@@ -27,7 +27,7 @@ function useSignInControls(navigation){
                     else{
                         console.log('id: ' + res.id);
                         setUser({
-                            
+                            id: res.id,
                         })
                         navigation.navigate('Home');
                     }

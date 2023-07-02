@@ -19,6 +19,7 @@ import InputLine from './components/InputLine';
 
 import { useSignInControls } from '../viewModels/onboardingLogic';
 
+import { useUser } from '../viewModels/userContext';
 
 
 const Onboarding = ({navigation}) => {

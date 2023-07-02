@@ -102,9 +102,6 @@ const styles = StyleSheet.create({
     //portion of background that is blue to center content into:
     width: '48%',
     alignItems: 'center',
-    borderColor: 'red',
-    borderWidth: 2,
-    borderStyle: 'solid'
   },
   title: { // Create account format
     color: 'white',

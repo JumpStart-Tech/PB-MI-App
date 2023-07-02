@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { userIsNew, saveUserAuthInfo, validateCreds } from "../models/userData.js";
-import { useUser } from "./userContext.js";
+import { useState } from 'react';
+import { userIsNew, saveUserAuthInfo, validateCreds } from '../models/userData.js';
+import { useUser } from './userContext.js';
 export {useSignUpControls}
 
 function useSignUpControls(navigation){
@@ -12,39 +12,44 @@ function useSignUpControls(navigation){
     
     function signUp(name, email, password, passwordC){
         try{
+            let nameErrorLocal = '';
+            let emailErrorLocal = '';
+            let passwordErrorLocal = '';
+            let confirmPasswordErrorLocal = '';
+
             setNameError('');
             setEmailError('');
             setPasswordError('');
             setConfirmPasswordError('');
             if(name === ''){
-                setNameError('Please enter a name');
+                nameErrorLocal = 'Please enter a name';
             }
             if(password !== passwordC){
-                setConfirmPasswordError('Passwords do not match');
+                confirmPasswordErrorLocal = 'Passwords do not match';
             }
             userIsNew(email)
                 .then(res => {
                     if(!res){
-                        setEmailError('User already exists');
+                        emailErrorLocal = 'User already exists';
+                    }
+                    if(nameErrorLocal === ''
+                    && emailErrorLocal === ''
+                    && passwordErrorLocal === ''
+                    && confirmPasswordErrorLocal === ''){
+                        saveUserAuthInfo(email, password)
+                            .then(res => {
+                                console.log(JSON.stringify(res));
+                                setUser(res.id);
+                                navigation.navigate('NewLearner');
+                            })
+                    }
+                    else{
+                        setNameError(nameErrorLocal);
+                        setEmailError(emailErrorLocal);
+                        setPasswordError(passwordErrorLocal);
+                        setConfirmPasswordError(confirmPasswordErrorLocal);
                     }
                 })
-
-            console.log('nameerror: ' + nameError);
-            console.log('emailError: ' + emailError);
-            console.log('passwordError: ' + passwordError);
-            console.log('confirmPasswordError: ' + confirmPasswordError);
-
-            if(nameError === ''
-            && emailError === ''
-            && passwordError === ''
-            && confirmPasswordError === ''){
-                saveUserAuthInfo(email, password)
-                    .then(res => {
-                        console.log(JSON.stringify(res));
-                        setUser(res.id);
-                        navigation.navigate('NewLearner');
-                    })
-            }
         }
         catch(e){
             console.log('signUp error: ' + e);

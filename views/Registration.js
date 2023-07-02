@@ -7,7 +7,6 @@ import {
   View,
   SafeAreaView,
   Text,
-  Alert,
   ImageBackground,
   TextInput,
   TouchableOpacity,

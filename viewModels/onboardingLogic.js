@@ -1,10 +1,12 @@
 import { useState } from "react";
 import {validateCreds } from "../models/userData.js";
+import { useUser } from "./userContext.js";
 export {useSignInControls}
 
 function useSignInControls(navigation){
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const {setUser} = useUser();
 
     function signInClick(email, password){
         try{
@@ -24,6 +26,9 @@ function useSignInControls(navigation){
                     }
                     else{
                         console.log('id: ' + res.id);
+                        setUser({
+                            
+                        })
                         navigation.navigate('Home');
                     }
                 })

@@ -35,27 +35,27 @@ const Registration = ({ navigation }) => {
       <ImageBackground source={bg} resizeMode="cover" style={styles.image} className="App-bg" alt="bg">
         <View style={styles.insideBlue}>
           <Text style={styles.title}>Create Account</Text>
-          <InputLine style={{width: '70%'}}
+          <InputLine viewStyle={{width: 400}}
             placeholder="Name *"
             setValue={setName}
             value={name}
           >
           </InputLine>
-          <InputLine style={{width: '70%'}}
+          <InputLine viewStyle={{width: 400}}
             placeholder="Email *"
             setValue={setEmail}
             keyboardType='email-address'
             value={email}
           >
           </InputLine>
-          <InputLine style={{width: '70%'}}
+          <InputLine viewStyle={{width: 400}}
             placeholder="Password *"
             secureTextEntry={true}
             setValue={setPass}
             value={pass}
           >
           </InputLine>
-          <InputLine style={{width: '70%'}}
+          <InputLine viewStyle={{width: 400}}
             placeholder="Confirm Password *"
             secureTextEntry={true}
             setValue={setPassC}
@@ -102,6 +102,9 @@ const styles = StyleSheet.create({
     //portion of background that is blue to center content into:
     width: '48%',
     alignItems: 'center',
+    borderColor: 'red',
+    borderWidth: 2,
+    borderStyle: 'solid'
   },
   title: { // Create account format
     color: 'white',

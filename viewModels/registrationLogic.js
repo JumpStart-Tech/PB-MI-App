@@ -61,6 +61,7 @@ function useSignUpControls(navigation){
                             .then(res => {
                                 console.log(JSON.stringify(res));
                                 setUser(res.id);
+                                navigation.pop(); // unmount screen
                                 navigation.navigate('NewLearner');
                             })
                     }

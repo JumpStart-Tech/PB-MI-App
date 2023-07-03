@@ -8,7 +8,7 @@ function useSignInControls(navigation){
     const [passwordError, setPasswordError] = useState('');
     const {setUser} = useUser();
 
-    function signInClick(email, password){
+    function signInClick(email, password, setEmail, setPass){
         try{
             setEmailError('');
             setPasswordError('');
@@ -29,6 +29,9 @@ function useSignInControls(navigation){
                         setUser({
                             id: res.id,
                         })
+                        setEmail('');
+                        setPass('');
+                        navigation.pop();
                         navigation.navigate('Home');
                     }
                 })

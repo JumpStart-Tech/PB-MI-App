@@ -62,7 +62,7 @@ const Onboarding = ({navigation}) => {
                   <RoundButton 
                     buttonText="Log In"
                     buttonWidth="2"
-                    onClick = {() => signInClick(email, pass)}
+                    onClick = {() => signInClick(email, pass, setEmail, setPass)}
                     >
                   </RoundButton>
                </View>

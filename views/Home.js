@@ -14,7 +14,7 @@ export default function Home({name}){
                     <Image style={styles.image} source={require('./components/temporary.png')} resizeMode="center" />
                     <Text style={styles.welcomeText}>Welcome Back, {name}</Text>
                     <View>
-                        <RoundButton buttonText="Start" buttonWidth="2" onClick = {() => navigation.navigate('Learner')}></RoundButton>
+                        <RoundButton buttonText="Start" buttonWidth="2" onClick = {() => navigation.navigate('ExistingLearner')}></RoundButton>
                     </View>
                 </View>
             </View>

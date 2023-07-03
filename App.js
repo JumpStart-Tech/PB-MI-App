@@ -10,6 +10,7 @@ const Stack = createStackNavigator();
 //include all views
 import Onboarding from './views/Onboarding';
 import Registration from './views/Registration';
+import ExistingLearner from './views/ExistingLearner';
 import Learner from './views/Learner';
 import NewLearner from './views/NewLearner';
 import ForgotPassword from './views/ForgotPassword';
@@ -32,6 +33,7 @@ const App = () =>  {
         >
           <Stack.Screen name="Onboarding" component={Onboarding} />
           <Stack.Screen name="Registration" component={Registration} />
+          <Stack.Screen name="ExistingLearner" component={ExistingLearner} />
           <Stack.Screen name="Learner" component={Learner} />
           <Stack.Screen name="NewLearner" component={NewLearner} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />

@@ -9,6 +9,12 @@ function useSignUpControls(navigation){
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
+    // function checks that password is at least 6 characters and includes at least one number
+    const checkPasswordValidity = (password) => {
+      const passwordRegex = /^(?=.*\d).{6,}$/;
+      return passwordRegex.test(password);
+    };
     
     function signUp(name, email, password, passwordC){ //This function is returned and is used in the sign up button onClick
         try{
@@ -22,15 +28,21 @@ function useSignUpControls(navigation){
             setPasswordError('');
             setConfirmPasswordError('');
             if(name === ''){
-                nameErrorLocal = 'Please enter a name';
+                nameErrorLocal = 'Please enter a name.';
+            }
+            if(password === ''){
+                passwordErrorLocal = 'Please enter a password.';
+            }
+            if (!(checkPasswordValidity(password))) {
+                passwordErrorLocal = 'Password length must be at least 6 characters and include a number.';
             }
             if(password !== passwordC){
-                confirmPasswordErrorLocal = 'Passwords do not match';
+                confirmPasswordErrorLocal = 'Passwords do not match.';
             }
             userIsNew(email)
                 .then(res => {
                     if(!res){
-                        emailErrorLocal = 'User already exists';
+                        emailErrorLocal = 'User already exists.';
                     }
                     if(nameErrorLocal === '' //if all error messages are empty, no errors so we can save the user and go to next screen
                     && emailErrorLocal === ''

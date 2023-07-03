@@ -13,9 +13,6 @@ const ForgotPassword = ({navigation}) => {
 
     return(
         <SafeAreaView style={styles.page}>
-             <View>
-                 <Header></Header>
-             </View>
              <View style={styles.body}>
                 <View style={styles.dialogue}>
                     <Text style={styles.titleText}>Forgot Password</Text>
@@ -44,7 +41,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     body: {
-        height: '60%',
+        height: '90%',
         alignItems: 'center',
         justifyContent: 'center',
     },

@@ -27,6 +27,14 @@ export default function ExistingLearner(){
                 <RoundButton buttonText={'Add New Learner'} buttonWidth={2}>
                 </RoundButton>
             </View>
+            <View style={styles.nextButton}>
+                <RoundButton 
+                  buttonText="Next"
+                  buttonWidth="1"
+                  onClick = {() => navigation.navigate('Learner')}
+                  >
+                </RoundButton>
+             </View>
         </SafeAreaView>
     )
 }
@@ -124,5 +132,11 @@ const styles = StyleSheet.create({
     },
     addLearnerHolder: {
         padding: '4%',
+    },
+    nextButton: {
+      flexDirection: 'column-reverse',
+      padding: 20,
+      justifyContent: 'flex-end',
+      alignItems: 'flex-end',
     },
 })

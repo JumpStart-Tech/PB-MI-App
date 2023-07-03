@@ -11,10 +11,15 @@ function useSignUpControls(navigation){
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
     // function checks that password is at least 6 characters and includes at least one number
-    const checkPasswordValidity = (password) => {
+    const passwordIsValid = (password) => {
       const passwordRegex = /^(?=.*\d).{6,}$/;
       return passwordRegex.test(password);
     };
+
+    const emailIsValid = (email) => {
+        const emailRegex = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm;
+        return emailRegex.test(email);
+    }
     
     function signUp(name, email, password, passwordC){ //This function is returned and is used in the sign up button onClick
         try{
@@ -30,10 +35,14 @@ function useSignUpControls(navigation){
             if(name === ''){
                 nameErrorLocal = 'Please enter a name.';
             }
+            if (email === '') {
+                emailErrorLocal = 'Please enter an email.';
+            } else if (!emailIsValid(email)) {
+                emailErrorLocal = 'Email format not valid.';
+            }
             if(password === ''){
                 passwordErrorLocal = 'Please enter a password.';
-            }
-            if (!(checkPasswordValidity(password))) {
+            } else if (!passwordIsValid(password)) {
                 passwordErrorLocal = 'Password length must be at least 6 characters and include a number.';
             }
             if(password !== passwordC){

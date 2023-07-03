@@ -1,23 +1,20 @@
-import { StyleSheet, View, Image, Text, ScrollView, FlatList, TextInput, Pressable, SafeAreaView } from "react-native";
+import { StyleSheet, View, Image, Text, ScrollView, FlatList, TextInput, Pressable, TouchableOpacity, SafeAreaView } from "react-native";
 import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
-
-// need to pull in data from server
-const data = [
-  {date: '2023-06-01',  id: '1'},
-  {date: '2023-06-02',  id: '2',  },
-  {date: '2023-06-03',  id: '3',  },
-];
+import { usePatients } from "../viewModels/learnerData";
+import ArrowSvg from "./components/ArrowSvg";
 
 const History = ({navigation}) =>{
-  const [searchDate, setSearchDate] = useState('');
-  const [searchID, setSearchID] = useState('');
+    const [searchDate, setSearchDate] = useState('');
+    const [searchID, setSearchID] = useState('');
 
-  const filteredData = data.filter((item) => {
-    return item.date.includes(searchDate) && item.id.includes(searchID);
-  });
+    // need to take therapist ID as value instead of 5827 here
+    let patientsArr = usePatients(5827);
+
+    //filter data by search criteria
+    const filteredData = patientsArr.filter((item) => item.id.toString().includes(searchID) && item.last_time_used.includes(searchDate))
 
     return (
         <SafeAreaView style={styles.page}>
@@ -33,8 +30,8 @@ const History = ({navigation}) =>{
 
                 <View style = {styles.table}>
                     <View style={styles.label}>
-                        <TextInput style={[styles.cell, {fontWeight: 'bold'}]} placeholder="Date" />
                         <TextInput style={[styles.cell, {fontWeight: 'bold'}]} placeholder="ID" />
+                        <TextInput style={[styles.cell, {fontWeight: 'bold'}]} placeholder="Date" />
                     </View>
                     <FlatList
                       data={filteredData}
@@ -42,7 +39,7 @@ const History = ({navigation}) =>{
                       renderItem={({ item }) => (
                         <View style={styles.row}>
                           <Text style={styles.cell}>{item.id}</Text>
-                          <Text style={styles.cell}>{item.date}</Text>
+                          <Text style={styles.cell}>{item.last_time_used}</Text>
                         </View>
                       )}
                     />
@@ -88,7 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     borderWidth: 2,
-    borderColor: '#E9EDF5',
+    borderColor: '#E9EDF5', // light gray
     borderRadius: 4,
     fontSize: 14,
     lineHeight: 20,

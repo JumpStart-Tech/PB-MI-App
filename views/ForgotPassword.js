@@ -19,13 +19,13 @@ const ForgotPassword = ({navigation}) => {
                     <InputLine 
                         style={{color: '#04A69D', borderBottomColor: 'black'}} 
                         viewStyle={{marginVertical: 80, width: 400}}
-                        placeholder='Email*'
+                        placeholder='Email *'
                         errorMessage={emailError}
                         setValue={setEmail}
                         keyboardType='email-address'
                         value={email}>
                     </InputLine>
-                    <RoundButton onClick = {() => click(email)} buttonText='Continue' buttonWidth='2'></RoundButton>
+                    <RoundButton onClick = {() => click(email, setEmail)} buttonText='Continue' buttonWidth='2'></RoundButton>
                     <Text style = {{marginVertical: '3%'}}>Don't have an account?
                         <TouchableOpacity onPress = {() => navigation.navigate('Registration')}><Text style={styles.signUpText}> Sign up</Text></TouchableOpacity>
                     </Text>
@@ -43,16 +43,17 @@ const styles = StyleSheet.create({
     body: {
         height: '90%',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
     },
     titleText: {
-        marginTop: '10%',
-        marginBottom: '5%',
+        marginTop: '15%',
+        marginBottom: '15%',
         fontSize: 35,
         lineHeight: 30,
     },
     dialogue: {
-        justifyContent: 'space-between',
+        padding: 20,
+        justifyContent: 'center',
         alignItems: 'center',
         width: '48%',
     },

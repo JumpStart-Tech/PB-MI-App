@@ -14,6 +14,7 @@ import ExistingLearner from './views/ExistingLearner';
 import Learner from './views/Learner';
 import NewLearner from './views/NewLearner';
 import ForgotPassword from './views/ForgotPassword';
+import NewPassword from './views/NewPassword';
 import Home from './views/Home';
 import Profile from './views/Profile';
 import History from './views/History';
@@ -37,6 +38,7 @@ const App = () =>  {
           <Stack.Screen name="Learner" component={Learner} />
           <Stack.Screen name="NewLearner" component={NewLearner} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen name="NewPassword" component={NewPassword} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="History" component={History} />

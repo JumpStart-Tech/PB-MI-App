@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { userIsNew, saveUserAuthInfo, validateCreds } from '../models/userData.js';
 import { useUser } from "./userContext.js";
+import {newPassControls} from "./newPasswordLogic.js";
 export {useControls}
 
-async function userExists(email){
+async function userExists(email, setEmail){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`);
     if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
         throw new Error(`HTTP error in userExists. status: ${response.status}`);
@@ -20,7 +21,7 @@ function useControls(navigation){
     const [emailError, setEmailError] = useState('');
     const {setUser} = useUser();
 
-    function click(email){
+    function click(email, setEmail){
         try{
             setEmailError('');
             userExists(email)
@@ -28,7 +29,9 @@ function useControls(navigation){
                     if(!res){
                         setEmailError('User does not exist.');
                     } else {
-                        navigation.navigate('Onboarding');
+                        setEmail('');
+                        navigation.pop();
+                        navigation.navigate('NewPassword');
                     }
                 })
         }

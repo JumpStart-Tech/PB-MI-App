@@ -5,13 +5,18 @@ import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 import { usePatients } from "../viewModels/learnerData";
 import ArrowSvg from "./components/ArrowSvg";
+import {useUser} from "../viewModels/userContext"
 
 const History = ({navigation}) =>{
     const [searchDate, setSearchDate] = useState('');
     const [searchID, setSearchID] = useState('');
 
+    //user seems to always have its initial state
+    const {user} = useUser();
     // need to take therapist ID as value instead of 5827 here
     let patientsArr = usePatients(5827);
+    // user.id or user does not seem to have expected id
+    //let patientsArr = usePatients(user.id); 
 
     //filter data by search criteria
     const filteredData = patientsArr.filter((item) => item.id.toString().includes(searchID) && item.last_time_used.includes(searchDate))

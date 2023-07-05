@@ -109,10 +109,7 @@ const styles = StyleSheet.create({
     justifyContent: 'top',
   },
   dropdown: {
-      //marginHorizontal: w/4,
-      //marginVertical: 100,
       justifyContent: 'center',
-      //paddingVertical: '20%',
       alignSelf: 'center',
   },
   rightInput: {

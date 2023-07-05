@@ -5,10 +5,10 @@ import pic from "./components/temporary.png";
 
 const Profile = ({navigation}) =>{
   const [affiliation, setAffiliation] = React.useState('');
-  const [title, setTitle] = React.useState('');
+  const [title, setTitle] = React.useState(' ');
 
   // tracks colors of buttons depending on whether they are selected
-  const [color1, setColor1] = useState('#04A69D');
+  const [color1, setColor1] = useState('#04A69D'); // teal color
   const [color2, setColor2] = useState('#04A69D40'); // color at 25% opacity
   const [color3, setColor3] = useState('#04A69D40');
   const [color4, setColor4] = useState('#04A69D40');
@@ -63,7 +63,7 @@ const Profile = ({navigation}) =>{
             </View>
             <View>
               <Text style = {[styles.text, {fontWeight: 'bold'}]}>First Name Last Name</Text>
-              <Text style = {[styles.text, {color: '#CBE1FF'}]}>Professional Title</Text>
+              <Text style = {[styles.text, {color: '#CBE1FF'}]}>{title}</Text>
             </View>
           </View>
           <View style={styles.line}></View>
@@ -73,12 +73,14 @@ const Profile = ({navigation}) =>{
           <TextInput style={styles.input}
             placeholder=""
             onChangeText={setAffiliation}
+            affiliation = {affiliation}
             value={affiliation}
            />
           <Text style = {styles.text2}>Title</Text>
           <TextInput style={styles.input}
             placeholder=""
             onChangeText={setTitle}
+            title = {title}
             value={title}
            />
            <Text style = {styles.text2}>Confidence in Scoring</Text>
@@ -159,8 +161,9 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     height: 35,
     width: '25%',
+    textAlign: 'center',
     marginHorizontal: '8%',
-    backgroundColor: '#eff7ff',  
+    backgroundColor: '#eff7ff', // light blue
     marginVertical: 5,
   },
   buttonContainer: {
@@ -171,12 +174,9 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#04A69D',
+    backgroundColor: '#04A69D', // teal
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  selectedButton: {
-    backgroundColor: 'darkblue',
   },
   buttonText: {
     fontSize: 24,

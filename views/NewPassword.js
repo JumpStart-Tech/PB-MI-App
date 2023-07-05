@@ -6,10 +6,13 @@ import Header from "./components/Header";
 import InputLine from "./components/InputLine";
 import { newPassControls} from '../viewModels/newPasswordLogic';
 
-const NewPassword = ({navigation}) => {
+const NewPassword = ({navigation, route}) => {
     const [pass, setPass] = React.useState('');
     const [passC, setPassC] = React.useState('');
     const {passwordError, confirmPasswordError, click} = newPassControls(navigation);
+
+    // take email from previous screen
+    const email = route.params?.data || 'No data received.';
 
     return(
         <SafeAreaView style={styles.page}>
@@ -21,6 +24,7 @@ const NewPassword = ({navigation}) => {
                         viewStyle={{width: '60%', marginBottom: 10,}}
                         placeholder='New Password *'
                         errorMessage={passwordError}
+                        secureTextEntry={true}
                         setValue={setPass}
                         value={pass}>
                     </InputLine>
@@ -29,13 +33,14 @@ const NewPassword = ({navigation}) => {
                         viewStyle={{width: '60%'}}
                         placeholder='Confirm New Password *'
                         errorMessage={confirmPasswordError}
+                        secureTextEntry={true}
                         setValue={setPassC}
                         value={passC}>
                     </InputLine>
                 </View>
             </View>
             <View style = {styles.bottom}>
-                    <RoundButton onClick = {() =>  click(pass, passC)} buttonText='Continue' buttonWidth='2'></RoundButton>
+                    <RoundButton onClick = {() =>  click(email, pass, setPass, passC, setPassC)} buttonText='Continue' buttonWidth='2'></RoundButton>
                 </View>
         </SafeAreaView>
     );

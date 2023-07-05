@@ -77,6 +77,6 @@ function useSignUpControls(navigation){
             console.log('signUp error: ' + e);
         }
     }
-    return {nameError, emailError, passwordError, confirmPasswordError, signUp}; //all these get used in the registration component itself
+    return {nameError, emailError, passwordError, confirmPasswordError, signUp, passwordIsValid}; //all these get used in the registration component itself
 }
 

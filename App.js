@@ -4,6 +4,7 @@ import { Linking, StyleSheet, Text, View } from 'react-native';
 
 //import for navigation 
 import { NavigationContainer} from '@react-navigation/native';
+import useRoute from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 

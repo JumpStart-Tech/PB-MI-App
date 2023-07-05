@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { userIsNew, saveUserAuthInfo, validateCreds } from '../models/userData.js';
+import { changePassword } from '../models/userData.js';
 import { useUser } from "./userContext.js";
 export {newPassControls}
 import { useSignUpControls } from "./registrationLogic"
@@ -10,12 +10,10 @@ function newPassControls(navigation){
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const {setUser} = useUser();
-    //todo: must take email parameter
-    const email = "hgevlwipr@hotmail.com";
 
     const {passwordIsValid} = useSignUpControls(navigation);
 
-    function click(password, passwordC){
+    function click(email, password, setPassword, passwordC, setPasswordC){
         try{
             let passwordErrorLocal = '';
             let confirmPasswordErrorLocal = '';
@@ -32,10 +30,13 @@ function newPassControls(navigation){
                 confirmPasswordErrorLocal = 'Passwords do not match.';
             }
                     if (passwordErrorLocal === '' && confirmPasswordErrorLocal === ''){
-                        saveUserAuthInfo(email, password)
+                    // TODO: must update already exisiting user password
+                        changePassword(email, password)
                             .then(res => {
                                 console.log(JSON.stringify(res));
                                 setUser(res.id);
+                                setPassword('');
+                                setPasswordC('');
                                 navigation.navigate('Onboarding');
                             })
                            

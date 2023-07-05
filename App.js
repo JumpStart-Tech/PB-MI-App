@@ -20,32 +20,27 @@ import Home from './views/Home';
 import Profile from './views/Profile';
 import History from './views/History';
 
-import { UserContext } from './viewModels/userContext';
-
 const App = () =>  {
-  const [user, setUser] = useState('jerry');
 
   return (
-    <UserContext.Provider value={{user, setUser}}>
-      <NavigationContainer linking={{ enabled: true }}>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-          }}
-        >
-          <Stack.Screen name="Onboarding" component={Onboarding} />
-          <Stack.Screen name="Registration" component={Registration} />
-          <Stack.Screen name="ExistingLearner" component={ExistingLearner} />
-          <Stack.Screen name="Learner" component={Learner} />
-          <Stack.Screen name="NewLearner" component={NewLearner} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-          <Stack.Screen name="NewPassword" component={NewPassword} />
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="History" component={History} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </UserContext.Provider>
+    <NavigationContainer linking={{ enabled: true }}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false
+        }}
+      >
+        <Stack.Screen name="Onboarding" component={Onboarding} />
+        <Stack.Screen name="Registration" component={Registration} />
+        <Stack.Screen name="ExistingLearner" component={ExistingLearner} />
+        <Stack.Screen name="Learner" component={Learner} />
+        <Stack.Screen name="NewLearner" component={NewLearner} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="NewPassword" component={NewPassword} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="History" component={History} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

@@ -2,7 +2,9 @@ import { StyleSheet, View, Image, Text } from "react-native";
 import Header from "./components/Header";
 import RoundButton from "./components/RoundButton";
 
-export default function Home({name}){
+export default function Home({route, name}){
+    const {userId} = route.params;
+    console.log('id from param:' + userId);
 
     return (
         <View style={styles.page}>

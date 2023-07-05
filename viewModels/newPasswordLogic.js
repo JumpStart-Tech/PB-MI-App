@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { changePassword } from '../models/userData.js';
-import { useUser } from "./userContext.js";
 export {newPassControls}
 import { useSignUpControls } from "./registrationLogic"
 import {useControls} from "./forgotPasswordLogic"
@@ -9,7 +8,6 @@ import {useControls} from "./forgotPasswordLogic"
 function newPassControls(navigation){
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
-    const {setUser} = useUser();
 
     const {passwordIsValid} = useSignUpControls(navigation);
 
@@ -34,10 +32,9 @@ function newPassControls(navigation){
                         changePassword(email, password)
                             .then(res => {
                                 console.log(JSON.stringify(res));
-                                setUser(res.id);
                                 setPassword('');
                                 setPasswordC('');
-                                navigation.navigate('Onboarding');
+                                navigation.navigate('Onboarding', {userId: res.id});
                             })
                            
                     }

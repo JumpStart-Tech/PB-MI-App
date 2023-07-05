@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { userIsNew, saveUserAuthInfo, validateCreds } from '../models/userData.js';
-import { useUser } from './userContext.js';
 export {useSignUpControls}
 
 function useSignUpControls(navigation){
-    const {setUser} = useUser(); //setUser lets you update the user context which can be accessed by every component
     const [nameError, setNameError] = useState(''); //These are returned and control the error message on each text input
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
@@ -60,9 +58,8 @@ function useSignUpControls(navigation){
                         saveUserAuthInfo(email, password)
                             .then(res => {
                                 console.log(JSON.stringify(res));
-                                setUser(res.id);
                                 navigation.pop(); // unmount screen
-                                navigation.navigate('NewLearner');
+                                navigation.navigate('NewLearner', {userId: res.id});
                             })
                     }
                     else{

@@ -21,7 +21,7 @@ import { useSignUpControls } from "../viewModels/registrationLogic"
 
 import InputLine from './components/InputLine';
 
-const Registration = ({ navigation }) => {
+const Registration = ({ navigation, route }) => {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [pass, setPass] = React.useState('');

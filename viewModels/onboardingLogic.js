@@ -21,13 +21,11 @@ function useSignInControls(navigation){
                             console.log('password error');
                             setPasswordError(res.message);
                         }
-                    }
-                    else{
+                    } else {
                         console.log('userId: ' + res.id);
                         setEmail('');
                         setPass('');
-                        navigation.pop();
-                        navigation.navigate('Home', {userId: res.id});
+                        navigation.navigate('Home', {data: String(res.id)});
                     }
                 })
         }

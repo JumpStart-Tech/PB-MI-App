@@ -7,8 +7,13 @@ import Header from "./components/Header";
 import { usePatients } from "../viewModels/learnerData";
 import ArrowSvg from "./components/ArrowSvg";
 
-export default function ExistingLearner(){
-    let patientsArr = usePatients(5827);
+export default function ExistingLearner({navigation, route}){
+
+    // take id from previous screen
+    const userId = route.params?.data || '0000';
+    console.log('id from param:' + userId);
+
+    let patientsArr = usePatients(userId);
 
     return (
         <SafeAreaView style={styles.page}>
@@ -31,7 +36,7 @@ export default function ExistingLearner(){
                 <RoundButton 
                   buttonText="Next"
                   buttonWidth="1"
-                  onClick = {() => navigation.navigate('Learner')}
+                  onClick = {() => navigation.navigate('Learner', {data: userId})}
                   >
                 </RoundButton>
              </View>

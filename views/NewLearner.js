@@ -4,7 +4,11 @@ import Header from "./components/Header";
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 
-export default function NewLearner({navigation}){
+export default function NewLearner({navigation, route}){
+    // take id from previous screen
+    const userId = route.params?.data || '0000';
+    console.log('id from param:' + userId);
+
     const [id, setId] = useState('');
     const [analysisName, setAnalysisName] = useState('')
     const [sessionName, setSessionName] = useState('')
@@ -55,7 +59,7 @@ export default function NewLearner({navigation}){
                     <KeyTable inputs={inputs} removeRow={removeRow}></KeyTable>
                     
                 </View>
-                <RoundButton onClick = {() => navigation.navigate('Onboarding')} buttonText='Submit' buttonWidth='2'></RoundButton>
+                <RoundButton onClick = {() => navigation.navigate('Onboarding', {data: userId})} buttonText='Submit' buttonWidth='2'></RoundButton>
             </View>
         </SafeAreaView>
     )

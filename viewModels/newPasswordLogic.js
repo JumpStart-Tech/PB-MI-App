@@ -34,7 +34,7 @@ function newPassControls(navigation){
                                 console.log(JSON.stringify(res));
                                 setPassword('');
                                 setPasswordC('');
-                                navigation.navigate('Onboarding', {userId: res.id});
+                                navigation.navigate('Onboarding', {data: res.id});
                             })
                            
                     }

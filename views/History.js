@@ -6,12 +6,15 @@ import InputBox from "./components/InputBox";
 import { usePatients } from "../viewModels/learnerData";
 import ArrowSvg from "./components/ArrowSvg";
 
-const History = ({navigation}) =>{
+const History = ({navigation, route}) =>{
     const [searchDate, setSearchDate] = useState('');
     const [searchID, setSearchID] = useState('');
 
-    // need to take therapist ID as value instead of 5827 here
-    let patientsArr = usePatients(5827);
+    // take id from previous screen (currently not functional)
+    const userId = route.params?.data || '0000';
+    console.log('id from param:' + userId);
+
+    let patientsArr = usePatients(userId);
 
     //filter data by search criteria
     const filteredData = patientsArr.filter((item) => item.id.toString().includes(searchID) && item.last_time_used.includes(searchDate))

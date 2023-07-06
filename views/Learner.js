@@ -7,7 +7,11 @@ import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 import DropDown from "./components/DropDown";
 
-const Learner = ({navigation}) =>{
+const Learner = ({navigation, route}) =>{
+
+    // take id from previous screen
+    const userId = route.params?.data || '0000';
+    console.log('id from param:' + userId);
 
     const [id, setId] = useState('');
     const [analysisName, setAnalysisName] = useState('')
@@ -74,7 +78,7 @@ const Learner = ({navigation}) =>{
                   <RoundButton 
                   buttonText="Next"
                   buttonWidth="1"
-                  onClick = {() => navigation.navigate('Onboarding')}
+                  onClick = {() => navigation.navigate('Onboarding', {data: userId})}
                   >
                   </RoundButton>
                 </View>

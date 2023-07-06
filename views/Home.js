@@ -2,21 +2,25 @@ import { StyleSheet, View, Image, Text } from "react-native";
 import Header from "./components/Header";
 import RoundButton from "./components/RoundButton";
 
-export default function Home({route, name}){
-    const {userId} = route.params;
+export default function Home({navigation, route}){
+    // take id from previous screen
+    const userId = route.params?.data || '0000';
     console.log('id from param:' + userId);
+
+    // todo: get name from userid
+    const name = '';
 
     return (
         <View style={styles.page}>
             <View>
-              <Header></Header>
+              <Header userId = {userId} navigation = {navigation}></Header>
             </View>
             <View style={styles.body}>
                 <View style={styles.bodyItemsContainer}>
                     <Image style={styles.image} source={require('./components/temporary.png')} resizeMode="center" />
                     <Text style={styles.welcomeText}>Welcome Back, {name}</Text>
                     <View>
-                        <RoundButton buttonText="Start" buttonWidth="2" onClick = {() => navigation.navigate('ExistingLearner')}></RoundButton>
+                        <RoundButton buttonText="Start" buttonWidth="2" onClick = {() => navigation.navigate('ExistingLearner', {data: userId})}></RoundButton>
                     </View>
                 </View>
             </View>

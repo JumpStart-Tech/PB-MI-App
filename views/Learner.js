@@ -36,7 +36,7 @@ const Learner = ({navigation, route}) =>{
     return (
       <SafeAreaView style = {{backgroundColor: '#fff', flex: 1}}>
         <View styles = {styles.header}>
-          <Header></Header>
+          <Header userId = {userId} navigation = {navigation}></Header>
         </View>
         <Text style = {styles.title}>Learner</Text>
         <View style={styles.container}>

@@ -10,9 +10,11 @@ const History = ({navigation, route}) =>{
     const [searchDate, setSearchDate] = useState('');
     const [searchID, setSearchID] = useState('');
 
-    // take id from previous screen (currently not functional)
+    // take id from previous screen
     const userId = route.params?.data || '0000';
     console.log('id from param:' + userId);
+
+    //todo: if userId has no data I'm not sure this functions properly
 
     let patientsArr = usePatients(userId);
 
@@ -22,7 +24,7 @@ const History = ({navigation, route}) =>{
     return (
         <SafeAreaView style={styles.page}>
             <View>
-                <Header></Header>
+                <Header userId = {userId} navigation = {navigation}></Header>
             </View>
             <Text style = {styles.titleText}>History</Text>
             <View style = {{alignItems: 'center'}}>

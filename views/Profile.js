@@ -3,9 +3,15 @@ import { StyleSheet, View, Image, Text, SafeAreaView, TextInput, TouchableOpacit
 import Header from "./components/Header";
 import pic from "./components/temporary.png";
 
-const Profile = ({navigation}) =>{
+const Profile = ({navigation, route}) =>{
   const [affiliation, setAffiliation] = React.useState('');
   const [title, setTitle] = React.useState('');
+
+  // take id from previous screen
+  const userId = route.params?.data || '0000';
+  console.log('id from param:' + userId);
+
+  // todo: use therapist data to fill in profile values
 
   // tracks colors of buttons depending on whether they are selected
   const [color1, setColor1] = useState('#04A69D');
@@ -53,7 +59,7 @@ const Profile = ({navigation}) =>{
   return (
       <SafeAreaView style = {{backgroundColor: '#fff', flex: 1,}}>
         <View styles = {styles.header}>
-          <Header></Header>
+          <Header userId = {userId} navigation = {navigation}></Header>
         </View>
         <Text style = {styles.title}>Profile</Text>
         <View style = {styles.box}>

@@ -1,15 +1,15 @@
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 
-function HeaderButtons(){
+function HeaderButtons({navigation, userId}){
     return (
         <View style={styles.headerButtonContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Home', {data: userId})}>
                 <Text style = {styles.text}> Home </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('History')}>
+            <TouchableOpacity onPress={() => navigation.navigate('History', {data: userId})}>
                 <Text style = {styles.text}> History </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Profile', {data: userId})}>
                 <Text style = {styles.text}> Profile </Text>
             </TouchableOpacity>
             <TouchableOpacity style = {{borderWidth: 2, borderColor: 'blue', borderRadius: 5,}} onPress={() => navigation.navigate('Onboarding')}>
@@ -19,15 +19,14 @@ function HeaderButtons(){
     )
 }
 
-export default function Header(){
-
+export default function Header({navigation, userId}){
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style = {styles.logo}>
                   <Image style={styles.image} source={require('./temporary.png')}  />
                 </View>
-                <HeaderButtons style = {{flex: 0.5, flexDirection: 'row',}}></HeaderButtons>
+                <HeaderButtons userId = {userId} navigation={navigation} style = {{flex: 0.5, flexDirection: 'row',}}></HeaderButtons>
             </View>
         </View>
     )

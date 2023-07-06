@@ -12,7 +12,7 @@ const NewPassword = ({navigation, route}) => {
     const {passwordError, confirmPasswordError, click} = newPassControls(navigation);
 
     // take email from previous screen
-    const email = route.params?.data || 'No data received.';
+    const email = route.params?.data || '0000';
 
     return(
         <SafeAreaView style={styles.page}>

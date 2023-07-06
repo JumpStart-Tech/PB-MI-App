@@ -34,7 +34,7 @@ export default function NewLearner({navigation, route}){
     return (
         <SafeAreaView style={styles.page}>
             <View>
-                <Header></Header>
+                <Header userId = {userId} navigation = {navigation}></Header>
             </View>
             <View style={styles.body}>
                 <View style={styles.topHalfContainer}>

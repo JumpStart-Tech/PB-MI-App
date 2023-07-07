@@ -8,7 +8,7 @@ const Profile = ({navigation, route}) =>{
   const [title, setTitle] = React.useState('');
 
   // take id from previous screen
-  const userId = route.params?.data || '0000';
+  const userId = route.params?.userId || "0000";
   console.log('id from param:' + userId);
 
   // todo: use therapist data to fill in profile values

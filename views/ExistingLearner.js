@@ -10,7 +10,7 @@ import ArrowSvg from "./components/ArrowSvg";
 export default function ExistingLearner({navigation, route}){
 
     // take id from previous screen
-    const userId = route.params?.data || '0000';
+    const userId = route.params?.userId || '0000';
     console.log('id from param:' + userId);
 
     let patientsArr = usePatients(userId);

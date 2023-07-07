@@ -4,7 +4,7 @@ import RoundButton from "./components/RoundButton";
 
 export default function Home({navigation, route}){
     // take id from previous screen
-    const userId = route.params?.data || '0000';
+    const userId = route.params?.userId || '0000';
     console.log('id from param:' + userId);
 
     // todo: get name from userid

@@ -56,6 +56,5 @@ async function getLearnerArray(therapistId){
         throw new Error(`HTTP error in pullLearnerInfo. status: ${response.status}`);
     }
     const responseArr = await response.json();
-    console.log(JSON.stringify(responseArr))
     return responseArr[0]['patients'];
 }

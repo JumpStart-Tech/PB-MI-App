@@ -78,7 +78,7 @@ const Learner = ({navigation, route}) =>{
                   <RoundButton 
                   buttonText="Next"
                   buttonWidth="1"
-                  onClick = {() => navigation.navigate('Onboarding', {data: userId})}
+                  onClick = {() => navigation.navigate('Onboarding', {userId})}
                   >
                   </RoundButton>
                 </View>

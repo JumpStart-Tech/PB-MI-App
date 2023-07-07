@@ -25,7 +25,7 @@ function useSignInControls(navigation){
                         console.log('userId: ' + res.id);
                         setEmail('');
                         setPass('');
-                        navigation.navigate('Home', {data: String(res.id)});
+                        navigation.navigate('Home', {userId: res.id});
                     }
                 })
         }

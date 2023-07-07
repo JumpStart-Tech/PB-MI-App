@@ -59,7 +59,7 @@ export default function NewLearner({navigation, route}){
                     <KeyTable inputs={inputs} removeRow={removeRow}></KeyTable>
                     
                 </View>
-                <RoundButton onClick = {() => navigation.navigate('Onboarding', {data: userId})} buttonText='Submit' buttonWidth='2'></RoundButton>
+                <RoundButton onClick = {() => navigation.navigate('Onboarding', {userId})} buttonText='Submit' buttonWidth='2'></RoundButton>
             </View>
         </SafeAreaView>
     )

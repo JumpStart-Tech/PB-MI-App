@@ -36,7 +36,7 @@ export default function ExistingLearner({navigation, route}){
                 <RoundButton 
                   buttonText="Next"
                   buttonWidth="1"
-                  onClick = {() => navigation.navigate('Learner', {data: userId})}
+                  onClick = {() => navigation.navigate('Learner', {userId})}
                   >
                 </RoundButton>
              </View>

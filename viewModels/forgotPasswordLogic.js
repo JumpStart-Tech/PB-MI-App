@@ -16,7 +16,7 @@ function useControls(navigation){
                     } else {
                         let userEmail = email;
                         setEmail('');
-                        navigation.navigate('NewPassword', {data: userEmail});
+                        navigation.navigate('NewPassword', {userEmail});
                     }
                 })
         }

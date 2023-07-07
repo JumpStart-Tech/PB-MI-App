@@ -3,13 +3,13 @@ import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 function HeaderButtons({navigation, userId}){
     return (
         <View style={styles.headerButtonContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('Home', {data: userId})}>
+            <TouchableOpacity onPress={() => navigation.navigate('Home', {userId})}>
                 <Text style = {styles.text}> Home </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('History', {data: userId})}>
+            <TouchableOpacity onPress={() => navigation.navigate('History', {userId})}>
                 <Text style = {styles.text}> History </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Profile', {data: userId})}>
+            <TouchableOpacity onPress={() => navigation.navigate('Profile', {userId})}>
                 <Text style = {styles.text}> Profile </Text>
             </TouchableOpacity>
             <TouchableOpacity style = {{borderWidth: 2, borderColor: 'blue', borderRadius: 5,}} onPress={() => navigation.navigate('Onboarding')}>

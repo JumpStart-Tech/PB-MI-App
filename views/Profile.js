@@ -2,22 +2,48 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, Text, SafeAreaView, TextInput, TouchableOpacity} from "react-native";
 import Header from "./components/Header";
 import pic from "./components/temporary.png";
+import { useTherapist } from "../viewModels/therapistData";
 
+// todo: must store modifications to this page into the server
 const Profile = ({navigation, route}) =>{
-  const [affiliation, setAffiliation] = React.useState('');
-  const [title, setTitle] = React.useState('');
-
   // take id from previous screen
   const userId = route.params?.userId || "0000";
   console.log('id from param:' + userId);
 
+  let name = "Therapist " + userId;
+
   // todo: use therapist data to fill in profile values
+  const therapistInfo = useTherapist(userId);
+  console.log('therapist info:', therapistInfo);
+  
+  const [title, setTitle] = React.useState('');
+  const [affiliation, setAffiliation] = React.useState('');
+  const [confidence, setConfidence] = React.useState('');
 
   // tracks colors of buttons depending on whether they are selected
-  const [color1, setColor1] = useState('#04A69D');
-  const [color2, setColor2] = useState('#04A69D40'); // color at 25% opacity
+  const [color1, setColor1] = useState('#04A69D40'); // color at 25% opacity
+  const [color2, setColor2] = useState('#04A69D40');
   const [color3, setColor3] = useState('#04A69D40');
   const [color4, setColor4] = useState('#04A69D40');
+
+  React.useEffect(() => { // check if therapistInfo changes
+    if (therapistInfo) { // therapist info is non-null
+      setTitle(therapistInfo.title);
+      setAffiliation(therapistInfo.affiliation);
+      setConfidence(therapistInfo.confidence);
+          // modify button color based on confidence data
+          if (therapistInfo.confidence === 4) {
+              setColor4('#04A69D');
+          } else if (therapistInfo.confidence === 3 ) {
+              setColor3('#04A69D');
+          } else if (therapistInfo.confidence === 2 ) {
+              setColor2('#04A69D');
+          } else if (therapistInfo.confidence === 1 ){
+              setColor1('#04A69D');
+          }
+    }
+  }, [therapistInfo]);
+
   
   const CircularButton = ({number, name, color, setColor}) => {
       // prevents more than one option from being selected at the same time
@@ -26,10 +52,10 @@ const Profile = ({navigation, route}) =>{
         if (!(color1 === '#04A69D40' && color2 === '#04A69D40' && color3 === '#04A69D40' && color4 === '#04A69D40')) {
           // prevents two options from being selected at once
           if (color === '#04A69D40') {
-                setColor1('#04A69D40');
-                setColor2('#04A69D40');
-                setColor3('#04A69D40');
-                setColor4('#04A69D40');
+              setColor1('#04A69D40');
+              setColor2('#04A69D40');
+              setColor3('#04A69D40');
+              setColor4('#04A69D40');
           }
         }
       }
@@ -68,8 +94,8 @@ const Profile = ({navigation, route}) =>{
               <Image style={styles.image} source={pic} />
             </View>
             <View>
-              <Text style = {[styles.text, {fontWeight: 'bold'}]}>First Name Last Name</Text>
-              <Text style = {[styles.text, {color: '#CBE1FF'}]}>Professional Title</Text>
+              <Text style = {[styles.text, {fontWeight: 'bold'}]}>{name}</Text>
+              <Text style = {[styles.text, {color: '#CBE1FF'}]}>{title}</Text>
             </View>
           </View>
           <View style={styles.line}></View>

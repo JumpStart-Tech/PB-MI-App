@@ -1,4 +1,4 @@
-export {userIsNew, saveUserAuthInfo, validateCreds, getLearnerArray, userExists, changePassword}
+export {userIsNew, saveUserAuthInfo, validateCreds, getLearnerArray, userExists, changePassword, getTherapistInfo}
 
 async function userIsNew(email){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
@@ -53,11 +53,24 @@ async function validateCreds(email, password){
 async function getLearnerArray(therapistId){
     const response = await fetch(`http://localhost:3000/therapists?id=${therapistId}`);
     if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
-        throw new Error(`HTTP error in pullLearnerInfo. status: ${response.status}`);
+        throw new Error(`HTTP error in getLearnerArray. status: ${response.status}`);
     }
     const responseArr = await response.json();
     return responseArr[0]['patients'];
 }
+
+async function getTherapistInfo(therapistId){
+    const response = await fetch(`http://localhost:3000/therapists?id=${therapistId}`);
+    if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
+        throw new Error(`HTTP error in getTherapistInfo. status: ${response.status}`);
+    }
+    const responseArr = await response.json();
+    const title = responseArr[0]['title'];
+    const affiliation = responseArr[0]['affiliation'];
+    const confidence = responseArr[0]['confidence'];
+    return {title, affiliation, confidence};
+}
+
 
 async function userExists(email, setEmail){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`);

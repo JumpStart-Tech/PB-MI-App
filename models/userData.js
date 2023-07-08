@@ -1,4 +1,4 @@
-export {userIsNew, saveUserAuthInfo, validateCreds, getLearnerArray, userExists, changePassword, getTherapistInfo}
+export {userIsNew, saveUserAuthInfo, validateCreds, getLearnerArray, userExists, changePassword, getTherapistInfo, updateTherapist}
 
 async function userIsNew(email){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
@@ -111,4 +111,44 @@ async function changePassword(email, password){
         throw new Error(`HTTP error in changePassword update. status: ${updateResponse.status}`);
     }
     return {status: 'Success', message: 'User password changed', id: responseObj.id}
+}
+
+async function updateTherapist(therapistId, updatedData) {
+  try {
+    const response = await fetch(`http://localhost:3000/therapists/${therapistId}`); //will be able to be done with signUp() in Amplify
+    if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
+        throw new Error(`HTTP error in updateTherapist. status: ${response.status}`);
+    }
+    const responseArray = await response.json(); //the db query returns an array
+    if(responseArray.length == 0){
+        console.log(`User with id ${therapistId} doesn't exist`);
+        return {status: 'Error', message: "User ID doesn't exist.", field: 'id'};
+    }
+    const responseObj = responseArray; //array should always have 1 element at this point b/c only 1 account can be created per email
+    const { title, affiliation, confidence } = updatedData;
+    if (title) {
+      responseObj.title = title; // set new title
+    }
+    if (affiliation) {
+      responseObj.affiliation = affiliation; // set new title
+    }
+    if (confidence) {
+      responseObj.confidence = confidence; // set new title
+    }
+
+    const updateResponse = await fetch(`http://localhost:3000/therapists/${therapistId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(responseObj),
+    });
+
+    if (!updateResponse.ok) {
+      throw new Error(`HTTP error in updateTherapist. status: ${response.status}`);
+    }
+    console.log('Therapist updated successfully');
+  } catch (error) {
+    console.error('Error updating therapist:', error);
+  }
 }

@@ -1,6 +1,9 @@
-import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Image, Text, TouchableOpacity, Platform } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
 
+//TODO: I can't for the life of me figure out how to make the logout button have a rounded border
 function HeaderButtons({navigation, userId}){
+
     return (
         <View style={styles.headerButtonContainer}>
             <TouchableOpacity onPress={() => navigation.navigate('Home', {userId})}>
@@ -12,9 +15,11 @@ function HeaderButtons({navigation, userId}){
             <TouchableOpacity onPress={() => navigation.navigate('Profile', {userId})}>
                 <Text style = {styles.text}> Profile </Text>
             </TouchableOpacity>
-            <TouchableOpacity style = {{borderWidth: 2, borderColor: 'blue', borderRadius: 5,}} onPress={() => navigation.navigate('Onboarding')}>
-                <Text style = {styles.text}> Logout </Text>
+            <View style = {{borderRadius: 10, overflow: 'hidden'}}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Onboarding')}>
+              <Text style={styles.text}>Logout</Text>
             </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -40,6 +45,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         marginRight: 13,
+        padding: 5,
     },
     text: {
         color: 'black',
@@ -71,5 +77,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-     },
+    },
+    button: {
+        padding: 10,
+        border: '2px solid',
+        borderImage: 'linear-gradient(to right, #36D1DC, #5B86E5)',
+        borderImageSlice: 1,
+        borderWidth: 2,
+        backgroundColor: '#FFF',
+    },
+ 
 })

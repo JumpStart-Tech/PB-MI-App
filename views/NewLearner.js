@@ -9,7 +9,7 @@ export default function NewLearner({navigation, route}){
     const userId = route.params?.userId || "0000";
     console.log('id from param:' + userId);
 
-    const [id, setId] = useState('');
+    const [learnerId, setId] = useState('');
     const [analysisName, setAnalysisName] = useState('')
     const [sessionName, setSessionName] = useState('')
     const [hreTime, setHreTime] = useState('')
@@ -41,7 +41,7 @@ export default function NewLearner({navigation, route}){
                     <Text style={styles.titleText}>Learner</Text>
                     <View style={styles.topFourInputsContainer}>
                         <View style={styles.leftTwoInputsContainer}>
-                            <InputBox title={'Participant Id'} style={styles.topHalfInput} value={id} setValue={setId}></InputBox>
+                            <InputBox title={'Participant ID'} style={styles.topHalfInput} value={learnerId} setValue={setId}></InputBox>
                             <InputBox title={'Behavior Analysis Name'} style={styles.topHalfInput} value={analysisName} setValue={setAnalysisName}></InputBox>
                         </View>
                         <View style={styles.rightTwoInputsContainer}>
@@ -59,7 +59,7 @@ export default function NewLearner({navigation, route}){
                     <KeyTable inputs={inputs} removeRow={removeRow}></KeyTable>
                     
                 </View>
-                <RoundButton onClick = {() => navigation.navigate('Onboarding', {userId})} buttonText='Submit' buttonWidth='2'></RoundButton>
+                <RoundButton onClick = {() => navigation.navigate('Learner', {userId, learnerId})} buttonText='Submit' buttonWidth='2'></RoundButton>
             </View>
         </SafeAreaView>
     )

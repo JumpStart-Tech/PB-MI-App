@@ -35,6 +35,7 @@ export default function ExistingLearner({navigation, route}){
         <View style={styles.addLearnerHolder}>
           <RoundButton
             buttonText={"Add New Learner"}
+            onClick={() => navigation.navigate("NewLearner", { userId })}
             buttonWidth={2}
           ></RoundButton>
         </View>

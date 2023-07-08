@@ -11,9 +11,11 @@ const Learner = ({navigation, route}) =>{
 
     // take id from previous screen
     const userId = route.params?.userId || "0000";
-    console.log('id from param:' + userId);
+    console.log('User ID from param:' + userId);
+    const learnerId = route.params?.learnerId || "0000";
+    console.log('Learner ID from param:' + learnerId);
 
-    const [id, setId] = useState('');
+    const [id, setId] = useState(learnerId);
     const [analysisName, setAnalysisName] = useState('')
     const [sessionName, setSessionName] = useState('')
     const [hreTime, setHreTime] = useState('')

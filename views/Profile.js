@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, Text, SafeAreaView, TextInput, TouchableOpacity} from "react-native";
 import Header from "./components/Header";
-import pic from "./components/temporary.png";
+import RoundButton from "./components/RoundButton";
+import ProfileImage from "./components/ProfileImage"; 
 import { useTherapist } from "../viewModels/therapistData";
+import { profileControls } from '../viewModels/profileLogic';
 
-// todo: must store modifications to this page into the server
+// TODO: will not be able to add data that does not exist, only change what is already there
 const Profile = ({navigation, route}) =>{
   // take id from previous screen
   const userId = route.params?.userId || "0000";
   console.log('id from param:' + userId);
 
   let name = "Therapist " + userId;
+
+  const {updateError, click} = profileControls(navigation);
 
   // todo: use therapist data to fill in profile values
   const therapistInfo = useTherapist(userId);
@@ -28,9 +32,15 @@ const Profile = ({navigation, route}) =>{
 
   React.useEffect(() => { // check if therapistInfo changes
     if (therapistInfo) { // therapist info is non-null
-      setTitle(therapistInfo.title);
-      setAffiliation(therapistInfo.affiliation);
-      setConfidence(therapistInfo.confidence);
+      if (therapistInfo.title) {
+        setTitle(therapistInfo.title);
+      }
+      if (therapistInfo.affiliation) {
+        setAffiliation(therapistInfo.affiliation);
+      }
+      if (therapistInfo.confidence) {
+        setConfidence(therapistInfo.confidence);
+      }
           // modify button color based on confidence data
           if (therapistInfo.confidence === 4) {
               setColor4('#04A69D');
@@ -43,7 +53,6 @@ const Profile = ({navigation, route}) =>{
           }
     }
   }, [therapistInfo]);
-
   
   const CircularButton = ({number, name, color, setColor}) => {
       // prevents more than one option from being selected at the same time
@@ -60,18 +69,19 @@ const Profile = ({navigation, route}) =>{
         }
       }
 
-      const changeColor = (color, setColor) => {
+      const changeColor = (number, color, setColor) => {
          limitSelection();
          if (color === '#04A69D') {
             setColor('#04A69D40');
          } else {
+            setConfidence(parseInt(number));
             setColor('#04A69D');
          }
       }
 
       return (
         <View style = {{padding: 10}}>
-        <TouchableOpacity style={styles.buttonContainer} onPress = {() => changeColor(color, setColor)}>
+        <TouchableOpacity style={styles.buttonContainer} onPress = {() => changeColor(number, color, setColor)}>
           <View style={[styles.button, {backgroundColor: color}]}>
             <Text style={styles.buttonText}>{number}</Text>
           </View>
@@ -83,7 +93,7 @@ const Profile = ({navigation, route}) =>{
  
 
   return (
-      <SafeAreaView style = {{backgroundColor: '#fff', flex: 1,}}>
+      <SafeAreaView style = {{backgroundColor: '#fff', flex: 1, height: '100%'}}>
         <View styles = {styles.header}>
           <Header userId = {userId} navigation = {navigation}></Header>
         </View>
@@ -91,7 +101,7 @@ const Profile = ({navigation, route}) =>{
         <View style = {styles.box}>
           <View style = {{flexDirection: 'row'}}>
             <View style = {styles.logo}>
-              <Image style={styles.image} source={pic} />
+              <ProfileImage></ProfileImage>
             </View>
             <View>
               <Text style = {[styles.text, {fontWeight: 'bold'}]}>{name}</Text>
@@ -114,13 +124,20 @@ const Profile = ({navigation, route}) =>{
             value={title}
            />
            <Text style = {styles.text2}>Confidence in Scoring</Text>
-           <View style = {{flexDirection: 'row', marginHorizontal: '8%', marginBottom: '2%'}}>
+           <View style = {{flexDirection: 'row', marginHorizontal: '8%'}}>
              <CircularButton number = '1' name = 'Beginner' color = {color1} setColor = {setColor1}></CircularButton>
              <CircularButton number = '2' name = 'Novice' color = {color2} setColor = {setColor2}></CircularButton>
              <CircularButton number = '3' name = 'Skilled' color = {color3} setColor = {setColor3}></CircularButton>
              <CircularButton number = '4' name = 'Expert' color = {color4} setColor = {setColor4}></CircularButton>
            </View>
-          <Text>' '</Text>
+        </View>
+        <View style = {styles.bottom}> 
+                  <RoundButton 
+                  buttonText="Save"
+                  buttonWidth="1"
+                  onClick = {() =>  click(userId, {title, affiliation, confidence})}
+                  >
+                  </RoundButton>
         </View>
       </SafeAreaView>
   );
@@ -214,6 +231,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: 'white',
     fontWeight: 'bold',
+  },
+  bottom: {
+    flexDirection: 'column-reverse',
+    alignItems: 'flex-end',
+    padding: 20,
   },
  });
 

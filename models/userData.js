@@ -1,4 +1,4 @@
-export {userIsNew, saveUserAuthInfo, validateCreds, getLearnerArray}
+export {userIsNew, saveUserAuthInfo, validateCreds, getLearnerArray, userExists, changePassword}
 
 async function userIsNew(email){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
@@ -58,4 +58,45 @@ async function getLearnerArray(therapistId){
     const responseArr = await response.json();
     console.log(JSON.stringify(responseArr))
     return responseArr[0]['patients'];
+}
+
+async function userExists(email, setEmail){
+    const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`);
+    if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
+        throw new Error(`HTTP error in userExists. status: ${response.status}`);
+    }
+    const responseObj = await response.json();
+    if (!(responseObj.length > 0)) {
+        console.log(`User with email ${email} does not exist.`);
+        return false;
+    }
+    return true;
+}
+
+async function changePassword(email, password){
+    const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
+    if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
+        throw new Error(`HTTP error in changePassword. status: ${response.status}`);
+    }
+    const responseArray = await response.json(); //the db query returns an array
+    if(responseArray.length == 0){
+        console.log(`User with email ${email} doesn't exist`);
+        return {status: 'Error', message: "Email doesn't exist.", field: 'Email'};
+    }
+    const responseObj = responseArray[0]; //array should always have 1 element at this point b/c only 1 account can be created per email
+    responseObj.password = password; // set new password
+
+    // Send the updated password to the server
+    const updateResponse = await fetch(`http://localhost:3000/authData/${responseObj.id}`, {
+        method: 'PUT', // or 'PATCH' depending on your server API
+        headers:  {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(responseObj),
+    });
+
+    if (!updateResponse.ok) {
+        throw new Error(`HTTP error in changePassword update. status: ${updateResponse.status}`);
+    }
+    return {status: 'Success', message: 'User password changed', id: responseObj.id}
 }

@@ -4,7 +4,7 @@ import RoundButton from "./components/RoundButton";
 
 export default function Home({navigation, route}){
     // take id from previous screen
-    const userId = route.params?.data || '0000';
+    const userId = route.params?.userId || '0000';
     console.log('id from param:' + userId);
 
     // todo: get name from userid
@@ -20,7 +20,7 @@ export default function Home({navigation, route}){
                     <Image style={styles.image} source={require('./components/temporary.png')} resizeMode="center" />
                     <Text style={styles.welcomeText}>Welcome Back, {name}</Text>
                     <View>
-                        <RoundButton buttonText="Start" buttonWidth="2" onClick = {() => navigation.navigate('ExistingLearner', {data: userId})}></RoundButton>
+                        <RoundButton buttonText="Start" buttonWidth="2" onClick = {() => navigation.navigate('ExistingLearner', {userId})}></RoundButton>
                     </View>
                 </View>
             </View>

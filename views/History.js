@@ -11,7 +11,7 @@ const History = ({navigation, route}) =>{
     const [searchID, setSearchID] = useState('');
 
     // take id from previous screen
-    const userId = route.params?.data || '0000';
+    const userId = route.params?.userId || "0000";
     console.log('id from param:' + userId);
 
     //todo: if userId has no data I'm not sure this functions properly

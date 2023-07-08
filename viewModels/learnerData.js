@@ -7,7 +7,6 @@ function usePatients(therapistId){
     useEffect(() =>{
         getLearnerArray(therapistId)
             .then(patientsArray => {
-                console.log('patients: ' + JSON.stringify(patientsArray))
                 setPatients(patientsArray);
             })
     } ,[])

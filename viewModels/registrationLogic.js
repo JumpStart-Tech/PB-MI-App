@@ -58,7 +58,7 @@ function useSignUpControls(navigation){
                         saveUserAuthInfo(email, password)
                             .then(res => {
                                 console.log(JSON.stringify(res));
-                                navigation.navigate('NewLearner', {data: res.id});
+                                navigation.navigate('NewLearner', {userId: res.id});
                             })
                     }
                     else{

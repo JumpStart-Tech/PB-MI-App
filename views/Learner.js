@@ -10,7 +10,7 @@ import DropDown from "./components/DropDown";
 const Learner = ({navigation, route}) =>{
 
     // take id from previous screen
-    const userId = route.params?.data || '0000';
+    const userId = route.params?.userId || "0000";
     console.log('id from param:' + userId);
 
     const [id, setId] = useState('');
@@ -78,7 +78,7 @@ const Learner = ({navigation, route}) =>{
                   <RoundButton 
                   buttonText="Next"
                   buttonWidth="1"
-                  onClick = {() => navigation.navigate('Onboarding', {data: userId})}
+                  onClick = {() => navigation.navigate('Onboarding', {userId})}
                   >
                   </RoundButton>
                 </View>

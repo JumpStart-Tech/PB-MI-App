@@ -6,7 +6,7 @@ import InputBox from "./components/InputBox";
 
 export default function NewLearner({navigation, route}){
     // take id from previous screen
-    const userId = route.params?.data || '0000';
+    const userId = route.params?.userId || "0000";
     console.log('id from param:' + userId);
 
     const [id, setId] = useState('');
@@ -59,7 +59,7 @@ export default function NewLearner({navigation, route}){
                     <KeyTable inputs={inputs} removeRow={removeRow}></KeyTable>
                     
                 </View>
-                <RoundButton onClick = {() => navigation.navigate('Onboarding', {data: userId})} buttonText='Submit' buttonWidth='2'></RoundButton>
+                <RoundButton onClick = {() => navigation.navigate('Onboarding', {userId})} buttonText='Submit' buttonWidth='2'></RoundButton>
             </View>
         </SafeAreaView>
     )

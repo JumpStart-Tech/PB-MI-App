@@ -4,11 +4,16 @@ export {usePatients};
 
 function usePatients(therapistId){
     const [patients, setPatients] = useState([])
-    useEffect(() =>{
-        getLearnerArray(therapistId)
-            .then(patientsArray => {
-                setPatients(patientsArray);
-            })
-    } ,[])
-    return patients;
+    try{
+        useEffect(() =>{
+            getLearnerArray(therapistId)
+                .then(patientsArray => {
+                    setPatients(patientsArray);
+                })
+        } ,[])
+        return patients;
+    } catch(e){
+        console.log('Error in obtaining learner data: ' + e);
+        return "";
+    }
 }

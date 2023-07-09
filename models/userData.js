@@ -56,7 +56,12 @@ async function getLearnerArray(therapistId){
         throw new Error(`HTTP error in getLearnerArray. status: ${response.status}`);
     }
     const responseArr = await response.json();
-    return responseArr[0]['patients'];
+    // check that patients field has data
+    if (responseArr && responseArr.length > 0 && responseArr[0].patients) {
+      return responseArr[0].patients;
+    } else {
+      throw new Error('No patient data associated with userID.');
+    }
 }
 
 async function getTherapistInfo(therapistId){

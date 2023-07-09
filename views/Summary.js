@@ -2,7 +2,6 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, SafeAreaView } fro
 import { useState, useEffect, useRef } from "react";
 import Header from "./components/Header";
 import EmailComments from "./components/EmailComments";
-import { usePatients } from "../viewModels/learnerData";
 
 const HistoryDetail = ({navigation, route}) => {
 
@@ -20,8 +19,6 @@ const HistoryDetail = ({navigation, route}) => {
         <Header userId = {userId} navigation = {navigation}></Header>
       </View>
       <View style = {styles.page}>
-        <Text style = {[styles.text, {marginTop: '3%'}]}>Participant ID: {learnerId}</Text>
-        <Text style = {[styles.text, {marginBottom: '8%'}]}>Experiment Data: {date}</Text>
         <View style = {{flexDirection: 'row'}}>
             <View style = {styles.leftContainer}>
               <Text style = {styles.text}>Control Level: </Text>

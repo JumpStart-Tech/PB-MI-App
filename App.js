@@ -19,6 +19,8 @@ import NewPassword from './views/NewPassword';
 import Home from './views/Home';
 import Profile from './views/Profile';
 import History from './views/History';
+import HistoryDetail from './views/HistoryDetail';
+import Summary from './views/Summary';
 
 const App = () =>  {
 
@@ -39,6 +41,8 @@ const App = () =>  {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="History" component={History} />
+        <Stack.Screen name="HistoryDetail" component={HistoryDetail} />
+        <Stack.Screen name="Summary" component={Summary} />
       </Stack.Navigator>
     </NavigationContainer>
   );

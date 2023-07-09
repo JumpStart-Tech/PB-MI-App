@@ -8,7 +8,7 @@ export default function Home({navigation, route}){
     console.log('id from param:' + userId);
 
     // todo: get name from userid
-    const name = '';
+    let name = "Therapist " + userId;
 
     return (
         <View style={styles.page}>

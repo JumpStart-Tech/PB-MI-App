@@ -15,10 +15,10 @@ function HeaderButtons({navigation, userId}){
             <TouchableOpacity onPress={() => navigation.navigate('Profile', {userId})}>
                 <Text style = {styles.text}> Profile </Text>
             </TouchableOpacity>
-            <View style = {{borderRadius: 10, overflow: 'hidden'}}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Onboarding')}>
-              <Text style={styles.text}>Logout</Text>
-            </TouchableOpacity>
+            <View style = {styles.border}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Onboarding')}>
+                  <Text style={styles.text}>Logout</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -79,12 +79,19 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     button: {
-        padding: 10,
-        border: '2px solid',
-        borderImage: 'linear-gradient(to right, #36D1DC, #5B86E5)',
-        borderImageSlice: 1,
-        borderWidth: 2,
+        borderWidth: 1,
+        borderRadius: 9,
+        borderColor: 'white',
         backgroundColor: '#FFF',
+        overflow: 'hidden'
+    },
+    border: {
+        borderWidth: 1.5,
+        borderColor: 'transparent',
+        borderRadius: 11,
+        overflow: 'hidden',
+        backgroundImage: 'linear-gradient(to right, #36D1DC, #5B86E5)',
+        padding: 2,
     },
  
 })

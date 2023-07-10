@@ -26,13 +26,13 @@ const Pagination = ({navigation, array}) => {
     return [
         <View key = "view" style={styles.pagination}>
             <RoundButton onClick={previousPage}
-                buttonText = {"Previous"}>
+                buttonText = {"Previous Page"}>
             </RoundButton>
             <Text style={styles.paginationText}>
                 Page {currentPage} of {Math.ceil(array.length / itemsPerPage)}
             </Text>
             <RoundButton onClick={nextPage}
-                buttonText = {"Next"}>
+                buttonText = {"Next Page"}>
             </RoundButton>
         </View>,
         slicedArray,

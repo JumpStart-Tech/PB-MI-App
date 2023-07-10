@@ -2,8 +2,10 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, SafeAreaView } fro
 import { useState, useEffect, useRef } from "react";
 import Header from "./components/Header";
 import EmailComments from "./components/EmailComments";
+import SummaryData from "./components/SummaryData";
 
-const HistoryDetail = ({navigation, route}) => {
+// Summary screen that is displayed when session is complete
+const Summary = ({navigation, route}) => {
 
   // take id from previous screen
   const userId = route.params?.userId || "0000";
@@ -18,22 +20,11 @@ const HistoryDetail = ({navigation, route}) => {
       <View>
         <Header userId = {userId} navigation = {navigation}></Header>
       </View>
+      <Text style = {styles.title}>Summary</Text>
       <View style = {styles.page}>
         <View style = {{flexDirection: 'row'}}>
             <View style = {styles.leftContainer}>
-              <Text style = {styles.text}>Control Level: </Text>
-              <Text style = {styles.text}>RIAs: </Text>
-              <Text style = {[styles.text, {marginBottom: 10}]}>RPIs: </Text>
-
-              <Text style = {styles.text}>EO Total Time: </Text>
-              <Text style = {styles.text}>SR Total Time: </Text>
-              <Text style = {[styles.text, {marginBottom: 10}]}>Total Time: </Text>
-
-              <Text style = {styles.text}>Total EO PBs: </Text>
-              <Text style = {[styles.text, {marginBottom: 10}]}>Total EO SRs: </Text>
-
-              <Text style = {styles.text}>Lowest PB Rate: </Text>
-              <Text style = {[styles.text, {marginBottom: 10}]}>Lowest SR Rate: </Text>
+              <SummaryData userId = {userId} learnerId = {learnerId}></SummaryData>
             </View>
             <View style = {styles.rightContainer}>
               <View style = {{flex: 1}}>
@@ -51,6 +42,14 @@ const styles = StyleSheet.create({
   page: {
      flex: 1,
      backgroundColor: '#fff',
+  },
+  title: {
+    color: 'black',
+    fontSize: 36,
+    justifyContent: 'top',
+    textAlign: 'left',
+    marginVertical: '6%',
+    marginHorizontal: '4%',
   },
   text: {
      color: 'black',
@@ -73,4 +72,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default(HistoryDetail);
+export default(Summary);

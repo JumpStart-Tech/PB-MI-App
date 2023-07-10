@@ -1,15 +1,20 @@
-import { StyleSheet, View, Image, Text, TouchableOpacity, SafeAreaView } from "react-native";
-import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView } from "react-native";
+import React, { useState } from "react";
 import RoundButton from "./components/RoundButton";
-import InputBox from "./components/InputBox";
-import Header from "./components/Header";
 import InputLine from "./components/InputLine";
 
+//import view model to take data and interface server
 import { useControls } from '../viewModels/forgotPasswordLogic';
 
+// Screen accessed after clicking 'Forgot password?' on the Onboarding screen
 const ForgotPassword = ({navigation}) => {
+    // state variable to track changes in email input
     const [email, setEmail] = React.useState('');
+
+    // pull in data from forgotPasswordLogic for use here
     const {emailError, click} = useControls(navigation);
+
+    // todo: must verify email before allowing password to be changed 
 
     return(
         <SafeAreaView style={styles.page}>
@@ -40,24 +45,24 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-    body: {
+    body: { // centered inner container
         height: '90%',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    titleText: {
+    titleText: { // forgot password title
         marginTop: '15%',
         marginBottom: '15%',
         fontSize: 35,
         lineHeight: 30,
     },
-    dialogue: {
+    dialogue: { // holds input line
         padding: 20,
         justifyContent: 'center',
         alignItems: 'center',
         width: '48%',
     },
-    signUpText: {
+    signUpText: { // sign up button text formatting
         color: '#04A69D',
         fontWeight: 'bold',
     }

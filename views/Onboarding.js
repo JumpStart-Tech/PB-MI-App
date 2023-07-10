@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -10,19 +10,22 @@ import {
 
 //import background image
 import bg from '../blue-bg.png';
+//import input line component
+import InputLine from './components/InputLine';
 //import standard teal button component
 import RoundButton from "./components/RoundButton";
+
 //import view model to take data and interface server
 import {signIn, signUp} from "../viewModels/registrationLogic"
-
-import InputLine from './components/InputLine';
-
 import { useSignInControls } from '../viewModels/onboardingLogic';
 
-
+// Initial screen when starting the application
 const Onboarding = ({navigation}) => {
+  // store email and pass state variables as the input is updated
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+
+  // pull in items from onboardingLogic so they may be used here
   const {emailError, passwordError, signInClick} = useSignInControls(navigation);
 
   return (  
@@ -30,6 +33,7 @@ const Onboarding = ({navigation}) => {
         <ImageBackground source={bg} resizeMode="cover" style={styles.image} className="App-bg" alt="bg">
           <View style = {styles.insideBlue}>
               <Text style={styles.title}>PB.MI</Text>
+              {/* Input boxes */}
               <View style = {styles.textBox}>
                <InputLine placeholder={'Email *'}
                 keyboardType={'email-address'}
@@ -44,12 +48,13 @@ const Onboarding = ({navigation}) => {
                 value={pass}>
                </InputLine>
                <View style={styles.link}>
+                 {/*forgot password link*/}
                  <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
                    <Text style = {{color: 'white', fontSize: 14}}> Forgot password? </Text>
                  </TouchableOpacity>
                </View>
                </View>
-               <Text style={styles.link}></Text>
+               {/*Sign up and log in buttons*/}
                <View style = {[styles.endButton, {marginBottom: 8}]}>
                   <RoundButton 
                     buttonText="Sign Up"
@@ -60,7 +65,8 @@ const Onboarding = ({navigation}) => {
                   <RoundButton 
                     buttonText="Log In"
                     buttonWidth="2"
-                    onClick = {() => signInClick(email, pass, setEmail, setPass)}
+                    /*calls function in onboardingLogic to check data and move to next page*/
+                    onClick = {() => signInClick(email, pass, setEmail, setPass)} 
                     >
                   </RoundButton>
                </View>
@@ -104,7 +110,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     marginVertical: 10,
   },
-  endButton: {
+  endButton: { // log in and sign up button formatting
     flexDirection: 'column-reverse',
     justifyContent: 'flex-start',
     padding: 2,

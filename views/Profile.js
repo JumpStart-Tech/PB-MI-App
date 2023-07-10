@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, Text, SafeAreaView, TextInput, TouchableOpacity} from "react-native";
 import Header from "./components/Header";
-import RoundButton from "./components/RoundButton";
 import ProfileImage from "./components/ProfileImage"; 
+
+// import view models to interface with server
 import { useTherapist } from "../viewModels/therapistData";
 import { profileControls } from '../viewModels/profileLogic';
 
 // TODO: will not be able to add data that does not exist, only change what is already there
+// TODO: must save profile picture
+
+// Screen can be accessed through the header once you are logged in
 const Profile = ({navigation, route}) =>{
   // take id from previous screen
   const userId = route.params?.userId || "0000";
@@ -14,12 +18,14 @@ const Profile = ({navigation, route}) =>{
 
   let name = "Therapist " + userId;
 
+  // store data from profileLogic file
   const {updateError, click} = profileControls(navigation);
 
-  // todo: use therapist data to fill in profile values
+  // obtain therapistInfo ysing therapistData file
   const therapistInfo = useTherapist(userId);
   console.log('therapist info:', therapistInfo);
   
+  // store state of each value
   const [title, setTitle] = React.useState('');
   const [affiliation, setAffiliation] = React.useState('');
   const [confidence, setConfidence] = React.useState('');
@@ -30,6 +36,7 @@ const Profile = ({navigation, route}) =>{
   const [color3, setColor3] = useState('#04A69D40');
   const [color4, setColor4] = useState('#04A69D40');
 
+  // Wrap in use effect to prevent infinite loop of re-renders as state changes
   React.useEffect(() => { // check if therapistInfo changes
     if (therapistInfo) { // therapist info is non-null
       if (therapistInfo.title) {
@@ -40,27 +47,27 @@ const Profile = ({navigation, route}) =>{
       }
       if (therapistInfo.confidence) {
         setConfidence(therapistInfo.confidence);
+        setButtonColor(therapistInfo.confidence); // mark confidence button selected 
       }
-          // modify button color based on confidence data
-          if (therapistInfo.confidence === 4) {
-              setColor4('#04A69D');
-          } else if (therapistInfo.confidence === 3 ) {
-              setColor3('#04A69D');
-          } else if (therapistInfo.confidence === 2 ) {
-              setColor2('#04A69D');
-          } else if (therapistInfo.confidence === 1 ){
-              setColor1('#04A69D');
-          }
     }
   }, [therapistInfo]);
+
+  // modify button color based on confidence data
+  const setButtonColor = (confidence) => {
+    setColor1(confidence === 1 ? '#04A69D' : '#04A69D40');
+    setColor2(confidence === 2 ? '#04A69D' : '#04A69D40');
+    setColor3(confidence === 3 ? '#04A69D' : '#04A69D40');
+    setColor4(confidence === 4 ? '#04A69D' : '#04A69D40');
+  };
   
+  // CircularButton component which takes the number and label it will display and its current coloring
   const CircularButton = ({number, name, color, setColor}) => {
       // prevents more than one option from being selected at the same time
       const limitSelection = () => {
         // allows no option to be selected
         if (!(color1 === '#04A69D40' && color2 === '#04A69D40' && color3 === '#04A69D40' && color4 === '#04A69D40')) {
           // prevents two options from being selected at once
-          if (color === '#04A69D40') {
+          if (color === '#04A69D40') { // light color
               setColor1('#04A69D40');
               setColor2('#04A69D40');
               setColor3('#04A69D40');
@@ -69,13 +76,14 @@ const Profile = ({navigation, route}) =>{
         }
       }
 
+      // if button is selected, unselect (change color from dark to light). If not selected, select it (change color from light to dark).
       const changeColor = (number, color, setColor) => {
          limitSelection();
-         if (color === '#04A69D') {
-            setColor('#04A69D40');
-         } else {
+         if (color === '#04A69D') { // unselected button
+            setColor('#04A69D40'); // light color
+         } else { // selected new button
             setConfidence(parseInt(number));
-            setColor('#04A69D');
+            setColor('#04A69D'); // dark color
          }
       }
 
@@ -83,10 +91,12 @@ const Profile = ({navigation, route}) =>{
         <View style = {{padding: 10}}>
         <TouchableOpacity style={styles.buttonContainer} onPress = {() => changeColor(number, color, setColor)}>
           <View style={[styles.button, {backgroundColor: color}]}>
+            {/* display 1, 2, 3, or 4 */}
             <Text style={styles.buttonText}>{number}</Text>
           </View>
         </TouchableOpacity>
-          <Text style={[styles.text2, {alignSelf: 'center'}]}>{name}</Text>
+          {/* display beginner, novice, skilled, or expert */}
+          <Text style={[styles.text2, {alignSelf: 'center'}]}>{name}</Text> 
         </View>
       );
   };
@@ -99,6 +109,7 @@ const Profile = ({navigation, route}) =>{
         </View>
         <Text style = {styles.title}>Profile</Text>
         <View style = {styles.box}>
+          {/* display picture, name, and title */}
           <View style = {{flexDirection: 'row'}}>
             <View style = {styles.logo}>
               <ProfileImage></ProfileImage>
@@ -111,18 +122,18 @@ const Profile = ({navigation, route}) =>{
           <View style={styles.line}></View>
         </View>
         <View>
+          {/* display title, affiliation, and confidence */}
           <Text style = {styles.text2}>Affiliation</Text>
           <TextInput style={styles.input}
             placeholder=""
-            onChangeText={setAffiliation}
             value={affiliation}
            />
           <Text style = {styles.text2}>Title</Text>
           <TextInput style={styles.input}
             placeholder=""
-            onChangeText={setTitle}
             value={title}
            />
+           {/* display confidence button selection */}
            <Text style = {styles.text2}>Confidence in Scoring</Text>
            <View style = {{flexDirection: 'row', marginHorizontal: '8%'}}>
              <CircularButton number = '1' name = 'Beginner' color = {color1} setColor = {setColor1}></CircularButton>
@@ -131,13 +142,12 @@ const Profile = ({navigation, route}) =>{
              <CircularButton number = '4' name = 'Expert' color = {color4} setColor = {setColor4}></CircularButton>
            </View>
         </View>
+        {/* display save button */}
         <View style = {styles.bottom}> 
-                  <RoundButton 
-                  buttonText="Save"
-                  buttonWidth="1"
-                  onClick = {() =>  click(userId, {title, affiliation, confidence})}
-                  >
-                  </RoundButton>
+             <TouchableOpacity style={[styles.saveButton]}
+               onPress = {() =>  click(userId, {title, affiliation, confidence})}>
+               <Text style={styles.saveButtonText}>Save</Text>
+             </TouchableOpacity>
         </View>
       </SafeAreaView>
   );
@@ -148,7 +158,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
   },
-  title: {
+  title: { // Profile text formatting
     color: 'black',
     fontSize: 36,
     justifyContent: 'top',
@@ -157,7 +167,7 @@ const styles = StyleSheet.create({
     marginBottom: '2%',
     marginHorizontal: '4%',
    },
-  box: {
+  box: { // box holding picture, name, and title
     flex: 1,
     backgroundColor: '#04A69D',
     color: '#04A69D',
@@ -168,7 +178,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     padding: 20,
   },
-  line: {
+  line: { // white line formatting
     flexDirection: 'row',
     width: '95%',
     height: 1,
@@ -176,24 +186,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff26',
     marginVertical: 10, 
   },
-  logo: {
-  
-  },
-  image: {
+  image: { // profile image formatting
     flex: 1,
     height: 43,
     width: undefined,
     aspectRatio: 512 / 297,
     padding: 10,
   },
-  text: {
+  text: { 
     color: 'white',
     fontSize: 18,
     lineHeight: 20,
     textAlign: 'left',
     padding: 10,
   },
-  text2: {
+  text2: { // generic text formatting for title, affiliation, and confidence
     color: 'black',
     fontSize: 16,
     lineHeight: 18,
@@ -224,9 +231,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  selectedButton: {
-    backgroundColor: 'darkblue',
-  },
   buttonText: {
     fontSize: 24,
     color: 'white',
@@ -236,6 +240,19 @@ const styles = StyleSheet.create({
     flexDirection: 'column-reverse',
     alignItems: 'flex-end',
     padding: 20,
+  },
+  saveButtonText: {
+    fontSize: 20,
+    lineHeight: 22,
+    color: '#FFFFFF',
+    paddingVertical: 12,
+  },
+  saveButton: {
+    borderRadius: 100,
+    width: '10%',
+    alignItems: 'center',  
+    backgroundColor: '#04A69D',
+    marginVertical: 5,
   },
  });
 

@@ -4,7 +4,7 @@ export {newPassControls}
 import { useSignUpControls } from "./registrationLogic"
 import {useControls} from "./forgotPasswordLogic"
 
-
+// validates the new password entered and then calls changePassword from userData to update the password, then goes to the Onboarding screen
 function newPassControls(navigation){
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');

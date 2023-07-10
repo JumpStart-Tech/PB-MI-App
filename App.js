@@ -3,10 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 
 //import for navigation 
-import { NavigationContainer} from '@react-navigation/native';
-import useRoute from '@react-navigation/native';
+import { NavigationContainer, useRoute} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-const Stack = createStackNavigator();
+const Stack = createStackNavigator(); // navigation stack holding history of screens visited
 
 //include all views
 import Onboarding from './views/Onboarding';
@@ -22,13 +21,15 @@ import History from './views/History';
 import HistoryDetail from './views/HistoryDetail';
 import Summary from './views/Summary';
 
+//simply outlines all possible pages so that we can navigate to them. The app will start on the Onboarding page
 const App = () =>  {
 
   return (
+    // set linking equal true to enable back and forward buttons and updated URL for each page
     <NavigationContainer linking={{ enabled: true }}>
       <Stack.Navigator
         screenOptions={{
-          headerShown: false
+          headerShown: false //don't need a page title on screens and will use custom header
         }}
       >
         <Stack.Screen name="Onboarding" component={Onboarding} />

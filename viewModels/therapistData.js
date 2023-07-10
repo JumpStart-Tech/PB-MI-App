@@ -1,6 +1,7 @@
 import { getTherapistInfo } from "../models/userData";
 import { useState, useEffect } from "react";
 
+// calls getTherapistInfo from userData to get information for the profile screen
 function useTherapist(therapistId) {
   const [info, setInfo] = useState(null);
 

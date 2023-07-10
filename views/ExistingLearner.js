@@ -14,6 +14,7 @@ export default function ExistingLearner({navigation, route}){
     const userId = route.params?.userId || '0000';
 
     let array = usePatients(userId);
+    //limit array to display ten items at a time
     const [paginationView, patientsArr] = Pagination({ array: array });
 
     return (
@@ -25,6 +26,8 @@ export default function ExistingLearner({navigation, route}){
           <View>
             <Text style={styles.titleText}>Existing Learners</Text>
           </View>
+
+          {/* Display table */}
           <View style={styles.tableHolder}>
             <Table
               inputs={patientsArr}
@@ -34,6 +37,7 @@ export default function ExistingLearner({navigation, route}){
             ></Table>
           </View>
         </View>
+        {/* displays previous page and next page buttons */}
         <View>
             {paginationView}
         </View>

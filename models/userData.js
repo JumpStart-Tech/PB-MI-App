@@ -1,5 +1,7 @@
+// export each function for use
 export {userIsNew, saveUserAuthInfo, validateCreds, getLearnerArray, userExists, changePassword, getTherapistInfo, updateTherapist}
 
+// returns true if the email is not found in the server and false otherwise
 async function userIsNew(email){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
     if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
@@ -13,6 +15,7 @@ async function userIsNew(email){
     return true;
 }
 
+// saves the email and password of a user who just created their account
 async function saveUserAuthInfo(email, password){
     const response = await fetch(`http://localhost:3000/authData`, {
                 method: 'POST',
@@ -32,6 +35,7 @@ async function saveUserAuthInfo(email, password){
     return {status: 'Success', message: 'User created', id};
 }
 
+// ensures both email and password match an account when logging in
 async function validateCreds(email, password){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
     if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
@@ -50,6 +54,7 @@ async function validateCreds(email, password){
     return {status: 'Success', message: 'User credentials authenticated', id: responseObj.id}
 }
 
+// gets all patient data for a given therapist
 async function getLearnerArray(therapistId){
     const response = await fetch(`http://localhost:3000/therapists?id=${therapistId}`);
     if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
@@ -64,6 +69,7 @@ async function getLearnerArray(therapistId){
     }
 }
 
+// gets therapist title, affiliation, and confidence level for use in the profile screen
 async function getTherapistInfo(therapistId){
     const response = await fetch(`http://localhost:3000/therapists?id=${therapistId}`);
     if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
@@ -76,7 +82,7 @@ async function getTherapistInfo(therapistId){
     return {title, affiliation, confidence};
 }
 
-
+// ensures the user with the entered email address exists
 async function userExists(email, setEmail){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`);
     if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
@@ -90,6 +96,7 @@ async function userExists(email, setEmail){
     return true;
 }
 
+// finds the user with the associated email and updates their password to the value passed into the function
 async function changePassword(email, password){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
     if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
@@ -118,6 +125,7 @@ async function changePassword(email, password){
     return {status: 'Success', message: 'User password changed', id: responseObj.id}
 }
 
+// allows the therapist profile data to be updated when changes are made
 async function updateTherapist(therapistId, updatedData) {
   try {
     const response = await fetch(`http://localhost:3000/therapists/${therapistId}`); //will be able to be done with signUp() in Amplify

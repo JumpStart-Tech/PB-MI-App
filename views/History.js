@@ -22,7 +22,7 @@ const History = ({navigation, route}) =>{
 
     // filter data by search criteria
     const newArray = patientsArr.filter((item) => item.id.toString().includes(searchID) && item.last_time_used.includes(searchDate))
-    // limit to ten items
+    // limit array to display ten items at a time
     const [paginationView, filteredData] = Pagination({ array: newArray });
 
     return (
@@ -48,6 +48,7 @@ const History = ({navigation, route}) =>{
                   >
                   </Table>
                 </View>
+                {/* displays previous page and next page buttons */}
                 <View>
                   {paginationView}
                 </View>

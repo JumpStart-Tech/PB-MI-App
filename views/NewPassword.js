@@ -1,17 +1,21 @@
 import { StyleSheet, View, Image, Text, TouchableOpacity, SafeAreaView } from "react-native";
 import React, { useState, useEffect } from "react";
 import RoundButton from "./components/RoundButton";
-import InputBox from "./components/InputBox";
-import Header from "./components/Header";
 import InputLine from "./components/InputLine";
+
+//import view model to take data and interface server
 import { newPassControls} from '../viewModels/newPasswordLogic';
 
+// Screen accessed after inputting a valid account email in the Forgot Password screen
 const NewPassword = ({navigation, route}) => {
+    // use state to track changes in input
     const [pass, setPass] = React.useState('');
     const [passC, setPassC] = React.useState('');
+
+    // store values from newPasswordLogic
     const {passwordError, confirmPasswordError, click} = newPassControls(navigation);
 
-    // take email from previous screen
+    // take query param for email from previous screen
     const email = route.params?.userEmail || "0000";
 
     return(
@@ -40,8 +44,8 @@ const NewPassword = ({navigation, route}) => {
                 </View>
             </View>
             <View style = {styles.bottom}>
-                    <RoundButton onClick = {() =>  click(email, pass, setPass, passC, setPassC)} buttonText='Continue' buttonWidth='2'></RoundButton>
-                </View>
+                <RoundButton onClick = {() =>  click(email, pass, setPass, passC, setPassC)} buttonText='Continue' buttonWidth='2'></RoundButton>
+            </View>
         </SafeAreaView>
     );
 };
@@ -51,31 +55,31 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-    body: {
+    body: { // centered inner container
         height: '70%',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    titleText: {
+    titleText: { // forgot password title
         marginTop: '15%',
         marginBottom: '15%',
         fontSize: 35,
         lineHeight: 30,
     },
-    dialogue: {
+    dialogue: { // holds input lines
         justifyContent: 'center',
         alignItems: 'center',
         width: '48%',
     },
-    signUpText: {
+    signUpText: { // sign up button text formatting
         color: '#04A69D',
         fontWeight: 'bold',
     },
-    bottom: {
+    bottom: { // ensures continue button is aligned near the bottom of the screen
         justifyContent: 'flex-end',
         alignItems: 'center',
         marginBottom: '10%',
     },
-})
+});
 
 export default NewPassword;

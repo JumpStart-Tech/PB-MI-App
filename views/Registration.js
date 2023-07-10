@@ -3,31 +3,31 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
-  Button,
   View,
   SafeAreaView,
   Text,
   ImageBackground,
-  TextInput,
-  TouchableOpacity,
 } from 'react-native';
 
 //import background image
 import bg from '../blue-bg.png';
 //import standard teal button component
 import RoundButton from "./components/RoundButton";
+//import input line component
+import InputLine from './components/InputLine';
+
 //import view model to take data and interface server
 import { useSignUpControls } from "../viewModels/registrationLogic"
 
-import InputLine from './components/InputLine';
-
+// Screen accessed from clicking 'Sign up' on the Onboarding or Forgot Password screen
 const Registration = ({ navigation, route }) => {
+  // store data in a state to track changes in input
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [pass, setPass] = React.useState('');
   const [passC, setPassC] = React.useState('');
-  const [validPass, setValidPass] = React.useState('false');
-  const [disabled, setDisabled] = React.useState('false');
+
+  // pull in items from registrationLogic so they may be used here
   const {nameError, emailError, passwordError, confirmPasswordError, signUp} = useSignUpControls(navigation);
 
   return (
@@ -35,14 +35,15 @@ const Registration = ({ navigation, route }) => {
       <ImageBackground source={bg} resizeMode="cover" style={styles.image} className="App-bg" alt="bg">
         <View style={styles.insideBlue}>
           <Text style={styles.title}>Create Account</Text>
-          <InputLine viewStyle={{width: 400}}
+          {/* All input fields */}
+          <InputLine viewStyle={{width: '50%'}}
             placeholder="Name *"
             errorMessage={nameError}
             setValue={setName}
             value={name}
           >
           </InputLine>
-          <InputLine viewStyle={{width: 400}}
+          <InputLine viewStyle={{width: '50%'}}
             placeholder="Email *"
             errorMessage={emailError}
             setValue={setEmail}
@@ -50,7 +51,7 @@ const Registration = ({ navigation, route }) => {
             value={email}
           >
           </InputLine>
-          <InputLine viewStyle={{width: 400}}
+          <InputLine viewStyle={{width: '50%'}}
             placeholder="Password *"
             secureTextEntry={true}
             errorMessage={passwordError}
@@ -58,7 +59,7 @@ const Registration = ({ navigation, route }) => {
             value={pass}
           >
           </InputLine>
-          <InputLine viewStyle={{width: 400}}
+          <InputLine viewStyle={{width: '50%'}}
             placeholder="Confirm Password *"
             secureTextEntry={true}
             errorMessage={confirmPasswordError}
@@ -66,11 +67,12 @@ const Registration = ({ navigation, route }) => {
             value={passC}
           >
           </InputLine>
+          {/* sign up button */}
           <View style={styles.endButton}>
             <RoundButton
               buttonText="Sign Up"
               buttonWidth="2"
-              disabled={disabled}
+              /* call function in registrationLogic to store data and move to next page */
               onClick={() => signUp(name, email, pass, passC)}
             >
             </RoundButton>
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
   },
-  buttonText: {
+  buttonText: { // text formatting inside button
     color: '#fff',
     fontSize: 18,
   },

@@ -3,6 +3,7 @@ import { userExists } from '../models/userData.js';
 import {newPassControls} from "./newPasswordLogic.js";
 export {useControls}
 
+// checks to make sure email has an account associated with it by calling the userExists function from userData
 function useControls(navigation){
     const [emailError, setEmailError] = useState('');
 

@@ -9,6 +9,7 @@ export default function NewLearner({navigation, route}){
     const userId = route.params?.userId || "0000";
     console.log('id from param:' + userId);
 
+    // store states of all inputs
     const [learnerId, setId] = useState('');
     const [analysisName, setAnalysisName] = useState('')
     const [sessionName, setSessionName] = useState('')
@@ -65,8 +66,8 @@ export default function NewLearner({navigation, route}){
     )
 }
 
+// Sets up table of keys/behaviors to be called by NewLearner
 function KeyTable({inputs, removeRow}){
-    
     return(
         <>
         <FlatList 
@@ -88,8 +89,8 @@ function KeyTable({inputs, removeRow}){
 
 }
 
+// Individual row formatting to be called by KeyTable
 function TableRow({chosenKey, behavior, isHeader=false, onClose, listIsEmpty}){
-
     return (
         <View style={{...styles.tableRow, borderTopLeftRadius: isHeader ? 8 : 0, 
         borderTopRightRadius: isHeader ? 8 : 0, borderTopWidth: isHeader ? 2 : 0, display: (listIsEmpty) ? 'none' : 'flex'}}>

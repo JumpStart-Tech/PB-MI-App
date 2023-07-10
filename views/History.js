@@ -1,13 +1,15 @@
-import { StyleSheet, View, Image, Text, ScrollView, FlatList, TextInput, Pressable, TouchableOpacity, SafeAreaView } from "react-native";
-import { useState, useEffect, useRef } from "react";
+import { StyleSheet, View, Text, ScrollView, FlatList, Pressable, SafeAreaView } from "react-native";
+import { useState, useRef } from "react";
 import { useHover, useFocus, useActive } from 'react-native-web-hooks';
 import Header from "./components/Header";
-import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
+import { Pagination } from "./components/Pagination";
 import { usePatients } from "../viewModels/learnerData";
-import ArrowSvg from "./components/ArrowSvg";
+//import ArrowSvg from "./components/ArrowSvg";
 
+// Screen can be accessed through the header once you are logged in
 const History = ({navigation, route}) =>{
+    // store state of inputs
     const [searchDate, setSearchDate] = useState('');
     const [searchID, setSearchID] = useState('');
 
@@ -15,12 +17,13 @@ const History = ({navigation, route}) =>{
     const userId = route.params?.userId || "No Data";
     console.log('id from param:' + userId);
 
-    //obtain patient data
+    // obtain patient data from learnerData view model
     let patientsArr = usePatients(userId);
 
-    //filter data by search criteria
-    const filteredData = patientsArr.filter((item) => item.id.toString().includes(searchID) && item.last_time_used.includes(searchDate))
-
+    // filter data by search criteria
+    const newArray = patientsArr.filter((item) => item.id.toString().includes(searchID) && item.last_time_used.includes(searchDate))
+    // limit to ten items
+    const [paginationView, filteredData] = Pagination({ array: newArray });
 
     return (
         <SafeAreaView style={styles.page}>
@@ -29,11 +32,13 @@ const History = ({navigation, route}) =>{
             </View>
             <Text style = {styles.titleText}>History</Text>
             <View style = {{alignItems: 'center', justifyContent: 'center'}}>
+                {/* Search boxes */}
                 <View style={styles.searchContainer}>
                     <InputBox title = "Search Learn ID" style = {[styles.input, {marginRight: '5%'}]} value = {searchID} setValue = {setSearchID}></InputBox>
                     <InputBox title = "Search Date" style = {[styles.input, {marginLeft: '5%'}]} value = {searchDate} setValue = {setSearchDate}></InputBox>
                 </View>
 
+                {/* Display table */}
                 <View style={styles.tableHolder}>
                   <Table
                     inputs={filteredData}
@@ -43,11 +48,15 @@ const History = ({navigation, route}) =>{
                   >
                   </Table>
                 </View>
+                <View>
+                  {paginationView}
+                </View>
             </View>
         </SafeAreaView>
     )
 }
 
+// Holds table styling to be called in main History function
 function Table({inputs, navigation, userId}){
     return(
         <>
@@ -67,16 +76,18 @@ function Table({inputs, navigation, userId}){
                 }
             }
             ListHeaderComponent={<TableRow learnerId={'Learner ID'} lastUsed={'Last Time Used'} 
-                compSessions={'Completed Sessions'} isHeader={true} listIsEmpty={false}
+                isHeader={true} listIsEmpty={false}
                 navigation={navigation} userId={userId}></TableRow>}
         />
         </>
     )
 }
 
+// Holds row-specific styling that is called by Table function
 function TableRow({learnerId, lastUsed, compSessions, isHeader=false, listIsEmpty, navigation, userId}){
     const ref = useRef(null);
     const isHovered = useHover(ref);
+    // the header should not be selectable and should not be colored when the mouse hovers over it
     const PressableOrView = (isHeader) ? View : Pressable;
     const buttonPress = (isHeader) ? {} : {onPress: () => {navigation.navigate('HistoryDetail', {userId, learnerId, lastUsed})}}
 
@@ -99,7 +110,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  titleText: {
+  titleText: { // History title text formatting
     fontSize: 35,
     lineHeight: 30,
     padding: '5%',
@@ -116,32 +127,32 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 10,
   },
-    tableHolder: {
-        alignSelf: 'center',
-        width: '80%',
-    },
-    tableRow : {
-        borderColor: '#E9EDF5',
-        borderStyle: 'solid',
-        borderWidth: 2,
-        flexDirection: 'row',
-    },
-    items: {
-        borderRightColor: '#E9EDF5',
-        borderRightWidth: 1,
-        borderRightStyle: 'solid',
-        flex: 1,
-        alignItems: 'center',
-    },
-    sessions: {
-        flex: 2,
-        alignItems: 'center',
-    },
-    rowText: {
-        padding: 10,
-        fontSize: 16,
-        lineHeight: 30,
-    },
+  tableHolder: {
+    alignSelf: 'center',
+    width: '80%',
+  },
+  tableRow : {
+    borderColor: '#E9EDF5',
+    borderStyle: 'solid',
+    borderWidth: 2,
+    flexDirection: 'row',
+  },
+  items: {
+    borderRightColor: '#E9EDF5',
+    borderRightWidth: 1,
+    borderRightStyle: 'solid',
+    flex: 1,
+    alignItems: 'center',
+  },
+  sessions: {
+    flex: 2,
+    alignItems: 'center',
+  },
+  rowText: {
+    padding: 10,
+    fontSize: 16,
+    lineHeight: 30,
+  },
 });
 
 export default(History);

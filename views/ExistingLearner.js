@@ -4,6 +4,7 @@ import { useHover, useFocus, useActive } from 'react-native-web-hooks';
 import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 import Header from "./components/Header";
+import { Pagination } from "./components/Pagination";
 import { usePatients } from "../viewModels/learnerData";
 import ArrowSvg from "./components/ArrowSvg";
 
@@ -12,7 +13,8 @@ export default function ExistingLearner({navigation, route}){
     // take id from previous screen
     const userId = route.params?.userId || '0000';
 
-    let patientsArr = usePatients(userId);
+    let array = usePatients(userId);
+    const [paginationView, patientsArr] = Pagination({ array: array });
 
     return (
       <SafeAreaView style={styles.page}>
@@ -31,6 +33,9 @@ export default function ExistingLearner({navigation, route}){
               userId={userId}
             ></Table>
           </View>
+        </View>
+        <View>
+            {paginationView}
         </View>
         <View style={styles.addLearnerHolder}>
           <RoundButton

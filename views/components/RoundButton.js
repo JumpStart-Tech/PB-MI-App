@@ -17,8 +17,8 @@ export default function RoundButton({buttonText, buttonWidth='1', onClick}){
 
 const styles = StyleSheet.create({
     buttonText: {
-        fontSize: 20,
-        lineHeight: 22,
+        fontSize: 18,
+        lineHeight: 20,
         color: '#FFFFFF',
         paddingVertical: 12,
     },

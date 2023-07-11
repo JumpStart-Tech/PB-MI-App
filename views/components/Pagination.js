@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, ScrollView, FlatList, Pressable, SafeAreaView } from "react-native";
 import RoundButton from "./RoundButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // function takes large data and displays 10 items at a time. It returns a view that will display the buttons as well as the current sliced data
 const Pagination = ({navigation, array}) => {
@@ -29,7 +29,11 @@ const Pagination = ({navigation, array}) => {
                 buttonText = {"Previous Page"}>
             </RoundButton>
             <Text style={styles.paginationText}>
-                Page {currentPage} of {Math.ceil(array.length / itemsPerPage)}
+              {array.length === 0
+                ? "Page 0 of 0"
+                : `Page ${currentPage} of ${Math.ceil(
+                    array.length / itemsPerPage
+                  )}`}
             </Text>
             <RoundButton onClick={nextPage}
                 buttonText = {"Next Page"}>

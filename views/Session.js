@@ -6,7 +6,7 @@ import SummaryData from "./components/SummaryData";
 import RoundButton from "./components/RoundButton";
 import SquareButton from "./components/SquareButton";
 
-{/* TODO: must store keys and values and track time in EO vs SR */}
+{/* TODO: must store button presses */}
 {/* TODO: must pull in keys and values from Learner screen */}
 
 // Session screen that is displayed while session is running
@@ -21,11 +21,30 @@ const Session = ({navigation, route}) => {
   console.log('Session name from param:' + sessionName);
 
   // tracks colors of buttons depending on whether they are selected
-  const [colorEO, setColorEO] = useState('#048CCC'); 
-  const [colorSR, setColorSR] = useState('#04A69D80');
+  const [colorEO, setColorEO] = useState('#04A69D80'); // unselected
+  const [colorSR, setColorSR] = useState('#04A69D80'); // unselected
+
+  // Calm, Screen, EO, and SR timers
+  const [calmTimerRunning, setCalmTimerRunning] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+  const [screenTimer, setScreenTimer] = useState(0);
+  const [eoTimer, setEoTimer] = useState(0);
+  const [srTimer, setSrTimer] = useState(0);
+  const [eoTimerRunning, setEoTimerRunning] = useState(false);
+  const [srTimerRunning, setSrTimerRunning] = useState(false);
+  const [screenTimerRunning, setScreenTimerRunning] = useState(true);
 
   //tracks times EO button has been pressed
   const [countEO, setCountEO] = useState(0);
+
+  // shuts down all timers and saves data before moving to the summary page
+  const endSession = () => {
+    setCalmTimerRunning(false);
+    setEoTimerRunning(false);
+    setSrTimerRunning(false);
+    setScreenTimerRunning(false);
+    navigation.navigate("Summary", {userId: userId, learnerId: learnerId, screenTimer: screenTimer, eoTimer: eoTimer, srTimer: srTimer});
+  };
 
   // change button colors
   const changeColor = (isEO, color, setColor) => {
@@ -33,52 +52,80 @@ const Session = ({navigation, route}) => {
     if (color === '#04A69D80') { // light color
         setColorEO('#04A69D80');
         setColorSR('#04A69D80');
-        }
+    }
     //toggle color selection
     if (color === '#04A69D80') { // unselected button
-        setColor('#048CCC'); // dark color
+        setColor('#048CCC'); // selected button
+        if (isEO) {
+            setEoTimerRunning(true);
+            setSrTimerRunning(false);
+        } else {
+            setSrTimerRunning(true);
+            setEoTimerRunning(false);
+        }
     }
     {/* TODO: should the counter go up when selecting EO even when it is already selected? move inside above if statement if not */}
     if (isEO) {
         setCountEO(countEO + 1);
     }
-  }
+  };
 
+  // calm button component 
   const CalmButton = () => {
-      const [timerRunning, setTimerRunning] = useState(false);
-      const [countdown, setCountdown] = useState(0);
 
       const startTimer = () => {
-        setTimerRunning(true);
+        setCalmTimerRunning(true);
         setCountdown(30); // Set the initial countdown time (in seconds)
       };
 
-      useEffect(() => {
-        let intervalId;
-        if (timerRunning) {
-          intervalId = setInterval(() => {
-            setCountdown((prevCountdown) => prevCountdown - 1);
-          }, 1000); // Update countdown every second
-        }
-
-        if (countdown === 0) {
-          clearInterval(intervalId);
-          setTimerRunning(false);
-        }
-
-        return () => {
-          clearInterval(intervalId);
-        };
-      }, [timerRunning, countdown]);
-
       return (
         <View style={{flexDirection: 'row'}}>
-          <SquareButton buttonText = {"Calm"} buttonHeight = {"0.8"} onClick = {startTimer} disabled = {timerRunning}></SquareButton>
-          {timerRunning && <Text style={[styles.text, {alignSelf: 'center'}]}>{countdown}s</Text>}
+          <SquareButton buttonText = {"Calm"} buttonHeight = {"0.8"} onClick = {startTimer} disabled = {calmTimerRunning}></SquareButton>
+          {calmTimerRunning && <Text style={[styles.text, {alignSelf: 'center'}]}>{countdown}s</Text>}
           {/* TODO: timer disappears whenever any other buttons are pressed */}
         </View>
       );
+  };
+
+  // screen, EO, SR, and calm timers
+  useEffect(() => {
+    let eoIntervalId;
+    let srIntervalId;
+    let screenIntervalId;
+    let calmIntervalId;
+
+    if (eoTimerRunning) {
+      eoIntervalId = setInterval(() => {
+        setEoTimer((prevTimer) => prevTimer + 1);
+      }, 1000);
+    } 
+    if (srTimerRunning) {
+      srIntervalId = setInterval(() => {
+        setSrTimer((prevTimer) => prevTimer + 1);
+      }, 1000);
+    } 
+    if (calmTimerRunning) {
+      calmIntervalId = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+      }, 1000);
+      if (countdown === 0) {
+        clearInterval(calmIntervalId);
+        setCalmTimerRunning(false);
+      }
+    } 
+    if (screenTimerRunning) {
+      screenIntervalId = setInterval(() => {
+        setScreenTimer((prevTimer) => prevTimer + 1);
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(eoIntervalId);
+      clearInterval(srIntervalId);
+      clearInterval(screenIntervalId);
+      clearInterval(calmIntervalId);
     };
+  }, [eoTimerRunning, srTimerRunning, calmTimerRunning, screenTimerRunning, countdown]);
 
   return (
     <SafeAreaView>
@@ -113,9 +160,9 @@ const Session = ({navigation, route}) => {
             <View style = {styles.bottomLeftContainer}>
               <Text style = {styles.text}>RIA: </Text>
               <Text style = {styles.text}>RPI: </Text>
-              <Text style = {styles.text}>Timer: </Text>
-              <Text style = {styles.text}>EO Time: </Text>
-              <Text style = {styles.text}>SR Time: </Text>
+              <Text style = {styles.text}>Timer: {screenTimer}s</Text>
+              <Text style = {styles.text}>EO Timer: {eoTimer}s</Text>
+              <Text style = {styles.text}>SR Timer: {srTimer}s</Text>
               <Text style = {styles.text}>PB Logged: </Text>
               <Text style = {styles.text}>PB During EO: </Text>
               <Text style = {styles.text}>PB During SR: </Text>
@@ -150,7 +197,7 @@ const Session = ({navigation, route}) => {
             </Pressable>
             <Pressable style = {styles.buttons}
               /* TODO: must end all timers and store data when clicking end session */
-              onPress = {() => navigation.navigate("Summary", {userId: userId, learnerId: learnerId})}>
+              onPress = {endSession}>
               <Text style = {styles.buttonText}>End Session</Text>
             </Pressable>
             </View>

@@ -19,6 +19,27 @@ const Summary = ({navigation, route}) => {
   const date = route.params?.lastUsed || "Unknown";
   console.log('Experiment date from param:' + date);
 
+  const screenTime = route.params?.screenTimer || "Unknown";
+  const eoTime = route.params?.eoTimer || "Unknown";
+  const srTime = route.params?.srTimer || "Unknown";
+
+  // tracks colors of buttons depending on whether they are selected
+  const [colorC, setColorC] = useState('#04A69D'); //control
+  const [colorT, setColorT] = useState('#04A69D80'); // test
+
+  // change button colors
+  const changeColor = (color, setColor) => {
+    //prevent two options from being selected at once
+    if (color === '#04A69D80') { // light color
+        setColorC('#04A69D80');
+        setColorT('#04A69D80');
+    }
+    //toggle color selection
+    if (color === '#04A69D80') { // unselected button
+        setColor('#04A69D'); // dark color
+    }
+  }
+
   return (
     <SafeAreaView>
       <View>
@@ -26,9 +47,20 @@ const Summary = ({navigation, route}) => {
       </View>
       <View style = {styles.page}>
         <Text style = {styles.title}>Summary</Text>
+        {/* Graph goes here */}
         <View style = {{flexDirection: 'row'}}>
             <View style = {styles.leftContainer}>
-              <SummaryData userId = {userId} learnerId = {learnerId}></SummaryData>
+              <SummaryData userId = {userId} learnerId = {learnerId} screenTimer = {screenTime} eoTimer = {eoTime} srTimer = {srTime}></SummaryData>
+            </View>
+            <View style = {styles.middleContainer}>
+                <View style = {{flexDirection: 'row', marginBottom: '5%',}}>
+                    <SquareButton buttonText = {"Control"} color = {colorC} onClick = {() => changeColor(colorC, setColorC)}></SquareButton>
+                    <SquareButton buttonText = {"Test"} color = {colorT} onClick = {() => changeColor(colorT, setColorT)}></SquareButton>
+                </View>
+                {/* TODO: must add email functionality when selecting start SBT */}
+                <RoundButton buttonWidth = {"1.5"} buttonText = {"Start SBT"}></RoundButton>
+                {/* TODO: when clicking New Session, which screen should it take you to? which data is saved? */}
+                <RoundButton buttonWidth = {"1.5"} buttonText = {"New Session"} onClick = {() => navigation.navigate('Session', {userId: userId})}></RoundButton>
             </View>
             <View style = {styles.rightContainer}>
               <View style = {{flex: 1}}>
@@ -65,6 +97,12 @@ const styles = StyleSheet.create({
   },
   leftContainer: {
     flex: 1,
+    marginLeft: '4%',
+  },
+  middleContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   rightContainer: {
     flex: 1,

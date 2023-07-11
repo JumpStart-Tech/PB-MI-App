@@ -1,16 +1,17 @@
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Pressable, SafeAreaView, Alert } from "react-native";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, memo } from "react";
 import Header from "./components/Header";
 import EmailComments from "./components/EmailComments";
 import SummaryData from "./components/SummaryData";
 import RoundButton from "./components/RoundButton";
 import SquareButton from "./components/SquareButton";
 
-{/* TODO: must store button presses */}
+{/* TODO: must store button presses and history more completely */}
 {/* TODO: must pull in keys and values from Learner screen */}
 
 // Session screen that is displayed while session is running
-const Session = ({navigation, route}) => {
+// Use React memo to prevent additional re-renders
+const Session = memo(({navigation, route}) => {
 
   // take id from previous screen
   const userId = route.params?.userId || "0000";
@@ -19,10 +20,13 @@ const Session = ({navigation, route}) => {
   console.log('Learner ID from param:' + learnerId);
   const sessionName = route.params?.sessionName || "Session Name";
   console.log('Session name from param:' + sessionName);
+  const keys = route.params?.selectedKeys || "No keys";
+  console.log('Keys from param:' + keys);
 
   // tracks colors of buttons depending on whether they are selected
   const [colorEO, setColorEO] = useState('#04A69D80'); // unselected
   const [colorSR, setColorSR] = useState('#04A69D80'); // unselected
+  const [colorCalm, setColorCalm] = useState('#04A69D'); // enabled
 
   // Calm, Screen, EO, and SR timers
   const [calmTimerRunning, setCalmTimerRunning] = useState(false);
@@ -37,13 +41,64 @@ const Session = ({navigation, route}) => {
   //tracks times EO button has been pressed
   const [countEO, setCountEO] = useState(0);
 
+  // tracks key input
+  const [input, setInput] = useState('');
+  const [history, setHistory] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [historyLength, setHistoryLength] = useState(0);
+
   // shuts down all timers and saves data before moving to the summary page
   const endSession = () => {
     setCalmTimerRunning(false);
     setEoTimerRunning(false);
     setSrTimerRunning(false);
     setScreenTimerRunning(false);
-    navigation.navigate("Summary", {userId: userId, learnerId: learnerId, screenTimer: screenTimer, eoTimer: eoTimer, srTimer: srTimer});
+    navigation.navigate("Summary", {
+      userId: userId,
+      learnerId: learnerId,
+      screenTimer: screenTimer,
+      eoTimer: eoTimer,
+      srTimer: srTimer,
+    });
+  };
+
+  // saves data and then clears it
+  const reset = () => {
+    {/* TODO: save data */}
+
+    {/* refresh page to set states to their initial values */}
+    window.location.reload();
+  }
+
+  const handleKeyPress = (digit) => {
+    const newInput = input + digit;
+    setInput(newInput);
+
+    // Add current input to history
+    setHistory((prevHistory) => [...prevHistory, newInput]);
+    setCurrentIndex((prevIndex) => prevIndex + 1);
+    setHistoryLength(historyLength + 1);
+  };
+
+  const handleUndo = () => {
+    if (currentIndex > 0) {
+      const newIndex = currentIndex - 1;
+      setCurrentIndex(newIndex);
+      setInput(history[newIndex]);
+    }
+    if (historyLength > 0) {
+      setHistoryLength(historyLength - 1);
+    }
+  };
+
+  
+  const handleRedo = () => {
+    if (currentIndex < history.length - 1) {
+      const newIndex = currentIndex + 1;
+      setCurrentIndex(newIndex);
+      setInput(history[newIndex]);
+      setHistoryLength(historyLength + 1);
+    }
   };
 
   // change button colors
@@ -57,16 +112,14 @@ const Session = ({navigation, route}) => {
     if (color === '#04A69D80') { // unselected button
         setColor('#048CCC'); // selected button
         if (isEO) {
+            setCountEO(countEO + 1);
             setEoTimerRunning(true);
             setSrTimerRunning(false);
         } else {
             setSrTimerRunning(true);
             setEoTimerRunning(false);
         }
-    }
-    {/* TODO: should the counter go up when selecting EO even when it is already selected? move inside above if statement if not */}
-    if (isEO) {
-        setCountEO(countEO + 1);
+        setScreenTimerRunning(true);
     }
   };
 
@@ -80,7 +133,7 @@ const Session = ({navigation, route}) => {
 
       return (
         <View style={{flexDirection: 'row'}}>
-          <SquareButton buttonText = {"Calm"} buttonHeight = {"0.8"} onClick = {startTimer} disabled = {calmTimerRunning}></SquareButton>
+          <SquareButton buttonText = {"Calm"} buttonHeight = {"0.8"} onClick = {startTimer} disabled = {calmTimerRunning} color = {colorCalm}></SquareButton>
           {calmTimerRunning && <Text style={[styles.text, {alignSelf: 'center'}]}>{countdown}s</Text>}
           {/* TODO: timer disappears whenever any other buttons are pressed */}
         </View>
@@ -105,12 +158,14 @@ const Session = ({navigation, route}) => {
       }, 1000);
     } 
     if (calmTimerRunning) {
+      setColorCalm('#04A69D80'); // disable calm button
       calmIntervalId = setInterval(() => {
         setCountdown((prevCountdown) => prevCountdown - 1);
       }, 1000);
       if (countdown === 0) {
         clearInterval(calmIntervalId);
         setCalmTimerRunning(false);
+        setColorCalm('#04A69D'); // enable calm button
       }
     } 
     if (screenTimerRunning) {
@@ -158,7 +213,7 @@ const Session = ({navigation, route}) => {
         {/* Bottom half of screen */}
         <View style = {{flexDirection: 'row'}}>
             <View style = {styles.bottomLeftContainer}>
-              <Text style = {styles.text}>RIA: </Text>
+              <Text style = {styles.text}>RIA: {historyLength}</Text>
               <Text style = {styles.text}>RPI: </Text>
               <Text style = {styles.text}>Timer: {screenTimer}s</Text>
               <Text style = {styles.text}>EO Timer: {eoTimer}s</Text>
@@ -170,29 +225,29 @@ const Session = ({navigation, route}) => {
             <View style = {styles.bottomRightContainer}>
             {/* 9 problem behavior (PB) buttons */}
               <View style = {{flexDirection: 'row'}}>
-                <SquareButton buttonText = {"PB 1"}></SquareButton>
-                <SquareButton buttonText = {"PB 2"}></SquareButton>
-                <SquareButton buttonText = {"PB 3"}></SquareButton>
+                <SquareButton buttonText = {"PB 1"} onClick = {() => handleKeyPress('1')}></SquareButton>
+                <SquareButton buttonText = {"PB 2"} onClick = {() => handleKeyPress('2')}></SquareButton>
+                <SquareButton buttonText = {"PB 3"} onClick = {() => handleKeyPress('3')}></SquareButton>
               </View>
               <View style = {{flexDirection: 'row'}}>
-                <SquareButton buttonText = {"PB 4"}></SquareButton>
-                <SquareButton buttonText = {"PB 5"}></SquareButton>
-                <SquareButton buttonText = {"PB 6"}></SquareButton>
+                <SquareButton buttonText = {"PB 4"} onClick = {() => handleKeyPress('4')}></SquareButton>
+                <SquareButton buttonText = {"PB 5"} onClick = {() => handleKeyPress('5')}></SquareButton>
+                <SquareButton buttonText = {"PB 6"} onClick = {() => handleKeyPress('6')}></SquareButton>
               </View>
               <View style = {{flexDirection: 'row', marginBottom: 10}}>
-                <SquareButton buttonText = {"PB 7"}></SquareButton>
-                <SquareButton buttonText = {"PB 8"}></SquareButton>
-                <SquareButton buttonText = {"PB 9"}></SquareButton>
+                <SquareButton buttonText = {"PB 7"} onClick = {() => handleKeyPress('7')}></SquareButton>
+                <SquareButton buttonText = {"PB 8"} onClick = {() => handleKeyPress('8')}></SquareButton>
+                <SquareButton buttonText = {"PB 9"} onClick = {() => handleKeyPress('9')}></SquareButton>
               </View>
               <View style = {{flexDirection: 'row'}}>
-                <RoundButton buttonWidth = {"0.85"} buttonText = {"Undo"}></RoundButton>
-                <RoundButton buttonWidth = {"0.85"} buttonText = {"Redo"}></RoundButton>
+                <RoundButton buttonWidth = {"0.85"} buttonText = {"Undo"} onClick = {handleUndo}></RoundButton>
+                <RoundButton buttonWidth = {"0.85"} buttonText = {"Redo"} onClick = {handleRedo}></RoundButton>
               </View>
             </View>
         </View>
           <View style = {styles.bottomContainer}>
-            <Pressable style = {styles.buttons}>
-              {/* TODO: must store data and clear values */}
+            <Pressable style = {styles.buttons}
+              onPress = {reset}>
               <Text style = {styles.buttonText}>Reset</Text>
             </Pressable>
             <Pressable style = {styles.buttons}
@@ -204,7 +259,7 @@ const Session = ({navigation, route}) => {
       </View>
     </SafeAreaView>
   )
-}
+});
 
 
 const styles = StyleSheet.create({

@@ -19,9 +19,9 @@ const Summary = ({navigation, route}) => {
   const date = route.params?.lastUsed || "Unknown";
   console.log('Experiment date from param:' + date);
 
-  const screenTime = route.params?.screenTimer || "Unknown";
-  const eoTime = route.params?.eoTimer || "Unknown";
-  const srTime = route.params?.srTimer || "Unknown";
+  const screenTime = route.params?.screenTimer || "0";
+  const eoTime = route.params?.eoTimer || "0";
+  const srTime = route.params?.srTimer || "0";
 
   // tracks colors of buttons depending on whether they are selected
   const [colorC, setColorC] = useState('#04A69D'); //control

@@ -7,6 +7,8 @@ import RoundButton from "./components/RoundButton";
 import InputBox from "./components/InputBox";
 import DropDown from "./components/DropDown";
 
+{/* TODO: should keys only be one character? */}
+{/* TODO: need to pass along keys to session screen */}
 const Learner = ({navigation, route}) =>{
 
     // take id from previous screen
@@ -26,13 +28,31 @@ const Learner = ({navigation, route}) =>{
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([]);
 
-    //allows new key and behavior to be added
+    let selectedKeys = [];
+
+    //allows new key and behavior to be added and orevent duplicate keys
     const handleAddToDropdown = () => {
-      if (chosenKey !== '') {
-        setItems([...items, {label: chosenKey, value: behavior}]);
+      if (chosenKey !== '' && !items.find(item => item.label === chosenKey) && !items.find(item => item.value === behavior)) {
+        setItems([...items, { label: chosenKey, value: behavior }]);
         setChosenKey('');
         setBehavior('');
       }
+    };
+
+    useEffect(() => {
+      // Limit the number of items to 50
+      if (items.length > 50) {
+        setItems(items.slice(0, 50));
+      }
+    }, [items]);
+
+    // prevent more than 9 keys from being selected
+    const handleValueChange = (selectedItems) => {
+      if (selectedItems.length <= 9) {
+        setValue(selectedItems);
+      }
+      selectedKeys.push(value ? (value.map(selectedItem => selectedItem.label)) : ([]));
+      console.log("Selected keys: " + selectedKeys);
     };
 
     return (
@@ -62,7 +82,7 @@ const Learner = ({navigation, route}) =>{
                       value={value}
                       items={items}
                       setOpen={setOpen}
-                      setValue={setValue}
+                      setValue={handleValueChange}
                       setItems={setItems}
                       placeholder="Select an option"
                       placeholderStyle={ { color: 'gray' }}
@@ -80,7 +100,7 @@ const Learner = ({navigation, route}) =>{
                   <RoundButton 
                   buttonText="Next"
                   buttonWidth="1"
-                  onClick = {() => navigation.navigate('Session', {userId, learnerId, sessionName})}
+                  onClick = {() => navigation.navigate('Session', {userId, learnerId, sessionName, selectedKeys})}
                   >
                   </RoundButton>
                 </View>

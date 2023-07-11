@@ -80,7 +80,7 @@ const Learner = ({navigation, route}) =>{
                   <RoundButton 
                   buttonText="Next"
                   buttonWidth="1"
-                  onClick = {() => navigation.navigate('Summary', {userId})}
+                  onClick = {() => navigation.navigate('Session', {userId, learnerId, sessionName})}
                   >
                   </RoundButton>
                 </View>

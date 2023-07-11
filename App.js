@@ -19,6 +19,7 @@ import Home from './views/Home';
 import Profile from './views/Profile';
 import History from './views/History';
 import HistoryDetail from './views/HistoryDetail';
+import Session from"./views/Session";
 import Summary from './views/Summary';
 
 //simply outlines all possible pages so that we can navigate to them. The app will start on the Onboarding page
@@ -43,6 +44,7 @@ const App = () =>  {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="History" component={History} />
         <Stack.Screen name="HistoryDetail" component={HistoryDetail} />
+        <Stack.Screen name="Session" component={Session} />
         <Stack.Screen name="Summary" component={Summary} />
       </Stack.Navigator>
     </NavigationContainer>

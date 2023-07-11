@@ -3,6 +3,10 @@ import { useState, useEffect, useRef } from "react";
 import Header from "./components/Header";
 import EmailComments from "./components/EmailComments";
 import SummaryData from "./components/SummaryData";
+import RoundButton from "./components/RoundButton";
+import SquareButton from "./components/SquareButton";
+
+{/* TODO: must pull in data from previous screen */}
 
 // Summary screen that is displayed when session is complete
 const Summary = ({navigation, route}) => {
@@ -20,8 +24,8 @@ const Summary = ({navigation, route}) => {
       <View>
         <Header userId = {userId} navigation = {navigation}></Header>
       </View>
-      <Text style = {styles.title}>Summary</Text>
       <View style = {styles.page}>
+        <Text style = {styles.title}>Summary</Text>
         <View style = {{flexDirection: 'row'}}>
             <View style = {styles.leftContainer}>
               <SummaryData userId = {userId} learnerId = {learnerId}></SummaryData>
@@ -48,7 +52,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     justifyContent: 'top',
     textAlign: 'left',
-    marginVertical: '6%',
+    marginVertical: '3%',
     marginHorizontal: '4%',
   },
   text: {

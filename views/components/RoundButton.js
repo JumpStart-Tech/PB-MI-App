@@ -4,7 +4,7 @@ import { StyleSheet, Pressable, Text, View} from 'react-native';
 export default function RoundButton({buttonText, buttonWidth='1', onClick}){
     return(
         <View>
-            <Pressable style={[styles.buttonSelf, {width: 148 * parseInt(buttonWidth)}]}
+            <Pressable style={[styles.buttonSelf, {width: 148 * parseFloat(buttonWidth)}]}
             onPress = {onClick}>
                 <Text style={styles.buttonText}>
                     {buttonText}
@@ -28,5 +28,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#04A69D',
         alignSelf: 'center',
         marginVertical: 5,
+        marginHorizontal: 10,
     },
 })

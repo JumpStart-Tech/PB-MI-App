@@ -45,7 +45,8 @@ const Session = memo(({navigation, route}) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
-  const [historyLength, setHistoryLength] = useState(0);
+  const [eoLength, setEoLength] = useState(0);
+  const [srLength, setSrLength] = useState(0);
 
   // shuts down all timers and saves data before moving to the summary page
   const endSession = () => {
@@ -77,27 +78,41 @@ const Session = memo(({navigation, route}) => {
     // Add current input to history
     setHistory((prevHistory) => [...prevHistory, newInput]);
     setCurrentIndex((prevIndex) => prevIndex + 1);
-    setHistoryLength(historyLength + 1);
+    if (digit === '1') {
+      setEoLength(eoLength + 1);
+    } else {
+      setSrLength(srLength + 1);
+    }
   };
 
   const handleUndo = () => {
     if (currentIndex > 0) {
+     if (input === '1') { 
+        if (eoLength > 0) {
+          setEoLength(eoLength - 1);
+        }
+     } else {
+        if (srLength > 0) {
+          setSrLength(srLength - 1);
+        }
+     }
       const newIndex = currentIndex - 1;
       setCurrentIndex(newIndex);
       setInput(history[newIndex]);
-    }
-    if (historyLength > 0) {
-      setHistoryLength(historyLength - 1);
     }
   };
 
   
   const handleRedo = () => {
     if (currentIndex < history.length - 1) {
+      if (history[currentIndex] === '1') { 
+        setEoLength(eoLength + 1);
+      } else {
+        setSrLength(srLength + 1);
+      }
       const newIndex = currentIndex + 1;
       setCurrentIndex(newIndex);
       setInput(history[newIndex]);
-      setHistoryLength(historyLength + 1);
     }
   };
 
@@ -213,8 +228,8 @@ const Session = memo(({navigation, route}) => {
         {/* Bottom half of screen */}
         <View style = {{flexDirection: 'row'}}>
             <View style = {styles.bottomLeftContainer}>
-              <Text style = {styles.text}>RIA: {historyLength}</Text>
-              <Text style = {styles.text}>RPI: </Text>
+              <Text style = {styles.text}>RIA: {eoLength}</Text>
+              <Text style = {styles.text}>RPI: {srLength}</Text>
               <Text style = {styles.text}>Timer: {screenTimer}s</Text>
               <Text style = {styles.text}>EO Timer: {eoTimer}s</Text>
               <Text style = {styles.text}>SR Timer: {srTimer}s</Text>

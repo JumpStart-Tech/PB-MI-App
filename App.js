@@ -26,10 +26,8 @@ import Chart from './views/components/Chart';
 
 //simply outlines all possible pages so that we can navigate to them. The app will start on the Onboarding page
 const App = () =>  {
-
   return (
     <Chart></Chart>
-
 
     // set linking equal true to enable back and forward buttons and updated URL for each page
     // <NavigationContainer linking={{ enabled: true }}>

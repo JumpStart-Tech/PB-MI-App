@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
+import Svg, {Circle} from 'react-native-svg';
 
 //import for navigation 
 import { NavigationContainer, useRoute} from '@react-navigation/native';
@@ -21,31 +22,36 @@ import History from './views/History';
 import HistoryDetail from './views/HistoryDetail';
 import Summary from './views/Summary';
 
+import Chart from './views/components/Chart';
+
 //simply outlines all possible pages so that we can navigate to them. The app will start on the Onboarding page
 const App = () =>  {
 
   return (
+    <Chart></Chart>
+
+
     // set linking equal true to enable back and forward buttons and updated URL for each page
-    <NavigationContainer linking={{ enabled: true }}>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false //don't need a page title on screens and will use custom header
-        }}
-      >
-        <Stack.Screen name="Onboarding" component={Onboarding} />
-        <Stack.Screen name="Registration" component={Registration} />
-        <Stack.Screen name="ExistingLearner" component={ExistingLearner} />
-        <Stack.Screen name="Learner" component={Learner} />
-        <Stack.Screen name="NewLearner" component={NewLearner} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-        <Stack.Screen name="NewPassword" component={NewPassword} />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="History" component={History} />
-        <Stack.Screen name="HistoryDetail" component={HistoryDetail} />
-        <Stack.Screen name="Summary" component={Summary} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    // <NavigationContainer linking={{ enabled: true }}>
+    //   <Stack.Navigator
+    //     screenOptions={{
+    //       headerShown: false //don't need a page title on screens and will use custom header
+    //     }}
+    //   >
+    //     <Stack.Screen name="Onboarding" component={Onboarding} />
+    //     <Stack.Screen name="Registration" component={Registration} />
+    //     <Stack.Screen name="ExistingLearner" component={ExistingLearner} />
+    //     <Stack.Screen name="Learner" component={Learner} />
+    //     <Stack.Screen name="NewLearner" component={NewLearner} />
+    //     <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+    //     <Stack.Screen name="NewPassword" component={NewPassword} />
+    //     <Stack.Screen name="Home" component={Home} />
+    //     <Stack.Screen name="Profile" component={Profile} />
+    //     <Stack.Screen name="History" component={History} />
+    //     <Stack.Screen name="HistoryDetail" component={HistoryDetail} />
+    //     <Stack.Screen name="Summary" component={Summary} />
+    //   </Stack.Navigator>
+    // </NavigationContainer>
   );
 }
 

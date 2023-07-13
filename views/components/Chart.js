@@ -4,6 +4,7 @@ import Svg, { Line } from "react-native-svg";
 import { useLayout } from "react-native-web-hooks";
 
 //TODO: make it work when page is resized maybe by throwing everything into a useEffect
+//TODO: consider splitting y axis into 2 child components with container as parent so y axis doesn't have to rerender every frame
 export default function Chart(){
     const {
       onLayout: onLayoutChart,
@@ -153,9 +154,9 @@ const styles = StyleSheet.create({
   },
   yAxis: {
     textAlign: "right",
-    borderColor: "black",
-    borderWidth: 2,
-    borderStyle: 'dotted',
+    // borderColor: "black",
+    // borderWidth: 2,
+    // borderStyle: 'dotted',
     justifyContent: 'space-between',
     position: 'relative',
     paddingRight: 5,

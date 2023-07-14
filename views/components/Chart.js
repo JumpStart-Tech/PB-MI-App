@@ -4,6 +4,7 @@ import Svg, { Line, Circle } from "react-native-svg";
 import { useLayout } from "react-native-web-hooks";
 import ChartShape from "./ChartShape";
 
+//TODO: switch the generateTestDashes function to generate a map from y axis label to height
 //TODO: make it work when page is resized maybe by throwing everything into a useEffect
 //TODO: consider splitting y axis into 2 child components with container as parent so y axis doesn't have to rerender every frame
 //TODO: add reasonable keys

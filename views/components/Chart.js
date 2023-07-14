@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Linking, StyleSheet, View, Text } from "react-native";
-import Svg, { Line, Circle } from "react-native-svg";
+import Svg, { Line, Circle, Rect } from "react-native-svg";
 import { useLayout } from "react-native-web-hooks";
 import ChartShape from "./ChartShape";
+import ChartLine from "./ChartLine";
 
 //TODO: switch the generateTestDashes function to generate a map from y axis label to height
 //TODO: make it work when page is resized maybe by throwing everything into a useEffect
@@ -24,6 +25,7 @@ export default function Chart() {
     y: yYAxis,
   } = useLayout();
   const [data, setData] = useState([10, 50, 150, 220]);
+  const [data2, setData2] = useState([0, 90, 92, 93, 180, 190, 205]);
   let [numSeconds, setNumSeconds] = useState(230);
 
   const DASH_LENGTH = 20;
@@ -107,25 +109,15 @@ export default function Chart() {
   function generateTestDashes() {
     const dashIncrement = (heightChart - LINE_HEIGHT - DASH_LENGTH) / 5;
     let yVal = LINE_HEIGHT / 2;
-    let dashes = [];
+    let yHeights = [];
     for (let i = 0; i < 6; i++) {
-      dashes.push(
-        <Line
-          x1={widthYAxis + 5}
-          y1={yVal}
-          x2={widthYAxis + 10}
-          y2={yVal}
-          stroke="red"
-          strokeWidth="1"
-          key={i * 100}
-        ></Line>
-      );
+      yHeights.push(yVal);
       yVal += dashIncrement;
     }
-    return dashes;
+    return yHeights;
   }
 
-  let testDashes = generateTestDashes();
+  let yHeights = generateTestDashes();
 
   return (
     <>
@@ -166,18 +158,42 @@ export default function Chart() {
             key="34"
           />
           {lineArray.map((item) => item)}
-          {testDashes.map((item) => item)}
           <ChartShape
             data={data}
             Shape={Circle}
-            shapeProps={{r: "10", fill: "blue" }}
+            shapeProps={{ r: "8", fill: "blue" }}
             xPosShapeProp="cx"
             yPosShapeProp="cy"
-            height="100"
+            height={yHeights[0]}
             xStart={widthYAxis}
             xEnd={widthChart}
             xScale={numSeconds}
           ></ChartShape>
+          <ChartShape
+            data={data2}
+            Shape={Rect}
+            shapeProps={{
+              width: 16,
+              height: 16,
+              fill: "white",
+              stroke: "black",
+              strokeWidth: 2,
+            }}
+            xPosShapeProp="x"
+            yPosShapeProp="y"
+            height={yHeights[3] - 8}
+            xStart={widthYAxis - 8}
+            xEnd={widthChart - 8}
+            xScale={numSeconds}
+          ></ChartShape>
+          <ChartLine
+            data={data}
+            color="black"
+            height={yHeights[4]}
+            xStart={widthYAxis}
+            xEnd={widthChart}
+            xScale={numSeconds}
+          ></ChartLine>
         </Svg>
       </View>
     </>

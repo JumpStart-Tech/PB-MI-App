@@ -11,7 +11,6 @@ export default function ChartShape({data, Shape, shapeProps, xPosShapeProp, yPos
         let tempShapeProps = structuredClone(shapeProps)
         tempShapeProps[xPosShapeProp] = xPos;
         tempShapeProps[yPosShapeProp] = height;
-        console.log(tempShapeProps)
         shapes.push(
 
                 <Shape {...tempShapeProps}></Shape>

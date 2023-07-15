@@ -24,7 +24,7 @@ export default function ChartLine({ data, color, height, xStart, xEnd, xScale}) 
           y1={height - 5}
           x2={lineStart}
           y2={height + 5}
-          stroke="black"
+          stroke={color}
           strokeWidth="1"
         ></Line>
       ); //vertical start line
@@ -34,7 +34,7 @@ export default function ChartLine({ data, color, height, xStart, xEnd, xScale}) 
           y1={height}
           x2={lineEnd}
           y2={height}
-          stroke="black"
+          stroke={color}
           strokeWidth="1"
         ></Line>
       ); //horizontal line
@@ -44,7 +44,7 @@ export default function ChartLine({ data, color, height, xStart, xEnd, xScale}) 
           y1={height - 5}
           x2={lineEnd}
           y2={height + 5}
-          stroke="black"
+          stroke={color}
           strokeWidth="1"
         ></Line>
       ); //vertical end line

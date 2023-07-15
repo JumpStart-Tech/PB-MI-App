@@ -24,7 +24,7 @@ export default function Chart() {
     x: xYAxis,
     y: yYAxis,
   } = useLayout();
-  const [data, setData] = useState([10, 50, 150, 220]);
+  const [data, setData] = useState([10, 50, 60, 150, 180, 220]);
   const [data2, setData2] = useState([0, 90, 92, 93, 180, 190, 205]);
   let [numSeconds, setNumSeconds] = useState(230);
 
@@ -33,8 +33,8 @@ export default function Chart() {
 
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
-  //     setNumSeconds((numSeconds) => numSeconds + 10);
-  //   }, 1000);
+  //     setNumSeconds((numSeconds) => numSeconds + .1);
+  //   }, 100);
   //   // clear interval on re-render to prevent multiple intervals from running
   //   return () => clearInterval(intervalId);
   //   // no dependency array, meaning it will run once on mount, and cleanup on unmount
@@ -57,7 +57,6 @@ export default function Chart() {
     } else {
       increment = increment * 10; // e.g., 10, 100, 1000, etc.
     }
-    console.log(increment);
 
     const pixelIncrement = (increment / numSeconds) * (widthChart - widthYAxis); //tick will be needed every x pixels
 
@@ -73,7 +72,6 @@ export default function Chart() {
       tickVal += increment;
       tickPx += pixelIncrement;
     }
-    console.log(tickArray);
     return tickArray;
   }
 
@@ -94,17 +92,11 @@ export default function Chart() {
         />
       );
     }
-    console.log(lineArray);
     return lineArray;
   }
 
   const lineArray = generateTicks();
-  console.log("width " + widthChart);
 
-  function handleOnLayout(event) {
-    const { textWidth } = event.nativeEvent.layout;
-    console.log("Text width: ", textWidth);
-  }
 
   function generateTestDashes() {
     const dashIncrement = (heightChart - LINE_HEIGHT - DASH_LENGTH) / 5;
@@ -130,7 +122,7 @@ export default function Chart() {
       >
         <Text style={{ lineHeight: LINE_HEIGHT }}>Dangerous</Text>
         <Text style={{ lineHeight: LINE_HEIGHT }}>Nondangerous</Text>
-        <Text style={{ lineHeight: LINE_HEIGHT }} onLayout={handleOnLayout}>
+        <Text style={{ lineHeight: LINE_HEIGHT }}>
           Interactive Behavior
         </Text>
         <Text style={{ lineHeight: LINE_HEIGHT }}>Engagement</Text>
@@ -188,7 +180,7 @@ export default function Chart() {
           ></ChartShape>
           <ChartLine
             data={data}
-            color="black"
+            color="red"
             height={yHeights[4]}
             xStart={widthYAxis}
             xEnd={widthChart}

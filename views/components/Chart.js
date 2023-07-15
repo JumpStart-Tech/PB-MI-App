@@ -24,12 +24,17 @@ export default function Chart() {
     x: xYAxis,
     y: yYAxis,
   } = useLayout();
+  const {
+    onLayout: testLayout,
+    x: testX,
+  } = useLayout();
   const [data, setData] = useState([6, 10, 14, 23, 28]);
   const [data2, setData2] = useState([0, 4, 10, 12, 16, 19, 27]);
   let [numSeconds, setNumSeconds] = useState(30);
   
+  
   const LINE_HEIGHT = 30;
-  const DASH_LENGTH = 40;
+  const DASH_LENGTH = 40; //actual dashes are 20 and numbers are 20
 
 
   // useEffect(() => {
@@ -40,6 +45,10 @@ export default function Chart() {
   //   return () => clearInterval(intervalId);
   //   // no dependency array, meaning it will run once on mount, and cleanup on unmount
   // }, []);
+
+  // useEffect(() => {
+  //   console.log("chart x: " + xChart);
+  // }, [xChart, yChart])
 
   function calculateTicks() {
     //returns an array of tick objects where each object is of the form {xlocation, value}
@@ -126,6 +135,11 @@ export default function Chart() {
 
   let yHeights = generateTestDashes();
 
+  function handleOnLayout(event){
+    const { x, y } = event.nativeEvent.layout;
+    console.log('x from handlelayout: ' + x);
+  }
+
   return (
     <>
       <View
@@ -144,7 +158,10 @@ export default function Chart() {
         <Text style={{ lineHeight: LINE_HEIGHT }}>Calmness</Text>
         <Text style={{ lineHeight: LINE_HEIGHT }}>Reinforcement</Text>
       </View>
-      <View style={styles.chartHolder} onLayout={onLayoutChart}>
+      <View style={styles.chartHolder} onLayout={(e) => {
+        onLayoutChart(e);
+      }
+          }>
         <Svg height="100%" width="100%">
           <Line
             x1={widthYAxis}
@@ -215,7 +232,7 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
     // borderStyle: 'dotted',
     height: 500,
-    width: 800,
+    width: '80%',
   },
   yAxis: {
     textAlign: "right",

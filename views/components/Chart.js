@@ -5,8 +5,7 @@ import { useLayout } from "react-native-web-hooks";
 import ChartShape from "./ChartShape";
 import ChartLine from "./ChartLine";
 
-//TODO: switch the generateTestDashes function to generate a map from y axis label to height
-//TODO: make it work when page is resized maybe by throwing everything into a useEffect
+//TODO: needs to be able to control if reinforcement or gray part comes first
 //TODO: consider splitting y axis into 2 child components with container as parent so y axis doesn't have to rerender every frame
 //TODO: add reasonable keys
 export default function Chart() {
@@ -151,17 +150,17 @@ export default function Chart() {
       >
         <Text style={{ lineHeight: LINE_HEIGHT }}>Dangerous</Text>
         <Text style={{ lineHeight: LINE_HEIGHT }}>Nondangerous</Text>
-        <Text style={{ lineHeight: LINE_HEIGHT }}>
-          Interactive Behavior
-        </Text>
+        <Text style={{ lineHeight: LINE_HEIGHT }}>Interactive Behavior</Text>
         <Text style={{ lineHeight: LINE_HEIGHT }}>Engagement</Text>
         <Text style={{ lineHeight: LINE_HEIGHT }}>Calmness</Text>
         <Text style={{ lineHeight: LINE_HEIGHT }}>Reinforcement</Text>
       </View>
-      <View style={styles.chartHolder} onLayout={(e) => {
-        onLayoutChart(e);
-      }
-          }>
+      <View
+        style={styles.chartHolder}
+        onLayout={(e) => {
+          onLayoutChart(e);
+        }}
+      >
         <Svg height="100%" width="100%">
           <Line
             x1={widthYAxis}
@@ -182,6 +181,16 @@ export default function Chart() {
             key="34"
           />
           {lineArray.map((item) => item)}
+          <ChartLine //items that are higher will go on the bottom, so rect line should be highest in return statement
+            data={data}
+            color="red"
+            height={yHeights[4]}
+            xStart={widthYAxis}
+            xEnd={widthChart}
+            xScale={numSeconds}
+            needsRect={true}
+            chartHeight={heightChart - DASH_LENGTH}
+          ></ChartLine>
           <ChartShape
             data={data}
             Shape={Circle}
@@ -210,14 +219,6 @@ export default function Chart() {
             xEnd={widthChart - 8}
             xScale={numSeconds}
           ></ChartShape>
-          <ChartLine
-            data={data}
-            color="red"
-            height={yHeights[4]}
-            xStart={widthYAxis}
-            xEnd={widthChart}
-            xScale={numSeconds}
-          ></ChartLine>
         </Svg>
       </View>
     </>

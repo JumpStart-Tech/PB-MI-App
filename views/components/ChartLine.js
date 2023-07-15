@@ -10,8 +10,8 @@ export default function ChartLine({
   xStart,
   xEnd,
   xScale,
-  needsRect,
-  chartHeight = 0,
+  needsRect=false,
+  chartHeight,
 }) {
   function generateLines() {
     const xIncrement = (xEnd - xStart) / xScale;

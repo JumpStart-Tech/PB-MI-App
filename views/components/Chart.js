@@ -23,18 +23,12 @@ export default function Chart() {
     x: xYAxis,
     y: yYAxis,
   } = useLayout();
-  const {
-    onLayout: testLayout,
-    x: testX,
-  } = useLayout();
-  const [data, setData] = useState([6, 10, 14, 23, 28]);
+  const [data, setData] = useState([0, 6, 10, 14, 23, 28]);
   const [data2, setData2] = useState([0, 4, 10, 12, 16, 19, 27]);
   let [numSeconds, setNumSeconds] = useState(30);
-  
-  
+
   const LINE_HEIGHT = 30;
   const DASH_LENGTH = 40; //actual dashes are 20 and numbers are 20
-
 
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
@@ -44,10 +38,6 @@ export default function Chart() {
   //   return () => clearInterval(intervalId);
   //   // no dependency array, meaning it will run once on mount, and cleanup on unmount
   // }, []);
-
-  // useEffect(() => {
-  //   console.log("chart x: " + xChart);
-  // }, [xChart, yChart])
 
   function calculateTicks() {
     //returns an array of tick objects where each object is of the form {xlocation, value}
@@ -120,8 +110,7 @@ export default function Chart() {
 
   const lineArray = generateTicks();
 
-
-  function generateTestDashes() {
+  function generateYSpacing() {
     const dashIncrement = (heightChart - LINE_HEIGHT - DASH_LENGTH) / 5;
     let yVal = LINE_HEIGHT / 2;
     let yHeights = [];
@@ -132,11 +121,30 @@ export default function Chart() {
     return yHeights;
   }
 
-  let yHeights = generateTestDashes();
+  function generateYDashes(yHeightsList) {
+    let yDashes = [];
+    for (let ind in yHeightsList) {
+      yDashes.push(
+        <Line
+          x1={widthYAxis}
+          y1={yHeightsList[ind]}
+          x2={widthYAxis - 20}
+          y2={yHeightsList[ind]}
+          stroke="black"
+          strokeWidth="1"
+          key={ind * 5}
+        ></Line>
+      );
+    }
+    return yDashes;
+  }
 
-  function handleOnLayout(event){
+  let yHeights = generateYSpacing();
+  let yDashes = generateYDashes(yHeights);
+
+  function handleOnLayout(event) {
     const { x, y } = event.nativeEvent.layout;
-    console.log('x from handlelayout: ' + x);
+    console.log("x from handlelayout: " + x);
   }
 
   return (
@@ -181,6 +189,7 @@ export default function Chart() {
             key="34"
           />
           {lineArray.map((item) => item)}
+          {yDashes.map((item) => item)}
           <ChartLine //items that are higher will go on the bottom, so rect line should be highest in return statement
             data={data}
             color="red"
@@ -189,7 +198,7 @@ export default function Chart() {
             xEnd={widthChart}
             xScale={numSeconds}
             needsRect={true}
-            chartHeight={heightChart - DASH_LENGTH}
+            chartHeight={Math.max(heightChart - DASH_LENGTH, 1)} //heightChart will show up as 0 for a split second upon render which causes an error in the console and this fixes that
           ></ChartLine>
           <ChartShape
             data={data}
@@ -233,7 +242,7 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
     // borderStyle: 'dotted',
     height: 500,
-    width: '80%',
+    width: "80%",
   },
   yAxis: {
     textAlign: "right",
@@ -242,6 +251,6 @@ const styles = StyleSheet.create({
     // borderStyle: 'dotted',
     justifyContent: "space-between",
     position: "relative",
-    paddingRight: 5,
+    paddingRight: 25,
   },
 });

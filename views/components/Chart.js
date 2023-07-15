@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Linking, StyleSheet, View, Text } from "react-native";
-import Svg, { Line, Circle, Rect } from "react-native-svg";
+import Svg, { Line, Circle, Rect, Text as SvgText } from "react-native-svg";
 import { useLayout } from "react-native-web-hooks";
 import ChartShape from "./ChartShape";
 import ChartLine from "./ChartLine";
@@ -24,12 +24,13 @@ export default function Chart() {
     x: xYAxis,
     y: yYAxis,
   } = useLayout();
-  const [data, setData] = useState([10, 50, 60, 150, 180, 220]);
-  const [data2, setData2] = useState([0, 90, 92, 93, 180, 190, 205]);
-  let [numSeconds, setNumSeconds] = useState(230);
-
-  const DASH_LENGTH = 20;
+  const [data, setData] = useState([6, 10, 14, 23, 28]);
+  const [data2, setData2] = useState([0, 4, 10, 12, 16, 19, 27]);
+  let [numSeconds, setNumSeconds] = useState(30);
+  
   const LINE_HEIGHT = 30;
+  const DASH_LENGTH = 40;
+
 
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
@@ -83,13 +84,27 @@ export default function Chart() {
       lineArray.push(
         <Line
           x1={xLocation}
-          y1={heightChart}
+          y1={heightChart - 20}
           x2={xLocation}
           y2={heightChart - DASH_LENGTH}
           stroke="black"
           strokeWidth="1"
           key={ind}
         />
+      );
+      lineArray.push(
+        <SvgText
+          fill="black"
+          stroke="black"
+          fontSize="20"
+          fontWeight="normal"
+          x={xLocation}
+          y={heightChart}
+          textAnchor="middle"
+          alignmentBaseline="ideographic"
+        >
+          {value}
+        </SvgText>
       );
     }
     return lineArray;

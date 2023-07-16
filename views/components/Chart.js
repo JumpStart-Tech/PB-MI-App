@@ -5,10 +5,9 @@ import { useLayout } from "react-native-web-hooks";
 import ChartShape from "./ChartShape";
 import ChartLine from "./ChartLine";
 
-//TODO: needs to be able to control if reinforcement or gray part comes first
 //TODO: consider splitting y axis into 2 child components with container as parent so y axis doesn't have to rerender every frame
 //TODO: add reasonable keys
-export default function Chart() {
+export default function Chart({propWidth, propHeight}) {
   const {
     onLayout: onLayoutChart,
     width: widthChart,
@@ -142,11 +141,7 @@ export default function Chart() {
   let yHeights = generateYSpacing();
   let yDashes = generateYDashes(yHeights);
 
-  function handleOnLayout(event) {
-    const { x, y } = event.nativeEvent.layout;
-    console.log("x from handlelayout: " + x);
-  }
-
+  
   return (
     <>
       <View
@@ -164,12 +159,13 @@ export default function Chart() {
         <Text style={{ lineHeight: LINE_HEIGHT }}>Reinforcement</Text>
       </View>
       <View
-        style={styles.chartHolder}
+        style={[styles.chartHolder, {width: propWidth, height: propHeight}]}
         onLayout={(e) => {
           onLayoutChart(e);
         }}
       >
         <Svg height="100%" width="100%">
+          <Rect width={widthChart + widthYAxis} height={heightChart} fill="none" stroke={'black'} strokeWidth={2}></Rect>
           <Line
             x1={widthYAxis}
             y1={heightChart - DASH_LENGTH}
@@ -241,8 +237,8 @@ const styles = StyleSheet.create({
     // borderColor: 'black',
     // borderWidth: 2,
     // borderStyle: 'dotted',
-    height: 500,
-    width: "80%",
+    // width: '80%',
+    // height: 500,
   },
   yAxis: {
     textAlign: "right",
@@ -250,7 +246,7 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
     // borderStyle: 'dotted',
     justifyContent: "space-between",
-    position: "relative",
+    position: "absolute",
     paddingRight: 25,
   },
 });

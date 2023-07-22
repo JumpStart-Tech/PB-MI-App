@@ -1,16 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 
 export default function useSessionControls(){
-    let [dangerousData, setDangerousData] = useState([]);
-    let [nonDangerousData, setNonDangerousData] = useState([]);
-    let [interactiveBehaviorData, setInteractiveBehaviorData] = useState([]);
-    let [engagementData, setEngagementData] = useState([]);
-    let [calmnessData, setCalmnessData] = useState([]);
-    let [reinforcementData, setReinforcementData] = useState([]);
-    let [seconds, setSeconds] = useState(0);
-    let [redoAvailable, setRedoAvailable] = useState(False);
+    const [dangerousData, setDangerousData] = useState([]);
+    const [nonDangerousData, setNonDangerousData] = useState([]);
+    const [interactiveBehaviorData, setInteractiveBehaviorData] = useState([]);
+    const [engagementData, setEngagementData] = useState([]);
+    const [calmnessData, setCalmnessData] = useState([]);
+    const [reinforcementData, setReinforcementData] = useState([]);
+    const [milliSeconds, setMilliseconds] = useState(0);
+    const [redoAvailable, setRedoAvailable] = useState(False);
     let undos = useRef([]);
     let redos = useRef([]); //any time any action other than an undo is done, lastUndone must be cleared
+    const startTime = useRef(Date.now());
 
     function undo(){
         if(undos.current.length > 0){
@@ -22,6 +23,7 @@ export default function useSessionControls(){
             }
             redos.current.push(updatedRedoFunction);
         }
+        setRedoAvailable(true);
     }
 
     function redo(){
@@ -34,5 +36,85 @@ export default function useSessionControls(){
             }
             undos.current.push(updatedUndoFunction);
         }
+        setRedoAvailable(redos.current.length > 0);
+    }
+
+    function addDangerous(behavior){
+        const timestamp = Date.now() - startTime;
+        setDangerousData(...dangerousData, [timestamp, behavior]);
+        setRedoAvailable(false);
+        const undoFunction = () => { //undo function will return a redo function
+            setDangerousData(dangerousData.slice(0, -1));
+            return () => {    
+                setDangerousData(...dangerousData, [timestamp, behavior]);
+            }
+        }
+        undos.current.push(undoFunction);
+    }
+
+    function addNonDangerous(behavior){
+        const timestamp = Date.now() - startTime;
+        setNonDangerousData(...nonDangerousData, [timestamp, behavior]);
+        setRedoAvailable(false);
+        const undoFunction = () => { //undo function will return a redo function
+            setNonDangerousData(nonDangerousData.slice(0, -1));
+            return () => {    
+                setNonDangerousData(...nonDangerousData, [timestamp, behavior]);
+            }
+        }
+        undos.current.push(undoFunction);
+    }
+
+    function addInteractive(behavior){
+        const timestamp = Date.now() - startTime;
+        setInteractiveBehaviorData(...interactiveBehaviorData, [timestamp, behavior]);
+        setRedoAvailable(false);
+        const undoFunction = () => { //undo function will return a redo function
+            setInteractiveBehaviorData(interactiveBehaviorData.slice(0, -1));
+            return () => {    
+                setInteractiveBehaviorData(...interactiveBehaviorData, [timestamp, behavior]);
+            }
+        }
+        undos.current.push(undoFunction);
+    }
+
+    function addEngagement(){
+        const timestamp = Date.now() - startTime;
+        setEngagementData(...engagementData, timestamp);
+        setRedoAvailable(false);
+        const undoFunction = () => { //undo function will return a redo function
+            setEngagementData(engagementData.slice(0, -1));
+            return () => {    
+                setEngagementData(...engagementData, timestamp);
+            }
+        }
+        undos.current.push(undoFunction);
+    }
+
+    function addCalmness(){
+        const timestamp = Date.now() - startTime;
+        setCalmnessData(...calmnessData, timestamp);
+        setRedoAvailable(false);
+        const undoFunction = () => { //undo function will return a redo function
+            setCalmnessData(calmnessData.slice(0, -1));
+            return () => {    
+                setCalmnessData(...calmnessData, timestamp);
+            }
+        }
+        undos.current.push(undoFunction);
+
+    }
+
+    function addReinforcement(){
+        const timestamp = Date.now() - startTime;
+        setReinforcementData(...reinforcementData, timestamp);
+        setRedoAvailable(false);
+        const undoFunction = () => { //undo function will return a redo function
+            setReinforcementData(reinforcementData.slice(0, -1));
+            return () => {    
+                setReinforcementData(...reinforcementData, timestamp);
+            }
+        }
+        undos.current.push(undoFunction);
     }
 }

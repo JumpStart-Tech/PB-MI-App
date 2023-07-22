@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import RoundButton from "./components/RoundButton";
 import SummaryData from "./components/SummaryData";
 import Chart from "./components/Chart";
+import useSessionControls from "../viewModels/sessionLogic";
 
 // Summary screen that is displayed when session is complete
 export default function Session({ navigation, route }) {
@@ -19,6 +20,16 @@ export default function Session({ navigation, route }) {
   console.log("id from param:" + userId);
   const learnerId = route.params?.learnerId || "0000";
   console.log("Learner ID from param:" + learnerId);
+  const {
+    dangerousData,
+    nonDangerousData,
+    interactiveBehaviorData,
+    engagementData,
+    calmnessData,
+    reinforcementData,
+    milliseconds,
+    redoAvailable,
+  } = useSessionControls();
 
   return (
     <View style={styles.page}>
@@ -35,7 +46,13 @@ export default function Session({ navigation, route }) {
               borderStyle: "solid",
             }}
           >
-            <Chart propWidth="100%" propHeight={300}></Chart>
+            <Chart propWidth="100%" propHeight={300} milliseconds={milliseconds}
+  dangerousData={dangerousData}
+  nonDangerousData={nonDangerousData}
+  interactiveBehaviorData={interactiveBehaviorData}
+  engagementData={engagementData}
+  calmnessData={calmnessData}
+  reinforcementData={reinforcementData}></Chart>
           </View>
 
           <View style={styles.topButtons}>

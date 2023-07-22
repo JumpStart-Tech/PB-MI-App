@@ -17,7 +17,8 @@ export default function ChartShape({
   let shapes = [];
   const xIncrement = (xEnd - xStart) / xScale;
   for (let ind in data) {
-    let xPos = data[ind] * xIncrement + xStart;
+    let [time, _] = data[ind];
+    let xPos = time * xIncrement + xStart;
     let tempShapeProps = structuredClone(shapeProps);
     tempShapeProps[xPosShapeProp] = xPos;
     tempShapeProps[yPosShapeProp] = height;

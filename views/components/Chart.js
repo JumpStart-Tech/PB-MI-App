@@ -7,7 +7,17 @@ import ChartLine from "./ChartLine";
 
 //TODO: consider splitting y axis into 2 child components with container as parent so y axis doesn't have to rerender every frame
 //TODO: add reasonable keys
-export default function Chart({propWidth, propHeight}) {
+export default function Chart({
+  propWidth,
+  propHeight,
+  milliseconds,
+  dangerousData,
+  nonDangerousData,
+  interactiveBehaviorData,
+  engagementData,
+  calmnessData,
+  reinforcementData,
+}) {
   const {
     onLayout: onLayoutChart,
     width: widthChart,
@@ -22,16 +32,15 @@ export default function Chart({propWidth, propHeight}) {
     x: xYAxis,
     y: yYAxis,
   } = useLayout();
-  const [data, setData] = useState([0, 6, 10, 14, 23, 28]);
-  const [data2, setData2] = useState([0, 4, 10, 12, 16, 19, 27]);
-  let [numSeconds, setNumSeconds] = useState(30);
+  // const [data, setData] = useState([0, 6, 10, 14, 23, 28]);
+  // const [data2, setData2] = useState([0, 4, 10, 12, 16, 19, 27]);
 
   const LINE_HEIGHT = 30;
   const DASH_LENGTH = 40; //actual dashes are 20 and numbers are 20
 
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
-  //     setNumSeconds((numSeconds) => numSeconds + .1);
+  //     setmilliseconds((milliseconds) => milliseconds + 100);
   //   }, 100);
   //   // clear interval on re-render to prevent multiple intervals from running
   //   return () => clearInterval(intervalId);
@@ -40,7 +49,7 @@ export default function Chart({propWidth, propHeight}) {
 
   function calculateTicks() {
     //returns an array of tick objects where each object is of the form {xlocation, value}
-    let roughIncrement = numSeconds / 5; //aiming for around 5 ticks
+    let roughIncrement = milliseconds / 5; //aiming for around 5 ticks
 
     // Calculate closest power of 10
     let power = Math.floor(Math.log10(roughIncrement));
@@ -56,13 +65,13 @@ export default function Chart({propWidth, propHeight}) {
       increment = increment * 10; // e.g., 10, 100, 1000, etc.
     }
 
-    const pixelIncrement = (increment / numSeconds) * (widthChart - widthYAxis); //tick will be needed every x pixels
+    const pixelIncrement = (increment / milliseconds) * (widthChart - widthYAxis); //tick will be needed every x pixels
 
     let tickArray = [];
     let tickVal = 0;
     let tickPx = widthYAxis;
 
-    while (tickVal < numSeconds) {
+    while (tickVal < milliseconds) {
       tickArray.push({
         value: tickVal,
         xLocation: tickPx,
@@ -141,7 +150,6 @@ export default function Chart({propWidth, propHeight}) {
   let yHeights = generateYSpacing();
   let yDashes = generateYDashes(yHeights);
 
-  
   return (
     <>
       <View
@@ -159,13 +167,19 @@ export default function Chart({propWidth, propHeight}) {
         <Text style={{ lineHeight: LINE_HEIGHT }}>Reinforcement</Text>
       </View>
       <View
-        style={[styles.chartHolder, {width: propWidth, height: propHeight}]}
+        style={[styles.chartHolder, { width: propWidth, height: propHeight }]}
         onLayout={(e) => {
           onLayoutChart(e);
         }}
       >
         <Svg height="100%" width="100%">
-          <Rect width={widthChart + widthYAxis} height={heightChart} fill="none" stroke={'black'} strokeWidth={2}></Rect>
+          <Rect
+            width={widthChart + widthYAxis}
+            height={heightChart}
+            fill="none"
+            stroke={"black"}
+            strokeWidth={2}
+          ></Rect>
           <Line
             x1={widthYAxis}
             y1={heightChart - DASH_LENGTH}
@@ -187,17 +201,17 @@ export default function Chart({propWidth, propHeight}) {
           {lineArray.map((item) => item)}
           {yDashes.map((item) => item)}
           <ChartLine //items that are higher will go on the bottom, so rect line should be highest in return statement
-            data={data}
-            color="red"
-            height={yHeights[4]}
+            data={reinforcementData}
+            color="green"
+            height={yHeights[5]}
             xStart={widthYAxis}
             xEnd={widthChart}
-            xScale={numSeconds}
+            xScale={milliseconds}
             needsRect={true}
             chartHeight={Math.max(heightChart - DASH_LENGTH, 1)} //heightChart will show up as 0 for a split second upon render which causes an error in the console and this fixes that
           ></ChartLine>
           <ChartShape
-            data={data}
+            data={dangerousData}
             Shape={Circle}
             shapeProps={{ r: "8", fill: "blue" }}
             xPosShapeProp="cx"
@@ -205,10 +219,21 @@ export default function Chart({propWidth, propHeight}) {
             height={yHeights[0]}
             xStart={widthYAxis}
             xEnd={widthChart}
-            xScale={numSeconds}
+            xScale={milliseconds}
           ></ChartShape>
           <ChartShape
-            data={data2}
+            data={nonDangerousData}
+            Shape={Circle}
+            shapeProps={{ r: "8", fill: "blue" }}
+            xPosShapeProp="cx"
+            yPosShapeProp="cy"
+            height={yHeights[0]}
+            xStart={widthYAxis}
+            xEnd={widthChart}
+            xScale={milliseconds}
+          ></ChartShape>
+          <ChartShape
+            data={interactiveBehaviorData}
             Shape={Rect}
             shapeProps={{
               width: 16,
@@ -219,11 +244,31 @@ export default function Chart({propWidth, propHeight}) {
             }}
             xPosShapeProp="x"
             yPosShapeProp="y"
-            height={yHeights[3] - 8}
+            height={yHeights[2] - 8}
             xStart={widthYAxis - 8}
             xEnd={widthChart - 8}
-            xScale={numSeconds}
+            xScale={milliseconds}
           ></ChartShape>
+          <ChartLine
+            data={engagementData}
+            color="purple"
+            height={yHeights[3]}
+            xStart={widthYAxis}
+            xEnd={widthChart}
+            xScale={milliseconds}
+            needsRect={false}
+            chartHeight={Math.max(heightChart - DASH_LENGTH, 1)} //heightChart will show up as 0 for a split second upon render which causes an error in the console and this fixes that
+          ></ChartLine>
+          <ChartLine
+            data={calmnessData}
+            color="blue"
+            height={yHeights[4]}
+            xStart={widthYAxis}
+            xEnd={widthChart}
+            xScale={milliseconds}
+            needsRect={false}
+            chartHeight={Math.max(heightChart - DASH_LENGTH, 1)} //heightChart will show up as 0 for a split second upon render which causes an error in the console and this fixes that
+          ></ChartLine>
         </Svg>
       </View>
     </>

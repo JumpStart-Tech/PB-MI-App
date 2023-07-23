@@ -17,10 +17,10 @@ import useSessionControls from "../viewModels/sessionLogic";
 export default function Session({ navigation, route }) {
   // take id from previous screen
   const userId = route.params?.userId || "0000";
-  console.log("id from param:" + userId);
   const learnerId = route.params?.learnerId || "0000";
-  console.log("Learner ID from param:" + learnerId);
   const {
+    startSession,
+    endSession,
     dangerousData,
     nonDangerousData,
     interactiveBehaviorData,
@@ -29,6 +29,14 @@ export default function Session({ navigation, route }) {
     reinforcementData,
     milliseconds,
     redoAvailable,
+    undo,
+    redo,
+    addDangerous,
+    addNonDangerous,
+    addInteractive,
+    addEngagement,
+    addCalmness,
+    addReinforcement,
   } = useSessionControls();
 
   return (
@@ -46,13 +54,17 @@ export default function Session({ navigation, route }) {
               borderStyle: "solid",
             }}
           >
-            <Chart propWidth="100%" propHeight={300} milliseconds={milliseconds}
-  dangerousData={dangerousData}
-  nonDangerousData={nonDangerousData}
-  interactiveBehaviorData={interactiveBehaviorData}
-  engagementData={engagementData}
-  calmnessData={calmnessData}
-  reinforcementData={reinforcementData}></Chart>
+            <Chart
+              propWidth="100%"
+              propHeight={300}
+              milliseconds={milliseconds}
+              dangerousData={dangerousData}
+              nonDangerousData={nonDangerousData}
+              interactiveBehaviorData={interactiveBehaviorData}
+              engagementData={engagementData}
+              calmnessData={calmnessData}
+              reinforcementData={reinforcementData}
+            ></Chart>
           </View>
 
           <View style={styles.topButtons}>
@@ -63,12 +75,12 @@ export default function Session({ navigation, route }) {
               ></RoundButton>
             </View>
             <View style={styles.buttonRow}>
-              <RoundButton buttonText={"EO"}></RoundButton>
-              <RoundButton buttonText={"SR"}></RoundButton>
+              <RoundButton buttonText={"EO"} onClick={addReinforcement}></RoundButton>
+              <RoundButton buttonText={"SR"} onClick={addReinforcement}></RoundButton>
               <Text></Text>
             </View>
             <View>
-              <RoundButton buttonText={"Calm"}></RoundButton>
+              <RoundButton buttonText={"Calm"} onClick={addCalmness}></RoundButton>
               <Text></Text>
             </View>
           </View>
@@ -77,25 +89,30 @@ export default function Session({ navigation, route }) {
           <SummaryData></SummaryData>
           <View style={styles.topButtons}>
             <View style={styles.buttonRow}>
-              <RoundButton buttonText={"PB"} buttonWidth="1"></RoundButton>
-              <RoundButton buttonText={"PB"} buttonWidth="1"></RoundButton>
-              <RoundButton buttonText={"PB"} buttonWidth="1"></RoundButton>
+              <RoundButton buttonText={"PB"} buttonWidth="1" onClick={() => addDangerous('test1')}></RoundButton>
+              <RoundButton buttonText={"PB"} buttonWidth="1" onClick={() => addDangerous('test1')}></RoundButton>
+              <RoundButton buttonText={"PB"} buttonWidth="1" onClick={() => addDangerous('test1')}></RoundButton>
             </View>
             <View style={styles.buttonRow}>
-              <RoundButton buttonText={"PB"} buttonWidth="1"></RoundButton>
-              <RoundButton buttonText={"PB"} buttonWidth="1"></RoundButton>
-              <RoundButton buttonText={"PB"} buttonWidth="1"></RoundButton>
+              <RoundButton buttonText={"PB"} buttonWidth="1" onClick={() => addDangerous('test1')}></RoundButton>
+              <RoundButton buttonText={"PB"} buttonWidth="1" onClick={() => addDangerous('test1')}></RoundButton>
+              <RoundButton buttonText={"PB"} buttonWidth="1" onClick={() => addNonDangerous('test6')}></RoundButton>
             </View>
             <View style={styles.buttonRow}>
-              <RoundButton buttonText={"PB"} buttonWidth="1"></RoundButton>
-              <RoundButton buttonText={"PB"} buttonWidth="1"></RoundButton>
-              <RoundButton buttonText={"PB"} buttonWidth="1"></RoundButton>
+              <RoundButton buttonText={"PB"} buttonWidth="1" onClick={() => addNonDangerous('test6')}></RoundButton>
+              <RoundButton buttonText={"PB"} buttonWidth="1" onClick={() => addNonDangerous('test6')}></RoundButton>
+              <RoundButton buttonText={"PB"} buttonWidth="1" onClick={() => addNonDangerous('test6')}></RoundButton>
             </View>
             <View style={styles.buttonRow}>
-              <RoundButton buttonText={"Undo"} buttonWidth="1"></RoundButton>
-              <RoundButton buttonText={"Redo"} buttonWidth="1"></RoundButton>
+              <RoundButton buttonText={"Undo"} buttonWidth="1" onClick={undo}></RoundButton>
+              <RoundButton buttonText={"Redo"} buttonWidth="1" onClick={redo}></RoundButton>
             </View>
           </View>
+        </View>
+        <View style={styles.topItems}>
+          <RoundButton buttonText={"Start w/ EO"} buttonWidth="2" onClick={() => startSession(true)}></RoundButton>
+          <RoundButton buttonText={"Start w/ SR"} buttonWidth="2" onClick={() => startSession(false)}></RoundButton>
+          <RoundButton buttonText={"Stop"} buttonWidth="2" onClick={endSession}></RoundButton>
         </View>
       </View>
     </View>

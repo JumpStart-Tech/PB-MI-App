@@ -73,7 +73,7 @@ export default function Chart({
 
     while (tickVal < milliseconds) {
       tickArray.push({
-        value: tickVal,
+        value: tickVal / 1000, //display should be in seconds
         xLocation: tickPx,
       });
       tickVal += increment;
@@ -227,7 +227,7 @@ export default function Chart({
             shapeProps={{ r: "8", fill: "blue" }}
             xPosShapeProp="cx"
             yPosShapeProp="cy"
-            height={yHeights[0]}
+            height={yHeights[1]}
             xStart={widthYAxis}
             xEnd={widthChart}
             xScale={milliseconds}

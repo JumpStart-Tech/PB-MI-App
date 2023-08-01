@@ -30,6 +30,7 @@ export default function Session({ navigation, route }) {
     reinforcementData,
     milliseconds,
     redoAvailable,
+    eoPresses,
     undo,
     redo,
     addDangerous,
@@ -81,13 +82,13 @@ export default function Session({ navigation, route }) {
                 buttonText={"EO"}
                 onClick={() => addReinforcement("EO")}
                 disabled={eoActive}
-                style={eoActive ? { backgroundColor: "#048CCC" } : null}
+                style={eoActive ? { backgroundColor: "#3cdfff" } : null}
               ></RoundButton>
               <RoundButton
                 buttonText={"SR"}
                 onClick={() => addReinforcement("SR")}
                 disabled={!eoActive}
-                style={!eoActive ? { backgroundColor: "#048CCC" } : null}
+                style={!eoActive ? { backgroundColor: "#3cdfff" } : null}
               ></RoundButton> */}
               <View style={styles.eoSwitchContainer}>
                 <Text style={[styles.eoSwitchText, {backgroundColor: (!eoActive) ? '#bebebe' : null}]}>SR</Text>
@@ -100,11 +101,12 @@ export default function Session({ navigation, route }) {
                   thumbColor="#04A69D"
                   activeThumbColor="#04A69D"
                   trackColor="#bebebe"
-                  activeTrackColor="#048CCC"
+                  activeTrackColor="#3cdfff"
                 />
-                <Text style={[styles.eoSwitchText, {backgroundColor: (eoActive) ? '#048CCC' : null}]}>EO</Text>
+                <Text style={[styles.eoSwitchText, {backgroundColor: (eoActive) ? '#3cdfff' : null}]}>EO</Text>
+                <Text style={styles.eoPressCountText}>{eoPresses}</Text>
               </View>
-              <Text></Text>
+              
             </View>
             <View>
               <RoundButton
@@ -223,6 +225,7 @@ const styles = StyleSheet.create({
   eoSwitchContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: 'center',
   },
   eoSwitchText: {
     fontSize: 20,
@@ -230,11 +233,20 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 5,
   },
+  eoPressCountText: {
+    fontSize: 20,
+    lineHeight: 22,
+    padding: 6,
+    borderRadius: 5,
+    backgroundColor: '#3cdfff',
+    marginLeft: 3,
+  },
   eoSwitch: {
     marginHorizontal: 12,
   },
   buttonRow: {
     flexDirection: "row",
     justifyContent: "space-around",
+    alignItems: "center",
   },
 });

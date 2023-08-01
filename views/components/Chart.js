@@ -202,7 +202,7 @@ export default function Chart({
           {yDashes.map((item) => item)}
           <ChartLine //items that are higher will go on the bottom, so rect line should be highest in return statement
             data={reinforcementData}
-            color="#048CCC"
+            color="#3cdfff"
             height={yHeights[5]}
             xStart={widthYAxis}
             xEnd={widthChart}

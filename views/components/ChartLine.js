@@ -85,5 +85,5 @@ export default function ChartLine({
   }
   let lines = generateLines();
 
-  return <>{lines.map((item) => item)}</>;
+  return <>{(xScale != 0) ? lines.map((item) => item) : null}</>; //won't render a line if time is 0 (session hasn't started)
 }

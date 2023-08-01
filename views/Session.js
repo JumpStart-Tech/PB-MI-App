@@ -75,8 +75,8 @@ export default function Session({ navigation, route }) {
               ></RoundButton>
             </View>
             <View style={styles.buttonRow}>
-              <RoundButton buttonText={"EO"} onClick={addReinforcement}></RoundButton>
-              <RoundButton buttonText={"SR"} onClick={addReinforcement}></RoundButton>
+              <RoundButton buttonText={"EO"} onClick={() => addReinforcement('EO')}></RoundButton>
+              <RoundButton buttonText={"SR"} onClick={() => addReinforcement('SR')}></RoundButton>
               <Text></Text>
             </View>
             <View>
@@ -110,8 +110,7 @@ export default function Session({ navigation, route }) {
           </View>
         </View>
         <View style={styles.topItems}>
-          <RoundButton buttonText={"Start w/ EO"} buttonWidth="2" onClick={() => startSession(true)}></RoundButton>
-          <RoundButton buttonText={"Start w/ SR"} buttonWidth="2" onClick={() => startSession(false)}></RoundButton>
+          <RoundButton buttonText={"Start"} buttonWidth="2" onClick={startSession}></RoundButton>
           <RoundButton buttonText={"Stop"} buttonWidth="2" onClick={endSession}></RoundButton>
         </View>
       </View>

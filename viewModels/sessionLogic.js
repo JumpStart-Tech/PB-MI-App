@@ -6,7 +6,7 @@ export default function useSessionControls() {
   const [interactiveBehaviorData, setInteractiveBehaviorData] = useState([]);
   const [engagementData, setEngagementData] = useState([]);
   const [calmnessData, setCalmnessData] = useState([]);
-  const [reinforcementData, setReinforcementData] = useState([]);
+  const [reinforcementData, setReinforcementData] = useState([0, 0]); //SR is default
   const [milliseconds, setMilliseconds] = useState(0);
   const [redoAvailable, setRedoAvailable] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
@@ -25,18 +25,12 @@ export default function useSessionControls() {
     return () => clearInterval(intervalId);
   }, [isRunning]);
 
-  function startSession(startsWithEO){
-    if(!startsWithEO){
-      setReinforcementData(reinforcementData => [...reinforcementData, 0, 0]); //need the 0 width interval at the beginning so it switches to SR
-    }
-    else{
-      setReinforcementData(reinforcementData => [...reinforcementData, 0]);
-    }
+  function startSession(){
     startTime.current = Date.now();
     setIsRunning(true);
   }
 
-  function endSession(){
+  function endSession(){ //TODO: needs to redirect to summary screen
     setIsRunning(false);
   }
 
@@ -143,18 +137,28 @@ export default function useSessionControls() {
     undos.current.push(undoFunction);
   }
 
-  function addReinforcement() {
-    const timestamp = Date.now() - startTime.current;
-    setReinforcementData(reinforcementData => [...reinforcementData, timestamp]);
-    setRedoAvailable(false);
-    const undoFunction = () => {
-      //undo function will return a redo function
-      setReinforcementData(reinforcementData.slice(0, -1));
-      return () => {
-        setReinforcementData(reinforcementData => [...reinforcementData, timestamp]);
+  function addReinforcement(reinforcementType) {
+    if(!isRunning){ //before the session is started, eo or sr can be selected (sr is default)
+      if(reinforcementType == 'EO'){
+        setReinforcementData([0]);
+      }
+      else{
+        setReinforcementData([0, 0]);
+      }
+    }
+    else{
+      const timestamp = Date.now() - startTime.current;
+      setReinforcementData(reinforcementData => [...reinforcementData, timestamp]);
+      setRedoAvailable(false);
+      const undoFunction = () => {
+        //undo function will return a redo function
+        setReinforcementData(reinforcementData.slice(0, -1));
+        return () => {
+          setReinforcementData(reinforcementData => [...reinforcementData, timestamp]);
+        };
       };
-    };
-    undos.current.push(undoFunction);
+      undos.current.push(undoFunction);
+    }
   }
 
   return {

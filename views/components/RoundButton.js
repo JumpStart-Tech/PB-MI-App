@@ -1,11 +1,12 @@
 import { StyleSheet, Pressable, Text, View} from 'react-native';
 
 
-export default function RoundButton({buttonText, buttonWidth='1', onClick}){
+export default function RoundButton({buttonText, buttonWidth='1', onClick, style = null, disabled}){
+    const clickableStyle = (disabled) ? {opacity: .5} : {};
     return(
-        <View>
-            <Pressable style={[styles.buttonSelf, {width: 148 * parseInt(buttonWidth)}]}
-            onPress = {onClick}>
+        <View style={clickableStyle}>
+            <Pressable style={[styles.buttonSelf, style, {width: 148 * parseInt(buttonWidth)}]}
+            onPress = {onClick} disabled={disabled}>
                 <Text style={styles.buttonText}>
                     {buttonText}
                 </Text>

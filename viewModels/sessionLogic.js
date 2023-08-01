@@ -13,6 +13,7 @@ export default function useSessionControls() {
   let undos = useRef([]);
   let redos = useRef([]); //any time any action other than an undo is done, lastUndone must be cleared
   let startTime = useRef(null);
+  const eoActive = reinforcementData.length % 2 == 1; //odd number of reinforcement data means eo is active
 
   useEffect(() => {
     let intervalId;
@@ -180,5 +181,6 @@ export default function useSessionControls() {
     addEngagement,
     addCalmness,
     addReinforcement,
+    eoActive,
   };
 }

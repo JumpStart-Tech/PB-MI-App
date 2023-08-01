@@ -22,6 +22,7 @@ export default function Session({ navigation, route }) {
   const {
     startSession,
     endSession,
+    resetSession,
     dangerousData,
     nonDangerousData,
     interactiveBehaviorData,
@@ -30,7 +31,8 @@ export default function Session({ navigation, route }) {
     reinforcementData,
     milliseconds,
     redoAvailable,
-    eoPresses,
+    eoPresses, //not state var
+    isRunning,
     undo,
     redo,
     addDangerous,
@@ -187,14 +189,15 @@ export default function Session({ navigation, route }) {
         </View>
         <View style={styles.topItems}>
           <RoundButton
-            buttonText={"Start"}
+            buttonText={(!isRunning) ? "Start" : "Stop"}
             buttonWidth="2"
-            onClick={startSession}
+            onClick={(!isRunning) ? startSession : endSession}
           ></RoundButton>
           <RoundButton
-            buttonText={"Stop"}
+            buttonText={"Reset"}
             buttonWidth="2"
-            onClick={endSession}
+            onClick={resetSession}
+            disabled={!isRunning}
           ></RoundButton>
         </View>
       </View>

@@ -49,6 +49,10 @@ export default function useSessionControls() {
     setIsRunning(false);
   }
 
+  function resetSession(){ //TODO: need to make this function
+
+  }
+
   function undo() {
     if (undos.current.length > 0) {
       let undoFunction = undos.current.pop();
@@ -196,6 +200,7 @@ export default function useSessionControls() {
   return {
     startSession,
     endSession,
+    resetSession,
     dangerousData,
     nonDangerousData,
     interactiveBehaviorData,
@@ -205,6 +210,7 @@ export default function useSessionControls() {
     milliseconds,
     redoAvailable,
     eoPresses,
+    isRunning,
     undo,
     redo,
     addDangerous,

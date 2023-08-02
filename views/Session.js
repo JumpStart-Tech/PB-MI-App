@@ -120,7 +120,7 @@ export default function Session({ navigation, route }) {
           </View>
         </View>
         <View style={styles.topItems}>
-          <SummaryData></SummaryData>
+          <SummaryData ria={1} rpi={2} eoTime={3} srTime={4} time={5} eoPb={6} eoSr={7}></SummaryData>
           <View style={styles.topButtons}>
             <View style={styles.buttonRow}>
               <RoundButton
@@ -189,15 +189,17 @@ export default function Session({ navigation, route }) {
         </View>
         <View style={styles.topItems}>
           <RoundButton
-            buttonText={(!isRunning) ? "Start" : "Stop"}
+            buttonText={(!isRunning) ? "Start" : "End Session"}
             buttonWidth="2"
             onClick={(!isRunning) ? startSession : endSession}
+            style={isRunning ? {backgroundColor: '#F21E1E'} : null}
           ></RoundButton>
           <RoundButton
             buttonText={"Reset"}
             buttonWidth="2"
             onClick={resetSession}
             disabled={!isRunning}
+
           ></RoundButton>
         </View>
       </View>

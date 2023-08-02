@@ -8,7 +8,7 @@ export default function useSessionControls() {
   const [calmnessData, setCalmnessData] = useState([]);
   const [reinforcementData, setReinforcementData] = useState([0, 0]); //SR is default
   const [milliseconds, setMilliseconds] = useState(0);
-  const [redoAvailable, setRedoAvailable] = useState(false);
+  const [redoAvailable, setRedoAvailable] = useState(false); //TODO: need to figure out if setting redo unavailable should clear the stack (possible same for undo stack)
   const [isRunning, setIsRunning] = useState(false);
   let undos = useRef([]);
   let redos = useRef([]); //any time any action other than an undo is done, lastUndone must be cleared
@@ -33,7 +33,7 @@ export default function useSessionControls() {
     if (isRunning) {
       intervalId = setInterval(() => {
         setMilliseconds(Date.now() - startTime.current);
-      }, 100);
+      }, 30); //this number determines the refresh rate of the chart
     }
     // clear interval on re-render to prevent multiple intervals from running
     return () => clearInterval(intervalId);

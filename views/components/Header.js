@@ -86,12 +86,10 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     border: {
-        borderWidth: 1.5,
         borderColor: 'transparent',
         borderRadius: 11,
-        overflow: 'hidden',
         backgroundImage: 'linear-gradient(to right, #36D1DC, #5B86E5)',
         padding: 2,
-    },
- 
+        border: 'none',
+     },
 })

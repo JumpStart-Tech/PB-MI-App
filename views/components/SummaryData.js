@@ -2,23 +2,23 @@ import { StyleSheet, View, Text } from "react-native";
 
 // todo: must pull in learner data
 
-const SummaryData = (userId, learnerId) => {
+const SummaryData = ({controlLevel=null, ria, rpi, eoTime, srTime, time, eoPb, eoSr, lowestPbRate=null, lowestSrRate=null}) => {
 
     return (
         <View>
-            <Text style = {styles.text}>Control Level: </Text>
-            <Text style = {styles.text}>RIAs: </Text>
-            <Text style = {[styles.text, {marginBottom: 10}]}>RPIs: </Text>
+            {controlLevel != null && <Text style = {styles.text}>Control Level: {controlLevel}</Text>}
+            <Text style = {styles.text}>RIAs: {ria}</Text>
+            <Text style = {[styles.text, {marginBottom: 10}]}>RPIs: {rpi}</Text>
 
-            <Text style = {styles.text}>EO Total Time: </Text>
-            <Text style = {styles.text}>SR Total Time: </Text>
-            <Text style = {[styles.text, {marginBottom: 10}]}>Total Time: </Text>
+            <Text style = {styles.text}>EO Total Time: {eoTime}</Text>
+            <Text style = {styles.text}>SR Total Time: {srTime}</Text>
+            <Text style = {[styles.text, {marginBottom: 10}]}>Total Time: {time}</Text>
 
-            <Text style = {styles.text}>Total EO PBs: </Text>
-            <Text style = {[styles.text, {marginBottom: 10}]}>Total EO SRs: </Text>
+            <Text style = {styles.text}>Total EO PBs: {eoPb}</Text>
+            <Text style = {[styles.text, {marginBottom: 10}]}>Total EO SRs: {eoSr}</Text>
 
-            <Text style = {styles.text}>Lowest PB Rate: </Text>
-            <Text style = {[styles.text, {marginBottom: 10}]}>Lowest SR Rate: </Text>
+            {lowestPbRate != null && <Text style = {styles.text}>Lowest PB Rate: {lowestPbRate}</Text>}
+            {lowestSrRate != null && <Text style = {[styles.text, {marginBottom: 10}]}>Lowest SR Rate: {lowestSrRate}</Text>}
         </View>
     );
 };

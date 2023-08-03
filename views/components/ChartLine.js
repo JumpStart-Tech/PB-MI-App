@@ -10,7 +10,7 @@ export default function ChartLine({
   xStart,
   xEnd,
   xScale,
-  needsRect=false,
+  needsRect = false,
   chartHeight,
 }) {
   function generateLines() {
@@ -21,6 +21,10 @@ export default function ChartLine({
       let lineStart = data[i] * xIncrement + xStart;
       let lineEnd = null;
       if (i + 1 < data.length) {
+        if (data[i + 1] == 0) {
+          //if the line ends at 0 don't render it
+          continue;
+        }
         //the line has a pair
         lineEnd = data[i + 1] * xIncrement + xStart;
       } else {
@@ -85,5 +89,5 @@ export default function ChartLine({
   }
   let lines = generateLines();
 
-  return <>{(xScale != 0) ? lines.map((item) => item) : null}</>; //won't render a line if time is 0 (session hasn't started)
+  return <>{xScale != 0 ? lines.map((item) => item) : null}</>; //won't render a line if time is 0 (session hasn't started)
 }

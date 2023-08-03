@@ -28,10 +28,6 @@ export default function useSessionControls() {
     return () => clearInterval(intervalId);
   }, [isRunning]);
 
-  useEffect(() => {
-    console.log(reinforcementData);
-  }, [reinforcementData]);
-
   function startSession() {
     startTime.current = Date.now();
     setIsRunning(true);

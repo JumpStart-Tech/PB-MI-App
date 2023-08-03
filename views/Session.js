@@ -33,7 +33,6 @@ export default function Session({ navigation, route }) {
     milliseconds,
     redoAvailable,
     isRunning,
-    calmTime,
     undo,
     redo,
     addDangerous,
@@ -142,14 +141,24 @@ export default function Session({ navigation, route }) {
               <RoundButton
                 buttonText={calmnessData.length % 2 == 0 ? "Calm" : "End Calm"}
                 onClick={calmnessData.length % 2 == 0 ? activateCalm : endCalm} //if calm data needs to be ended, end it
-                style={calmnessData.length % 2 != 0 ? {backgroundColor: '#F21E1E'} : {}}
+                style={
+                  calmnessData.length % 2 != 0
+                    ? { backgroundColor: "#F21E1E" }
+                    : {}
+                }
               ></RoundButton>
               <Text>
-                {calmTime == null
+                {calmnessData.length % 2 == 0 //calm isn't active in this case
                   ? ""
-                  : Date.now() - calmTime < 30000
-                  ? `${30 - Math.floor((Date.now() - calmTime) / 1000)} s`
-                  : "0 s"}
+                  : ((milliseconds - calmnessData[calmnessData.length - 1] < 30000)
+                  ? `${
+                      30 -
+                      Math.floor(
+                        (milliseconds - calmnessData[calmnessData.length - 1]) /
+                          1000
+                      )
+                    } s`
+                  : "0 s")}
               </Text>
               {/* if calm time has been started and less than 30 s have elapsed, show number of seconds remaining. Otherwise, show 0 seconds  */}
             </View>

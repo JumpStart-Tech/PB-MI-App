@@ -10,13 +10,12 @@ export default function useSessionControls() {
   const [milliseconds, setMilliseconds] = useState(0);
   const [redoAvailable, setRedoAvailable] = useState(false); //TODO: need to figure out if setting redo unavailable should clear the stack (possible same for undo stack)
   const [isRunning, setIsRunning] = useState(false);
-  const [calmTime, setCalmTime] = useState(null);
+  //const [calmTime, setCalmTime] = useState(null);
   let undos = useRef([]);
   let redos = useRef([]); //any time any action other than an undo is done, redos must be cleared
   let startTime = useRef(null);
   const eoActive = reinforcementData.length % 2 == 1; //odd number of reinforcement data means eo is active
-  
-  
+
   useEffect(() => {
     let intervalId;
     if (isRunning) {
@@ -30,7 +29,7 @@ export default function useSessionControls() {
 
   useEffect(() => {
     console.log(reinforcementData);
-  }, [reinforcementData])
+  }, [reinforcementData]);
 
   function startSession() {
     startTime.current = Date.now();
@@ -42,8 +41,8 @@ export default function useSessionControls() {
     setIsRunning(false);
   }
 
-  function resetSession(){ //TODO: need to make this function
-
+  function resetSession() {
+    //TODO: need to make this function
   }
 
   function undo() {
@@ -73,18 +72,18 @@ export default function useSessionControls() {
     setRedoAvailable(redos.current.length > 0);
   }
 
-  function redoIsUnavailable(){
+  function redoIsUnavailable() {
     setRedoAvailable(false);
     redos.current = [];
   }
 
-  function activateCalm(){
-    setCalmTime(Date.now());
+  function activateCalm() {
+    //setCalmTime(Date.now());
     addCalmness();
   }
 
-  function endCalm(){
-    setCalmTime(null);
+  function endCalm() {
+    //setCalmTime(null);
     addCalmness();
   }
 
@@ -137,7 +136,9 @@ export default function useSessionControls() {
     redoIsUnavailable();
     const undoFunction = () => {
       //undo function will return a redo function
-      setInteractiveBehaviorData((interactiveBehaviorData) => interactiveBehaviorData.slice(0, -1));
+      setInteractiveBehaviorData((interactiveBehaviorData) =>
+        interactiveBehaviorData.slice(0, -1)
+      );
       return () => {
         setInteractiveBehaviorData((interactiveBehaviorData) => [
           ...interactiveBehaviorData,
@@ -193,7 +194,9 @@ export default function useSessionControls() {
       redoIsUnavailable();
       const undoFunction = () => {
         //undo function will return a redo function
-        setReinforcementData((reinforcementData) => reinforcementData.slice(0, -1));
+        setReinforcementData((reinforcementData) =>
+          reinforcementData.slice(0, -1)
+        );
         return () => {
           setReinforcementData((reinforcementData) => [
             ...reinforcementData,
@@ -218,7 +221,7 @@ export default function useSessionControls() {
     milliseconds,
     redoAvailable,
     isRunning,
-    calmTime,
+    //calmTime,
     undo,
     redo,
     addDangerous,

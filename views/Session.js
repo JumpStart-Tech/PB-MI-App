@@ -31,6 +31,7 @@ export default function Session({ navigation, route }) {
     calmnessData,
     reinforcementData,
     milliseconds,
+    undoAvailable,
     redoAvailable,
     isRunning,
     undo,
@@ -39,8 +40,7 @@ export default function Session({ navigation, route }) {
     addNonDangerous,
     addInteractive,
     addEngagement,
-    activateCalm,
-    endCalm,
+    addCalmness,
     addReinforcement,
     eoActive, //not state var
   } = useSessionControls();
@@ -91,6 +91,7 @@ export default function Session({ navigation, route }) {
               <RoundButton
                 buttonText={"Confirm Control"}
                 buttonWidth={2}
+                disabled={!isRunning}
               ></RoundButton>
             </View>
             <View style={styles.buttonRow}>
@@ -140,12 +141,13 @@ export default function Session({ navigation, route }) {
             <View>
               <RoundButton
                 buttonText={calmnessData.length % 2 == 0 ? "Calm" : "End Calm"}
-                onClick={calmnessData.length % 2 == 0 ? activateCalm : endCalm} //if calm data needs to be ended, end it
+                onClick={addCalmness} //if calm data needs to be ended, end it
                 style={
                   calmnessData.length % 2 != 0
                     ? { backgroundColor: "#F21E1E" }
                     : {}
                 }
+                disabled={!isRunning}
               ></RoundButton>
               <Text>
                 {calmnessData.length % 2 == 0 //calm isn't active in this case
@@ -180,16 +182,19 @@ export default function Session({ navigation, route }) {
                 buttonText={"PB"}
                 buttonWidth="1"
                 onClick={() => addDangerous("test1")}
+                disabled={!isRunning}
               ></RoundButton>
               <RoundButton
                 buttonText={"PB"}
                 buttonWidth="1"
                 onClick={() => addDangerous("test1")}
+                disabled={!isRunning}
               ></RoundButton>
               <RoundButton
                 buttonText={"PB"}
                 buttonWidth="1"
                 onClick={() => addDangerous("test1")}
+                disabled={!isRunning}
               ></RoundButton>
             </View>
             <View style={styles.buttonRow}>
@@ -197,16 +202,19 @@ export default function Session({ navigation, route }) {
                 buttonText={"PB"}
                 buttonWidth="1"
                 onClick={() => addDangerous("test1")}
+                disabled={!isRunning}
               ></RoundButton>
               <RoundButton
                 buttonText={"PB"}
                 buttonWidth="1"
                 onClick={() => addDangerous("test1")}
+                disabled={!isRunning}
               ></RoundButton>
               <RoundButton
                 buttonText={"PB"}
                 buttonWidth="1"
                 onClick={() => addNonDangerous("test6")}
+                disabled={!isRunning}
               ></RoundButton>
             </View>
             <View style={styles.buttonRow}>
@@ -214,16 +222,19 @@ export default function Session({ navigation, route }) {
                 buttonText={"PB"}
                 buttonWidth="1"
                 onClick={() => addNonDangerous("test6")}
+                disabled={!isRunning}
               ></RoundButton>
               <RoundButton
                 buttonText={"PB"}
                 buttonWidth="1"
                 onClick={() => addNonDangerous("test6")}
+                disabled={!isRunning}
               ></RoundButton>
               <RoundButton
                 buttonText={"PB"}
                 buttonWidth="1"
                 onClick={() => addNonDangerous("test6")}
+                disabled={!isRunning}
               ></RoundButton>
             </View>
             <View style={styles.buttonRow}>
@@ -231,11 +242,13 @@ export default function Session({ navigation, route }) {
                 buttonText={"Undo"}
                 buttonWidth="1"
                 onClick={undo}
+                disabled={!undoAvailable}
               ></RoundButton>
               <RoundButton
                 buttonText={"Redo"}
                 buttonWidth="1"
                 onClick={redo}
+                disabled={!redoAvailable}
               ></RoundButton>
             </View>
           </View>

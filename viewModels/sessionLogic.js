@@ -8,13 +8,14 @@ export default function useSessionControls() {
   const [calmnessData, setCalmnessData] = useState([]);
   const [reinforcementData, setReinforcementData] = useState([0, 0]); //SR is default
   const [milliseconds, setMilliseconds] = useState(0);
-  const [redoAvailable, setRedoAvailable] = useState(false); //TODO: need to figure out if setting redo unavailable should clear the stack (possible same for undo stack)
+  //const [redoAvailable, setRedoAvailable] = useState(false); //TODO: need to figure out if setting redo unavailable should clear the stack (possible same for undo stack)
   const [isRunning, setIsRunning] = useState(false);
-  //const [calmTime, setCalmTime] = useState(null);
   let undos = useRef([]);
   let redos = useRef([]); //any time any action other than an undo is done, redos must be cleared
   let startTime = useRef(null);
   const eoActive = reinforcementData.length % 2 == 1; //odd number of reinforcement data means eo is active
+  const undoAvailable = undos.current.length > 0;
+  const redoAvailable = redos.current.length > 0;
 
   useEffect(() => {
     let intervalId;
@@ -55,7 +56,7 @@ export default function useSessionControls() {
       };
       redos.current.push(updatedRedoFunction);
     }
-    setRedoAvailable(true);
+    //setRedoAvailable(true);
   }
 
   function redo() {
@@ -69,22 +70,12 @@ export default function useSessionControls() {
       };
       undos.current.push(updatedUndoFunction);
     }
-    setRedoAvailable(redos.current.length > 0);
+    //setRedoAvailable(redos.current.length > 0);
   }
 
   function redoIsUnavailable() {
-    setRedoAvailable(false);
+    //setRedoAvailable(false);
     redos.current = [];
-  }
-
-  function activateCalm() {
-    //setCalmTime(Date.now());
-    addCalmness();
-  }
-
-  function endCalm() {
-    //setCalmTime(null);
-    addCalmness();
   }
 
   function addDangerous(behavior) {
@@ -219,17 +210,16 @@ export default function useSessionControls() {
     calmnessData,
     reinforcementData,
     milliseconds,
+    undoAvailable,
     redoAvailable,
     isRunning,
-    //calmTime,
     undo,
     redo,
     addDangerous,
     addNonDangerous,
     addInteractive,
     addEngagement,
-    activateCalm,
-    endCalm,
+    addCalmness,
     addReinforcement,
     eoActive,
   };

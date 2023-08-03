@@ -5,7 +5,7 @@ import { StyleSheet, View, Text } from "react-native";
 const SummaryData = ({controlLevel=null, ria, rpi, eoTime, srTime, time, eoPb, eoSr, lowestPbRate=null, lowestSrRate=null}) => {
 
     return (
-        <View>
+        <View style={styles.summaryDataContainer}> 
             {controlLevel != null && <Text style = {styles.text}>Control Level: {controlLevel}</Text>}
             <Text style = {styles.text}>RIAs: {ria}</Text>
             <Text style = {[styles.text, {marginBottom: 10}]}>RPIs: {rpi}</Text>
@@ -24,6 +24,9 @@ const SummaryData = ({controlLevel=null, ria, rpi, eoTime, srTime, time, eoPb, e
 };
 
 const styles = StyleSheet.create({
+  summaryDataContainer: {
+    width: 200,
+  },
   text: {
     color: 'black',
     fontSize: 14,

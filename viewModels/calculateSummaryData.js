@@ -113,7 +113,7 @@ function secondsToString(totalSeconds){
     const seconds = Math.floor(totalSeconds % 60);
     let tempStr = '';
     if(minutes > 0){
-        tempStr += `${minutes} mins, `;
+        tempStr += `${minutes} min, `;
     }
     tempStr += `${seconds} sec`;
     return tempStr;

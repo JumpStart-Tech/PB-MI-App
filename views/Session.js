@@ -68,9 +68,6 @@ export default function Session({ navigation, route }) {
           <View
             style={{
               width: 800,
-              borderColor: "red",
-              borderWidth: 2,
-              borderStyle: "solid",
             }}
           >
             <Chart
@@ -152,7 +149,7 @@ export default function Session({ navigation, route }) {
               <Text>
                 {calmnessData.length % 2 == 0 //calm isn't active in this case
                   ? ""
-                  : ((milliseconds - calmnessData[calmnessData.length - 1] < 30000)
+                  : milliseconds - calmnessData[calmnessData.length - 1] < 30000
                   ? `${
                       30 -
                       Math.floor(
@@ -160,7 +157,7 @@ export default function Session({ navigation, route }) {
                           1000
                       )
                     } s`
-                  : "0 s")}
+                  : "0 s"}
               </Text>
               {/* if calm time has been started and less than 30 s have elapsed, show number of seconds remaining. Otherwise, show 0 seconds  */}
             </View>
@@ -287,9 +284,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   topButtons: {
-    borderColor: "black",
-    borderWidth: 2,
-    borderStyle: "solid",
     justifyContent: "space-around",
   },
   eoSwitchContainer: {

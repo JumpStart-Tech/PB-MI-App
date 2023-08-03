@@ -177,7 +177,7 @@ export default function Chart({
             width={widthChart + widthYAxis}
             height={heightChart}
             fill="none"
-            stroke={"black"}
+            stroke={"none"}
             strokeWidth={2}
           ></Rect>
           <Line
@@ -279,17 +279,9 @@ const styles = StyleSheet.create({
   chartHolder: {
     alignSelf: "center",
     marginHorizontal: "auto",
-    // borderColor: 'black',
-    // borderWidth: 2,
-    // borderStyle: 'dotted',
-    // width: '80%',
-    // height: 500,
   },
   yAxis: {
     textAlign: "right",
-    // borderColor: "black",
-    // borderWidth: 2,
-    // borderStyle: 'dotted',
     justifyContent: "space-between",
     position: "absolute",
     paddingRight: 25,

@@ -15,7 +15,6 @@ export default function useSessionControls() {
   let redos = useRef([]); //any time any action other than an undo is done, redos must be cleared
   let startTime = useRef(null);
   const eoActive = reinforcementData.length % 2 == 1; //odd number of reinforcement data means eo is active
-  //const eoPresses = (isRunning) ? Math.floor((reinforcementData.length + 1) / 2) : ((reinforcementData.length == 2) ? 0 : 1);
   
   
   useEffect(() => {
@@ -28,6 +27,10 @@ export default function useSessionControls() {
     // clear interval on re-render to prevent multiple intervals from running
     return () => clearInterval(intervalId);
   }, [isRunning]);
+
+  useEffect(() => {
+    console.log(reinforcementData);
+  }, [reinforcementData])
 
   function startSession() {
     startTime.current = Date.now();
@@ -114,7 +117,7 @@ export default function useSessionControls() {
     redoIsUnavailable();
     const undoFunction = () => {
       //undo function will return a redo function
-      setNonDangerousData(nonDangerousData.slice(0, -1));
+      setNonDangerousData((nonDangerousData) => nonDangerousData.slice(0, -1));
       return () => {
         setNonDangerousData((nonDangerousData) => [
           ...nonDangerousData,
@@ -134,7 +137,7 @@ export default function useSessionControls() {
     redoIsUnavailable();
     const undoFunction = () => {
       //undo function will return a redo function
-      setInteractiveBehaviorData(interactiveBehaviorData.slice(0, -1));
+      setInteractiveBehaviorData((interactiveBehaviorData) => interactiveBehaviorData.slice(0, -1));
       return () => {
         setInteractiveBehaviorData((interactiveBehaviorData) => [
           ...interactiveBehaviorData,
@@ -151,7 +154,7 @@ export default function useSessionControls() {
     redoIsUnavailable();
     const undoFunction = () => {
       //undo function will return a redo function
-      setEngagementData(engagementData.slice(0, -1));
+      setEngagementData((engagementData) => engagementData.slice(0, -1));
       return () => {
         setEngagementData((engagementData) => [...engagementData, timestamp]);
       };
@@ -165,7 +168,7 @@ export default function useSessionControls() {
     redoIsUnavailable();
     const undoFunction = () => {
       //undo function will return a redo function
-      setCalmnessData(calmnessData.slice(0, -1));
+      setCalmnessData((calmnessData) => calmnessData.slice(0, -1));
       return () => {
         setCalmnessData((calmnessData) => [...calmnessData, timestamp]);
       };
@@ -190,7 +193,7 @@ export default function useSessionControls() {
       redoIsUnavailable();
       const undoFunction = () => {
         //undo function will return a redo function
-        setReinforcementData(reinforcementData.slice(0, -1));
+        setReinforcementData((reinforcementData) => reinforcementData.slice(0, -1));
         return () => {
           setReinforcementData((reinforcementData) => [
             ...reinforcementData,

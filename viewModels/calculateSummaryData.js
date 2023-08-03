@@ -43,9 +43,9 @@ function calculateSummaryData(
     return {
         ria,
         rpi,
-        eoTime,
-        srTime,
-        time: sessionLength,
+        eoTime: secondsToString(eoTime),
+        srTime: secondsToString(srTime),
+        time: secondsToString(sessionLength / 1000),
         eoPb: null,
         eoSr: null,
         lowestPbRate: null,
@@ -106,4 +106,15 @@ function countEoSrTime(reinforcementArray, eoIsFirst, sessionLength){
         isCountingEoTime = !isCountingEoTime;
     }
     return [eoTime, srTime];
+}
+
+function secondsToString(totalSeconds){
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = Math.floor(totalSeconds % 60);
+    let tempStr = '';
+    if(minutes > 0){
+        tempStr += `${minutes} mins, `;
+    }
+    tempStr += `${seconds} sec`;
+    return tempStr;
 }

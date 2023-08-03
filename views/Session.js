@@ -134,7 +134,7 @@ export default function Session({ navigation, route }) {
           </View>
         </View>
         <View style={styles.topItems}>
-          <SummaryData ria={ria} rpi={rpi} eoTime={eoTime} srTime={srTime} time={milliseconds/1000} eoPb={'-'} eoSr={'-'}></SummaryData>
+          <SummaryData ria={ria} rpi={rpi} eoTime={eoTime} srTime={srTime} time={time} eoPb={'-'} eoSr={'-'}></SummaryData>
           <View style={styles.topButtons}>
             <View style={styles.buttonRow}>
               <RoundButton

@@ -15,18 +15,7 @@ export default function useSessionControls() {
   let startTime = useRef(null);
   const eoActive = reinforcementData.length % 2 == 1; //odd number of reinforcement data means eo is active
   //const eoPresses = (isRunning) ? Math.floor((reinforcementData.length + 1) / 2) : ((reinforcementData.length == 2) ? 0 : 1);
-  const eoPresses = (() => {
-    if (!isRunning) { //if it's being adjusted before the session starts, can only be 1 zero or 2 zeroes so those cases are hard coded
-      if (reinforcementData.length == 2) {
-        return 0;
-      }
-      return 1;
-    }
-    if (reinforcementData.length < 2 || reinforcementData[1] != 0) { //this case is where the session started with eo
-      return Math.floor((reinforcementData.length - 1) / 2) + 1;
-    }
-    return Math.floor((reinforcementData.length - 1) / 2); //this case is where the session started with sr
-  })();
+  
   
   useEffect(() => {
     let intervalId;
@@ -209,7 +198,6 @@ export default function useSessionControls() {
     reinforcementData,
     milliseconds,
     redoAvailable,
-    eoPresses,
     isRunning,
     undo,
     redo,

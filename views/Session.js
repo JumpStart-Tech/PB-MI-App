@@ -13,6 +13,7 @@ import RoundButton from "./components/RoundButton";
 import SummaryData from "./components/SummaryData";
 import Chart from "./components/Chart";
 import useSessionControls from "../viewModels/sessionLogic";
+import { calculateSummaryData } from "../viewModels/calculateSummaryData";
 
 // Summary screen that is displayed when session is complete
 export default function Session({ navigation, route }) {
@@ -31,7 +32,6 @@ export default function Session({ navigation, route }) {
     reinforcementData,
     milliseconds,
     redoAvailable,
-    eoPresses, //not state var
     isRunning,
     undo,
     redo,
@@ -43,6 +43,20 @@ export default function Session({ navigation, route }) {
     addReinforcement,
     eoActive, //not state var
   } = useSessionControls();
+
+  const {
+    ria,
+    rpi,
+    eoTime,
+    srTime,
+    time,
+    eoPresses,
+  } = calculateSummaryData(milliseconds, isRunning, {dangerousData,
+    nonDangerousData,
+    interactiveBehaviorData,
+    engagementData,
+    calmnessData,
+    reinforcementData,})
 
   return (
     <View style={styles.page}>
@@ -120,7 +134,7 @@ export default function Session({ navigation, route }) {
           </View>
         </View>
         <View style={styles.topItems}>
-          <SummaryData ria={1} rpi={2} eoTime={3} srTime={4} time={5} eoPb={6} eoSr={7}></SummaryData>
+          <SummaryData ria={ria} rpi={rpi} eoTime={eoTime} srTime={srTime} time={milliseconds/1000} eoPb={'-'} eoSr={'-'}></SummaryData>
           <View style={styles.topButtons}>
             <View style={styles.buttonRow}>
               <RoundButton

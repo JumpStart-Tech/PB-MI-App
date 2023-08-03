@@ -33,30 +33,31 @@ export default function Session({ navigation, route }) {
     milliseconds,
     redoAvailable,
     isRunning,
+    calmTime,
     undo,
     redo,
     addDangerous,
     addNonDangerous,
     addInteractive,
     addEngagement,
-    addCalmness,
+    activateCalm,
+    endCalm,
     addReinforcement,
     eoActive, //not state var
   } = useSessionControls();
 
-  const {
-    ria,
-    rpi,
-    eoTime,
-    srTime,
-    time,
-    eoPresses,
-  } = calculateSummaryData(milliseconds, isRunning, {dangerousData,
-    nonDangerousData,
-    interactiveBehaviorData,
-    engagementData,
-    calmnessData,
-    reinforcementData,})
+  const { ria, rpi, eoTime, srTime, time, eoPresses } = calculateSummaryData(
+    milliseconds,
+    isRunning,
+    {
+      dangerousData,
+      nonDangerousData,
+      interactiveBehaviorData,
+      engagementData,
+      calmnessData,
+      reinforcementData,
+    }
+  );
 
   return (
     <View style={styles.page}>
@@ -107,7 +108,14 @@ export default function Session({ navigation, route }) {
                 style={!eoActive ? { backgroundColor: "#3cdfff" } : null}
               ></RoundButton> */}
               <View style={styles.eoSwitchContainer}>
-                <Text style={[styles.eoSwitchText, {backgroundColor: (!eoActive) ? '#bebebe' : null}]}>SR</Text>
+                <Text
+                  style={[
+                    styles.eoSwitchText,
+                    { backgroundColor: !eoActive ? "#bebebe" : null },
+                  ]}
+                >
+                  SR
+                </Text>
                 <Switch
                   style={styles.eoSwitch}
                   value={eoActive}
@@ -119,22 +127,44 @@ export default function Session({ navigation, route }) {
                   trackColor="#bebebe"
                   activeTrackColor="#3cdfff"
                 />
-                <Text style={[styles.eoSwitchText, {backgroundColor: (eoActive) ? '#3cdfff' : null}]}>EO</Text>
+                <Text
+                  style={[
+                    styles.eoSwitchText,
+                    { backgroundColor: eoActive ? "#3cdfff" : null },
+                  ]}
+                >
+                  EO
+                </Text>
                 <Text style={styles.eoPressCountText}>{eoPresses}</Text>
               </View>
-              
             </View>
             <View>
               <RoundButton
-                buttonText={"Calm"}
-                onClick={addCalmness}
+                buttonText={calmnessData.length % 2 == 0 ? "Calm" : "End Calm"}
+                onClick={calmnessData.length % 2 == 0 ? activateCalm : endCalm} //if calm data needs to be ended, end it
+                style={calmnessData.length % 2 != 0 ? {backgroundColor: '#F21E1E'} : {}}
               ></RoundButton>
-              <Text></Text>
+              <Text>
+                {calmTime == null
+                  ? ""
+                  : Date.now() - calmTime < 30000
+                  ? `${30 - Math.floor((Date.now() - calmTime) / 1000)} s`
+                  : "0 s"}
+              </Text>
+              {/* if calm time has been started and less than 30 s have elapsed, show number of seconds remaining. Otherwise, show 0 seconds  */}
             </View>
           </View>
         </View>
         <View style={styles.topItems}>
-          <SummaryData ria={ria} rpi={rpi} eoTime={eoTime} srTime={srTime} time={time} eoPb={'-'} eoSr={'-'}></SummaryData>
+          <SummaryData
+            ria={ria}
+            rpi={rpi}
+            eoTime={eoTime}
+            srTime={srTime}
+            time={time}
+            eoPb={"-"}
+            eoSr={"-"}
+          ></SummaryData>
           <View style={styles.topButtons}>
             <View style={styles.buttonRow}>
               <RoundButton
@@ -203,17 +233,16 @@ export default function Session({ navigation, route }) {
         </View>
         <View style={styles.topItems}>
           <RoundButton
-            buttonText={(!isRunning) ? "Start" : "End Session"}
+            buttonText={!isRunning ? "Start" : "End Session"}
             buttonWidth="2"
-            onClick={(!isRunning) ? startSession : endSession}
-            style={isRunning ? {backgroundColor: '#F21E1E'} : null}
+            onClick={!isRunning ? startSession : endSession}
+            style={isRunning ? { backgroundColor: "#F21E1E" } : null}
           ></RoundButton>
           <RoundButton
             buttonText={"Reset"}
             buttonWidth="2"
             onClick={resetSession}
             disabled={!isRunning}
-
           ></RoundButton>
         </View>
       </View>
@@ -244,7 +273,7 @@ const styles = StyleSheet.create({
   eoSwitchContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   eoSwitchText: {
     fontSize: 20,
@@ -257,7 +286,7 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     padding: 6,
     borderRadius: 5,
-    backgroundColor: '#3cdfff',
+    backgroundColor: "#3cdfff",
     marginLeft: 3,
   },
   eoSwitch: {

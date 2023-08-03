@@ -10,6 +10,7 @@ export default function useSessionControls() {
   const [milliseconds, setMilliseconds] = useState(0);
   const [redoAvailable, setRedoAvailable] = useState(false); //TODO: need to figure out if setting redo unavailable should clear the stack (possible same for undo stack)
   const [isRunning, setIsRunning] = useState(false);
+  const [calmTime, setCalmTime] = useState(null);
   let undos = useRef([]);
   let redos = useRef([]); //any time any action other than an undo is done, lastUndone must be cleared
   let startTime = useRef(null);
@@ -67,6 +68,16 @@ export default function useSessionControls() {
       undos.current.push(updatedUndoFunction);
     }
     setRedoAvailable(redos.current.length > 0);
+  }
+
+  function activateCalm(){
+    setCalmTime(Date.now());
+    addCalmness();
+  }
+
+  function endCalm(){
+    setCalmTime(null);
+    addCalmness();
   }
 
   function addDangerous(behavior) {
@@ -199,13 +210,15 @@ export default function useSessionControls() {
     milliseconds,
     redoAvailable,
     isRunning,
+    calmTime,
     undo,
     redo,
     addDangerous,
     addNonDangerous,
     addInteractive,
     addEngagement,
-    addCalmness,
+    activateCalm,
+    endCalm,
     addReinforcement,
     eoActive,
   };

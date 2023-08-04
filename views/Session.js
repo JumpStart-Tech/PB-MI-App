@@ -65,7 +65,7 @@ export default function Session({ navigation, route }) {
         <Header userId={userId} navigation={navigation}></Header>
       </View>
       <View style={styles.body}>
-      <View style={styles.topItems}>
+        <View style={styles.topItems}>
           <RoundButton
             buttonText={!isRunning ? "Start" : "End Session"}
             buttonWidth="2"
@@ -141,9 +141,24 @@ export default function Session({ navigation, route }) {
                 <Text style={styles.eoPressCountText}>{eoPresses}</Text>
               </View>
             </View>
-            <View>
+            <View style={styles.eoSwitchContainer}>
               <RoundButton
-                buttonText={calmnessData.length % 2 == 0 ? "Calm" : "End Calm"}
+                buttonText={
+                  calmnessData.length % 2 == 0
+                    ? "Calm"
+                    : "End Calm " +
+                      (milliseconds - calmnessData[calmnessData.length - 1] <
+                      30000 //if less than 30s have elapsed
+                        ? `(${
+                            30 -
+                            Math.floor(
+                              (milliseconds -
+                                calmnessData[calmnessData.length - 1]) /
+                                1000
+                            )
+                          }s)` //calculate number of seconds that have elapsed then do 30 - that
+                        : "(0s)")
+                }
                 onClick={addCalmness} //if calm data needs to be ended, end it
                 style={
                   calmnessData.length % 2 != 0
@@ -152,19 +167,6 @@ export default function Session({ navigation, route }) {
                 }
                 disabled={!isRunning}
               ></RoundButton>
-              <Text>
-                {calmnessData.length % 2 == 0 //calm isn't active in this case
-                  ? ""
-                  : milliseconds - calmnessData[calmnessData.length - 1] < 30000
-                  ? `${
-                      30 -
-                      Math.floor(
-                        (milliseconds - calmnessData[calmnessData.length - 1]) /
-                          1000
-                      )
-                    } s`
-                  : "0 s"}
-              </Text>
               {/* if calm time has been started and less than 30 s have elapsed, show number of seconds remaining. Otherwise, show 0 seconds  */}
             </View>
           </View>
@@ -256,7 +258,6 @@ export default function Session({ navigation, route }) {
             </View>
           </View>
         </View>
-        
       </View>
     </View>
   );
@@ -281,10 +282,10 @@ const { ids, styles } = StyleSheet.create({
     },
   },
   chartStyle: {
-    width: '100%',
+    width: "100%",
     height: 300,
     "@media (max-width: 820px)": {
-      width: '80%',
+      width: "80%",
       height: 250,
     },
   },
@@ -301,8 +302,8 @@ const { ids, styles } = StyleSheet.create({
     justifyContent: "center",
     padding: 4,
     borderRadius: 5,
-    borderColor: 'black',
-    borderStyle: 'solid',
+    borderColor: "black",
+    borderStyle: "solid",
     borderWidth: 1,
   },
   eoSwitchText: {

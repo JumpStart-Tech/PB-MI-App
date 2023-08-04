@@ -1,5 +1,5 @@
 import {
-  StyleSheet,
+  //StyleSheet,
   View,
   Text,
   TextInput,
@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Switch,
 } from "react-native";
+import StyleSheet from "react-native-media-query";
 import { useState, useEffect, useRef } from "react";
 import Header from "./components/Header";
 import RoundButton from "./components/RoundButton";
@@ -64,15 +65,32 @@ export default function Session({ navigation, route }) {
         <Header userId={userId} navigation={navigation}></Header>
       </View>
       <View style={styles.body}>
-        <View style={styles.topItems}>
+      <View style={styles.topItems}>
+          <RoundButton
+            buttonText={!isRunning ? "Start" : "End Session"}
+            buttonWidth="2"
+            onClick={!isRunning ? startSession : endSession}
+            style={isRunning ? { backgroundColor: "#F21E1E" } : null}
+          ></RoundButton>
+          <RoundButton
+            buttonText={"Reset"}
+            buttonWidth="2"
+            onClick={resetSession}
+            disabled={!isRunning}
+          ></RoundButton>
+        </View>
+        <View style={styles.topItems} dataSet={{ media: ids.topItems }}>
           <View
             style={{
               width: 800,
+              alignSelf: "center",
             }}
           >
             <Chart
-              propWidth="100%"
-              propHeight={300}
+              // propWidth="100%"
+              // propHeight={300}
+              chartStyle={styles.chartStyle}
+              chartDataset={{ media: ids.chartStyle }}
               milliseconds={milliseconds}
               dangerousData={dangerousData}
               nonDangerousData={nonDangerousData}
@@ -83,7 +101,7 @@ export default function Session({ navigation, route }) {
             ></Chart>
           </View>
 
-          <View style={styles.topButtons}>
+          <View style={styles.topButtons} dataSet={{ media: ids.topButtons }}>
             <View>
               <RoundButton
                 buttonText={"Confirm Control"}
@@ -92,18 +110,6 @@ export default function Session({ navigation, route }) {
               ></RoundButton>
             </View>
             <View style={styles.buttonRow}>
-              {/* <RoundButton
-                buttonText={"EO"}
-                onClick={() => addReinforcement("EO")}
-                disabled={eoActive}
-                style={eoActive ? { backgroundColor: "#3cdfff" } : null}
-              ></RoundButton>
-              <RoundButton
-                buttonText={"SR"}
-                onClick={() => addReinforcement("SR")}
-                disabled={!eoActive}
-                style={!eoActive ? { backgroundColor: "#3cdfff" } : null}
-              ></RoundButton> */}
               <View style={styles.eoSwitchContainer}>
                 <Text
                   style={[
@@ -250,26 +256,13 @@ export default function Session({ navigation, route }) {
             </View>
           </View>
         </View>
-        <View style={styles.topItems}>
-          <RoundButton
-            buttonText={!isRunning ? "Start" : "End Session"}
-            buttonWidth="2"
-            onClick={!isRunning ? startSession : endSession}
-            style={isRunning ? { backgroundColor: "#F21E1E" } : null}
-          ></RoundButton>
-          <RoundButton
-            buttonText={"Reset"}
-            buttonWidth="2"
-            onClick={resetSession}
-            disabled={!isRunning}
-          ></RoundButton>
-        </View>
+        
       </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const { ids, styles } = StyleSheet.create({
   page: {
     flex: 1,
     backgroundColor: "#fff",
@@ -282,19 +275,40 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-around",
+    marginBottom: "4%",
+    "@media (max-width: 1100px)": {
+      flexDirection: "column",
+    },
+  },
+  chartStyle: {
+    width: '100%',
+    height: 300,
+    "@media (max-width: 820px)": {
+      width: '80%',
+      height: 250,
+    },
   },
   topButtons: {
     justifyContent: "space-around",
+    justifyContent: "space-around",
+    "@media (max-width: 1100px)": {
+      flexDirection: "row",
+    },
   },
   eoSwitchContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    padding: 4,
+    borderRadius: 5,
+    borderColor: 'black',
+    borderStyle: 'solid',
+    borderWidth: 1,
   },
   eoSwitchText: {
     fontSize: 20,
     lineHeight: 22,
-    padding: 12,
+    padding: 8,
     borderRadius: 5,
   },
   eoPressCountText: {

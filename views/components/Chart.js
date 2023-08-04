@@ -17,6 +17,8 @@ export default function Chart({
   engagementData,
   calmnessData,
   reinforcementData,
+  chartStyle,
+  chartDataset,
 }) {
   const {
     onLayout: onLayoutChart,
@@ -37,15 +39,6 @@ export default function Chart({
 
   const LINE_HEIGHT = 30;
   const DASH_LENGTH = 40; //actual dashes are 20 and numbers are 20
-
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     setmilliseconds((milliseconds) => milliseconds + 100);
-  //   }, 100);
-  //   // clear interval on re-render to prevent multiple intervals from running
-  //   return () => clearInterval(intervalId);
-  //   // no dependency array, meaning it will run once on mount, and cleanup on unmount
-  // }, []);
 
   function calculateTicks() {
     //returns an array of tick objects where each object is of the form {xlocation, value}
@@ -167,7 +160,9 @@ export default function Chart({
         <Text style={{ lineHeight: LINE_HEIGHT }}>Reinforcement</Text>
       </View>
       <View
-        style={[styles.chartHolder, { width: propWidth, height: propHeight }]}
+        // style={[styles.chartHolder, { width: propWidth, height: propHeight }]}
+        style={[styles.chartHolder, chartStyle]}
+        dataSet={chartDataset}
         onLayout={(e) => {
           onLayoutChart(e);
         }}

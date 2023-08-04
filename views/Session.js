@@ -141,9 +141,10 @@ export default function Session({ navigation, route }) {
                 <Text style={styles.eoPressCountText}>{eoPresses}</Text>
               </View>
             </View>
-            <View style={styles.eoSwitchContainer}>
+            <View>
               <RoundButton
                 buttonText={
+                  //put countdown inside the button so that when the countdown changes it doesn't mess with the width of that row (especially on smaller screens)
                   calmnessData.length % 2 == 0
                     ? "Calm"
                     : "End Calm " +

@@ -58,7 +58,8 @@ export default function Chart({
       increment = increment * 10; // e.g., 10, 100, 1000, etc.
     }
 
-    const pixelIncrement = (increment / milliseconds) * (widthChart - widthYAxis); //tick will be needed every x pixels
+    const pixelIncrement =
+      (increment / milliseconds) * (widthChart - widthYAxis); //tick will be needed every x pixels
 
     let tickArray = [];
     let tickVal = 0;
@@ -160,7 +161,6 @@ export default function Chart({
         <Text style={{ lineHeight: LINE_HEIGHT }}>Reinforcement</Text>
       </View>
       <View
-        // style={[styles.chartHolder, { width: propWidth, height: propHeight }]}
         style={[styles.chartHolder, chartStyle]}
         dataSet={chartDataset}
         onLayout={(e) => {
@@ -208,7 +208,7 @@ export default function Chart({
           <ChartShape
             data={dangerousData}
             Shape={Circle}
-            shapeProps={{ r: "8", fill: "blue" }}
+            shapeProps={{ r: "8", fill: "blue", stroke: "black" }}
             xPosShapeProp="cx"
             yPosShapeProp="cy"
             height={yHeights[0]}
@@ -219,7 +219,7 @@ export default function Chart({
           <ChartShape
             data={nonDangerousData}
             Shape={Circle}
-            shapeProps={{ r: "8", fill: "blue" }}
+            shapeProps={{ r: "8", fill: "gray", stroke: "black" }}
             xPosShapeProp="cx"
             yPosShapeProp="cy"
             height={yHeights[1]}
@@ -246,7 +246,7 @@ export default function Chart({
           ></ChartShape>
           <ChartLine
             data={engagementData}
-            color="purple"
+            color="#b042ff"
             height={yHeights[3]}
             xStart={widthYAxis}
             xEnd={widthChart}

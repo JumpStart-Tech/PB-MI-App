@@ -31,6 +31,7 @@ export default function Session({ navigation, route }) {
     engagementData,
     calmnessData,
     reinforcementData,
+    resetData,
     milliseconds,
     undoAvailable,
     redoAvailable,
@@ -43,6 +44,7 @@ export default function Session({ navigation, route }) {
     addEngagement,
     addCalmness,
     addReinforcement,
+    addReset,
     eoActive, //not state var
   } = useSessionControls();
 
@@ -56,6 +58,7 @@ export default function Session({ navigation, route }) {
       engagementData,
       calmnessData,
       reinforcementData,
+      resetData,
     }
   );
 
@@ -75,7 +78,7 @@ export default function Session({ navigation, route }) {
           <RoundButton
             buttonText={"Reset"}
             buttonWidth="2"
-            onClick={resetSession}
+            onClick={addReset}
             disabled={!isRunning}
           ></RoundButton>
         </View>

@@ -7,8 +7,8 @@ export default function useSessionControls() {
   const [engagementData, setEngagementData] = useState([]);
   const [calmnessData, setCalmnessData] = useState([]);
   const [reinforcementData, setReinforcementData] = useState([0, 0]); //SR is default
+  const [resetData, setResetData] = useState(null);
   const [milliseconds, setMilliseconds] = useState(0);
-  //const [redoAvailable, setRedoAvailable] = useState(false); //TODO: need to figure out if setting redo unavailable should clear the stack (possible same for undo stack)
   const [isRunning, setIsRunning] = useState(false);
   let undos = useRef([]);
   let redos = useRef([]); //any time any action other than an undo is done, redos must be cleared
@@ -36,10 +36,6 @@ export default function useSessionControls() {
   function endSession() {
     //TODO: needs to redirect to summary screen
     setIsRunning(false);
-  }
-
-  function resetSession() {
-    //TODO: need to make this function
   }
 
   function undo() {
@@ -195,16 +191,31 @@ export default function useSessionControls() {
     }
   }
 
+  function addReset() {
+    const oldResetVal = resetData;
+    const timestamp = Date.now() - startTime.current;
+    setResetData(timestamp);
+    redoIsUnavailable();
+    const undoFunction = () => {
+      //undo function will return a redo function
+      setResetData(oldResetVal);
+      return () => {
+        setResetData(timestamp);
+      };
+    };
+    undos.current.push(undoFunction);
+  }
+
   return {
     startSession,
     endSession,
-    resetSession,
     dangerousData,
     nonDangerousData,
     interactiveBehaviorData,
     engagementData,
     calmnessData,
     reinforcementData,
+    resetData,
     milliseconds,
     undoAvailable,
     redoAvailable,
@@ -217,6 +228,7 @@ export default function useSessionControls() {
     addEngagement,
     addCalmness,
     addReinforcement,
+    addReset,
     eoActive,
   };
 }

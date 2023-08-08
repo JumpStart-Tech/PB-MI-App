@@ -10,8 +10,12 @@ function calculateSummaryData(
     engagementData,
     calmnessData,
     reinforcementData,
+    resetData,
   }
 ) {
+  if(resetData != null){
+    sessionLength = sessionLength - resetData;
+  }
   if (sessionLength == 0) {
     //before the session has been started, the data to be returned is different
     const eoPresses = reinforcementData.length == 2 ? 0 : 1;
@@ -29,17 +33,44 @@ function calculateSummaryData(
     };
   } else { //session has been started (and possibly is finished, doesn't matter)
     const eoIsFirst = reinforcementData.length < 2 || reinforcementData[1] != 0; //session started w/ eo
+
+    const localDangerousData = dangerousData.filter((item) => { //all these filter the data used for the calculations down to data after the reset happened
+      item[0] > resetData;
+    })
+    const localNonDangerousData = nonDangerousData.filter((item) => { //TODO: account for when resetData is null
+      item[0] > resetData;
+    })
+    const localInteractiveBehaviorData = interactiveBehaviorData.filter((item) => {
+      item > resetData;
+    })
+    const localEngagementData = engagementData.filter((item) => {
+      item > resetData;
+    })
+    const localCalmnessData = calmnessData.filter((item) => {
+      item > resetData;
+    })
+    let localReinforcementData = reinforcementData.filter((item) => {
+      item > resetData;
+    })
+
+    if((reinforcementData.length - localReinforcementData.length) % 2 == 0){ //these are just for calculation purposes, simulating the 0 at the beginning or 0, 0
+      localReinforcementData = [resetData, ...localReinforcementData];
+    }
+    else{
+      localReinforcementData = [resetData, resetData, ...localReinforcementData];
+    }
+
     const eoPresses = (() => { //immediately invoked function
       if (eoIsFirst) {
-        return Math.floor((reinforcementData.length - 1) / 2) + 1;
+        return Math.floor((localReinforcementData.length - 1) / 2) + 1;
       }
-      return Math.floor((reinforcementData.length - 1) / 2); //this case is where the session started with sr
+      return Math.floor((localReinforcementData.length - 1) / 2); //this case is where the session started with sr
     })();
-    let [ria, rpi] = countPbsInRanges(dangerousData, reinforcementData, eoIsFirst);
-    // let [tempRia, tempRpi] = countPbsInRanges(nonDangerousData, reinforcementData, eoIsFirst);
-    // ria += tempRia;
-    // rpi += tempRpi;
-    const [eoTime, srTime] = countEoSrTime(reinforcementData, eoIsFirst, sessionLength);
+    let [ria, rpi] = countPbsInRanges(localDangerousData, localReinforcementData, eoIsFirst);
+    let [tempRia, tempRpi] = countPbsInRanges(localNonDangerousData, localReinforcementData, eoIsFirst);
+    ria += tempRia;
+    rpi += tempRpi;
+    const [eoTime, srTime] = countEoSrTime(localReinforcementData, eoIsFirst, sessionLength);
     return {
         ria,
         rpi,

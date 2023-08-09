@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 import { Amplify } from 'aws-amplify';
-import awsExports from './src/aws-exports';
+import awsExports from './aws-exports';
 Amplify.configure(awsExports);
 
 //import for navigation 

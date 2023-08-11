@@ -1,38 +1,87 @@
+import { Auth } from 'aws-amplify';
 // export each function for use
 export {userIsNew, saveUserAuthInfo, validateCreds, getLearnerArray, userExists, changePassword, getTherapistInfo, updateTherapist}
 
 // returns true if the email is not found in the server and false otherwise
 async function userIsNew(email){
-    const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
-    if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
-        throw new Error(`HTTP error in userIsNew. status: ${response.status}`);
+    // const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
+    // if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
+    //     throw new Error(`HTTP error in userIsNew. status: ${response.status}`);
+    // }
+    // const responseObj = await response.json();
+    // if(responseObj.length > 0){
+    //     console.log(`User with email ${email} already exists.`);
+    //     return false;
+    // }
+    // return true;
+    try{ //it's stupid but this is the best way to check if a user exists already
+        await Auth.confirmSignUp(email, '000000', {
+        // If set to False, the API will throw an AliasExistsException error if the phone number/email used already exists as an alias with a different user
+        forceAliasCreation: false
+        })
     }
-    const responseObj = await response.json();
-    if(responseObj.length > 0){
-        console.log(`User with email ${email} already exists.`);
-        return false;
+    catch(err){
+        switch ( err.code ) {
+            case 'UserNotFoundException':
+                return true;
+            case 'NotAuthorizedException':
+                return false;
+            case 'AliasExistsException':
+                // Email alias already exists
+                return false;
+            case 'CodeMismatchException':
+                return false;
+            case 'ExpiredCodeException':
+                return false;
+            default:
+                return false;
+        }
     }
-    return true;
 }
 
 // saves the email and password of a user who just created their account
-async function saveUserAuthInfo(email, password){
-    const response = await fetch(`http://localhost:3000/authData`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(
-                    {
-                        email: email.toLowerCase(),
-                        password,
-                    }
-                )
-            });
-    if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
-        throw new Error(`HTTP error in saveUserAuthInfo. status: ${response.status}`);
-    }
-    const {id} = await response.json()
-    console.log('user created. identifier: ' + id);
-    return {status: 'Success', message: 'User created', id};
+async function saveUserAuthInfo(email, password, name){
+    // const response = await fetch(`http://localhost:3000/authData`, {
+    //             method: 'POST',
+    //             headers: {'Content-Type': 'application/json'},
+    //             body: JSON.stringify(
+    //                 {
+    //                     email: email.toLowerCase(),
+    //                     password,
+    //                 }
+    //             )
+    //         });
+    // if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
+    //     throw new Error(`HTTP error in saveUserAuthInfo. status: ${response.status}`);
+    // }
+    // const {id} = await response.json()
+    // console.log('user created. identifier: ' + id);
+    try {
+        const { user, userSub } = await Auth.signUp({
+          username: email,
+          password,
+          attributes: {
+            email: email,
+            name,
+          },
+          autoSignIn: {
+            enabled: true,
+          }
+        });
+        console.log("signUp() didn't error");
+        return {status: 'Success', message: 'User created', id: userSub};
+      } catch (error) {
+        console.log('error signing up:', error);
+        switch(error.name){
+            case 'UsernameExistsException':
+                return {status: 'Error', message: error.message, errorLocation: 'email'};
+            case 'InvalidPasswordException':
+                return {status: 'Error', message: error.message.substring(lastIndexOf('Password did not conform with policy: ' + 1)), errorLocation: 'password'};
+            default:
+                return {status: 'Error', message: error.message};
+        }
+      }
+    
 }
 
 // ensures both email and password match an account when logging in

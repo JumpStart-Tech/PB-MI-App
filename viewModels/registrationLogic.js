@@ -10,7 +10,7 @@ function useSignUpControls(navigation){
 
     // function checks that password is at least 6 characters and includes at least one number
     const passwordIsValid = (password) => {
-      const passwordRegex = /^(?=.*\d).{6,}$/;
+      const passwordRegex = /^(?=.*\d).{8,}$/;
       return passwordRegex.test(password);
     };
 
@@ -41,7 +41,7 @@ function useSignUpControls(navigation){
             if(password === ''){
                 passwordErrorLocal = 'Please enter a password.';
             } else if (!passwordIsValid(password)) {
-                passwordErrorLocal = 'Password length must be at least 6 characters and include a number.';
+                passwordErrorLocal = 'Password must be at least 8 characters and include a number.';
             }
             if(password !== passwordC){
                 confirmPasswordErrorLocal = 'Passwords do not match.';
@@ -55,10 +55,24 @@ function useSignUpControls(navigation){
                     && emailErrorLocal === ''
                     && passwordErrorLocal === ''
                     && confirmPasswordErrorLocal === ''){
-                        saveUserAuthInfo(email, password)
+                        saveUserAuthInfo(email, password, name)
                             .then(res => {
                                 console.log(JSON.stringify(res));
-                                navigation.navigate('NewLearner', {userId: res.id});
+                                if(res.status == 'Success'){
+                                    navigation.navigate('NewLearner', {userId: res.id});
+                                }
+                                else{
+                                    switch(res.errorLocation){
+                                        case email:
+                                            setEmailError(res.message);
+                                            break;
+                                        case password:
+                                            setPasswordError(res.message);
+                                            break;
+                                        default:
+                                            setConfirmPasswordError(res.message);
+                                    }
+                                }
                             })
                     }
                     else{

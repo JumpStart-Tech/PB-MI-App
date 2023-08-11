@@ -7,6 +7,7 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
+import { userIsNew } from '../models/userData';
 
 //import background image
 import bg from '../blue-bg.png';
@@ -28,24 +29,6 @@ const Onboarding = ({navigation}) => {
 
   // pull in items from onboardingLogic so they may be used here
   const {emailError, passwordError, signInClick} = useSignInControls(navigation);
-
-  useEffect(() => {
-    async function signUp() {
-      try {
-        const { user } = await Auth.signUp({
-          username: 'nickeymousetest2@gmail.com',
-          password: 'pass123123123123',
-          autoSignIn: { // optional - enables auto sign in after user is confirmed
-            enabled: true,
-          }
-        });
-        console.log(user);
-      } catch (error) {
-        console.log('error signing up:', error);
-      }
-    }
-    signUp();
-  }, [])
 
   return (  
       <SafeAreaView style={styles.container}>

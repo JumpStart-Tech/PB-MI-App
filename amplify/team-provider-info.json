@@ -9,11 +9,21 @@
       "UnauthRoleName": "amplify-pbmiapp-dev-111826-unauthRole",
       "StackName": "amplify-pbmiapp-dev-111826",
       "StackId": "arn:aws:cloudformation:us-east-1:488625297361:stack/amplify-pbmiapp-dev-111826/36b81a10-3607-11ee-aeac-126caf697c83",
-      "AmplifyAppId": "declpnrw7rt3h"
+      "AmplifyAppId": "declpnrw7rt3h",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-pbmiapp-dev-111826-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
         "pbmiapp7e361dd1": {}
+      },
+      "function": {
+        "pbmiapp7e361dd1CustomMessage": {
+          "REDIRECTURL": "http://localhost:19006/Home",
+          "EMAILSUBJECT": "Verify your email",
+          "EMAILMESSAGE": "Click this link to verify your email: ",
+          "deploymentBucketName": "amplify-pbmiapp-dev-111826-deployment",
+          "s3Key": "amplify-builds/pbmiapp7e361dd1CustomMessage-78767467676e787a4545-build.zip"
+        }
       }
     }
   }

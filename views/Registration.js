@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-
+import { Auth } from 'aws-amplify';
 import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
@@ -29,6 +29,18 @@ const Registration = ({ navigation, route }) => {
 
   // pull in items from registrationLogic so they may be used here
   const {nameError, emailError, passwordError, confirmPasswordError, signUp} = useSignUpControls(navigation);
+
+  useEffect(() => {
+    async function signIn(username, password) {
+      try {
+        const user = await Auth.signIn(username, password);
+        console.log('signed in successfully');
+      } catch (error) {
+        console.log('error signing in', error);
+      }
+    }
+    signIn('siri.suntichaiwakin@vanderbilt.edu', 'jackyjackychen123')
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>

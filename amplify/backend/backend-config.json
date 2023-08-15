@@ -2,7 +2,17 @@
   "auth": {
     "pbmiapp7e361dd1": {
       "customAuth": false,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "pbmiapp7e361dd1CustomMessage",
+          "triggerProvider": "Cognito"
+        }
+      ],
       "frontendAuthConfig": {
         "mfaConfiguration": "OFF",
         "mfaTypes": [
@@ -27,6 +37,55 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "pbmiapp7e361dd1CustomMessage": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_pbmiapp7e361dd1CustomMessage_EMAILMESSAGE": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbmiapp7e361dd1CustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbmiapp7e361dd1CustomMessage_EMAILSUBJECT": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbmiapp7e361dd1CustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbmiapp7e361dd1CustomMessage_REDIRECTURL": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbmiapp7e361dd1CustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbmiapp7e361dd1CustomMessage_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbmiapp7e361dd1CustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbmiapp7e361dd1CustomMessage_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbmiapp7e361dd1CustomMessage"
+        }
+      ]
     }
   }
 }

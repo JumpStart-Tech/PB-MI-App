@@ -61,16 +61,32 @@
       ]
     },
     "breakCircularDependency": true,
-    "dependsOn": [],
+    "dependsOn": [
+      {
+        "category": "function",
+        "resourceName": "pbmiapp7e361dd1CustomMessage",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
+      }
+    ],
     "thirdPartyAuth": false,
     "userPoolGroups": false,
     "adminQueries": false,
-    "triggers": {},
+    "triggers": {
+      "CustomMessage": [
+        "verification-link"
+      ]
+    },
     "hostedUI": false,
     "authProviders": [],
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "permissions": []
+    "permissions": [],
+    "verificationBucketName": "pbmiapp7e361dd1verificationbucket",
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"CustomMessage\",\n    \"lambdaFunctionName\": \"pbmiapp7e361dd1CustomMessage\"\n  }\n]"
   }
 }

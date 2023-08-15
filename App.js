@@ -24,6 +24,7 @@ import History from './views/History';
 import HistoryDetail from './views/HistoryDetail';
 import Session from"./views/Session";
 import Summary from './views/Summary';
+import VerifyEmail from './views/VerifyEmail';
 
 //simply outlines all possible pages so that we can navigate to them. The app will start on the Onboarding page
 const App = () =>  {
@@ -49,6 +50,7 @@ const App = () =>  {
         <Stack.Screen name="HistoryDetail" component={HistoryDetail} />
         <Stack.Screen name="Session" component={Session} />
         <Stack.Screen name="Summary" component={Summary} />
+        <Stack.Screen name="VerifyEmail" component={VerifyEmail} />
       </Stack.Navigator>
     </NavigationContainer>
   );

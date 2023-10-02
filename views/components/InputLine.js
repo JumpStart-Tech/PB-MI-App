@@ -5,6 +5,7 @@ import {
     Text
   } from 'react-native';
 
+//generalized component for the inputs in the figma which are just a line you can type on
 export default function InputLine({style, viewStyle, placeholder, secureTextEntry=false, value, setValue, keyboardType='default', errorMessage=''}){
 
     return(

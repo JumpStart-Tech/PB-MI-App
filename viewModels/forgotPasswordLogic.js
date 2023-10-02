@@ -9,6 +9,7 @@ function useControls(navigation){
 
     function click(email, setEmail){
         try{
+			//email error state will show on the input component if something goes wrong
             setEmailError('');
             userExists(email)
                 .then(res => {

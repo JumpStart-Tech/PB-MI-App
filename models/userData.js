@@ -3,6 +3,7 @@ import { Auth } from 'aws-amplify';
 export {userIsNew, saveUserAuthInfo, validateCreds, getLearnerArray, userExists, changePassword, getTherapistInfo, updateTherapist}
 
 // returns true if the email is not found in the server and false otherwise
+//this funciton has been upgraded to use Amplify
 async function userIsNew(email){
     // const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
     // if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
@@ -40,6 +41,7 @@ async function userIsNew(email){
 }
 
 // saves the email and password of a user who just created their account
+// this function has been upgraded to use Amplify
 async function saveUserAuthInfo(email, password, name){
     // const response = await fetch(`http://localhost:3000/authData`, {
     //             method: 'POST',
@@ -85,6 +87,7 @@ async function saveUserAuthInfo(email, password, name){
 }
 
 // ensures both email and password match an account when logging in
+//this function hasn't been upgraded; still uses the local data source, not Amplify
 async function validateCreds(email, password){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
     if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
@@ -104,6 +107,7 @@ async function validateCreds(email, password){
 }
 
 // gets all patient data for a given therapist
+//this function hasn't been upgraded; still uses the local data source, not Amplify
 async function getLearnerArray(therapistId){
     const response = await fetch(`http://localhost:3000/therapists?id=${therapistId}`);
     if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
@@ -119,6 +123,7 @@ async function getLearnerArray(therapistId){
 }
 
 // gets therapist title, affiliation, and confidence level for use in the profile screen
+//this function hasn't been upgraded; still uses the local data source, not Amplify
 async function getTherapistInfo(therapistId){
     const response = await fetch(`http://localhost:3000/therapists?id=${therapistId}`);
     if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
@@ -132,6 +137,7 @@ async function getTherapistInfo(therapistId){
 }
 
 // ensures the user with the entered email address exists
+//this function hasn't been upgraded; still uses the local data source, not Amplify
 async function userExists(email, setEmail){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`);
     if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
@@ -146,6 +152,7 @@ async function userExists(email, setEmail){
 }
 
 // finds the user with the associated email and updates their password to the value passed into the function
+//this function hasn't been upgraded; still uses the local data source, not Amplify
 async function changePassword(email, password){
     const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
     if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
@@ -175,6 +182,7 @@ async function changePassword(email, password){
 }
 
 // allows the therapist profile data to be updated when changes are made
+//this function hasn't been upgraded; still uses the local data source, not Amplify
 async function updateTherapist(therapistId, updatedData) {
   try {
     const response = await fetch(`http://localhost:3000/therapists/${therapistId}`); //will be able to be done with signUp() in Amplify

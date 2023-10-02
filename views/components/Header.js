@@ -1,7 +1,7 @@
 import { StyleSheet, View, Image, Text, TouchableOpacity, Platform } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 
-//TODO: I can't for the life of me figure out how to make the logout button have a rounded border
+
 function HeaderButtons({navigation, userId}){
 
     return (

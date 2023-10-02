@@ -48,7 +48,7 @@ function useSignUpControls(navigation){
             }
             userIsNew(email)
                 .then(res => {
-                    if(!res){
+                    if(!res){ //userIsNew will return false if the user already exists
                         emailErrorLocal = 'User already exists.';
                     }
                     if(nameErrorLocal === '' //if all error messages are empty, no errors so we can save the user and go to next screen
@@ -59,10 +59,10 @@ function useSignUpControls(navigation){
                             .then(res => {
                                 console.log(JSON.stringify(res));
                                 if(res.status == 'Success'){
-                                    navigation.navigate('NewLearner', {userId: res.id});
+                                    navigation.navigate('NewLearner', {userId: res.id}); //go to the next page if saveuserAuthInfo was successful
                                 }
                                 else{
-                                    switch(res.errorLocation){
+                                    switch(res.errorLocation){ //displays whatever error is returned by Amplify. Tries to put it under the right input
                                         case email:
                                             setEmailError(res.message);
                                             break;
@@ -75,7 +75,7 @@ function useSignUpControls(navigation){
                                 }
                             })
                     }
-                    else{
+                    else{ //the state variables show what error is actually shown so need to set it if there is an error
                         setNameError(nameErrorLocal);
                         setEmailError(emailErrorLocal);
                         setPasswordError(passwordErrorLocal);

@@ -7,7 +7,7 @@ import {
   TextInput,
 } from 'react-native';
 
-
+//generalized component for the box-like input component on the figma
 const InputBox  = ({title, style, value, setValue}) => {
 
     return (

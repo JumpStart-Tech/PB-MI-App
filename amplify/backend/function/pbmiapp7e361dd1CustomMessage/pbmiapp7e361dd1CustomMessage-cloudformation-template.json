@@ -51,6 +51,9 @@
     },
     "s3Key": {
       "Type": "String"
+    },
+    "currentEnvironment": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -112,6 +115,9 @@
             },
             "RESOURCENAME": {
               "Ref": "resourceName"
+            },
+            "CURRENT_ENVIRONMENT": {
+              "Ref": "currentEnvironment"
             }
           }
         },

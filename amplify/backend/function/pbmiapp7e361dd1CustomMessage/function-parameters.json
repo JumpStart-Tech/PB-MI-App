@@ -12,5 +12,11 @@
   "triggerTemplate": "CustomMessage.json.ejs",
   "triggerEventPath": "CustomMessage.event.json",
   "roleName": "pbmiapp7e361dd1CustomMessage",
-  "skipEdit": true
+  "skipEdit": true,
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "currentEnvironment",
+      "environmentVariableName": "CURRENT_ENVIRONMENT"
+    }
+  ]
 }

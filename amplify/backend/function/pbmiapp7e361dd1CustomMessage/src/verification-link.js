@@ -8,20 +8,20 @@ exports.handler = async (event) => {
     const { region, userName } = event;
     const { clientId } = event.callerContext;
     const redirectUrl = `${process.env.REDIRECTURL}/?username=${userName}`;
-    const resourcePrefix = process.env.RESOURCENAME.split('CustomMessage')[0];
+    // const resourcePrefix = process.env.RESOURCENAME.split('CustomMessage')[0];
 
-    const hyphenRegions = [
-      'us-east-1',
-      'us-west-1',
-      'us-west-2',
-      'ap-southeast-1',
-      'ap-southeast-2',
-      'ap-northeast-1',
-      'eu-west-1',
-      'sa-east-1',
-    ];
+    // const hyphenRegions = [
+    //   'us-east-1',
+    //   'us-west-1',
+    //   'us-west-2',
+    //   'ap-southeast-1',
+    //   'ap-southeast-2',
+    //   'ap-northeast-1',
+    //   'eu-west-1',
+    //   'sa-east-1',
+    // ];
 
-    const separator = hyphenRegions.includes(region) ? '-' : '.';
+    // const separator = hyphenRegions.includes(region) ? '-' : '.';
 
     const payload = Buffer.from(
       JSON.stringify({
@@ -32,8 +32,10 @@ exports.handler = async (event) => {
       }),
     ).toString('base64');
     // eslint-disable-next-line spellcheck/spell-checker
-    const bucketUrl = `http://${resourcePrefix}verificationbucket-${process.env.ENV}.s3-website${separator}${region}.amazonaws.com`;
-    const url = `${bucketUrl}/?data=${payload}&code=${codeParameter}`;
+    // const bucketUrl = `http://${resourcePrefix}verificationbucket-${process.env.ENV}.s3-website${separator}${region}.amazonaws.com`;
+	//Need to add the actual url here once it is determined
+	const urlBase = (process.env.CURRENT_ENVIRONMENT === 'PROD') ? '' : 'http://localhost:19006/VerifyEmail';
+    const url = `${urlBase}/?data=${payload}&code=${codeParameter}`;
     const message = `${process.env.EMAILMESSAGE}. \n ${url}`;
     event.response.smsMessage = message;
     event.response.emailSubject = process.env.EMAILSUBJECT;

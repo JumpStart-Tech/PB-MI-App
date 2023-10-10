@@ -71,6 +71,14 @@
         }
       ]
     },
+    "AMPLIFY_function_pbmiapp7e361dd1CustomMessage_currentEnvironment": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbmiapp7e361dd1CustomMessage"
+        }
+      ]
+    },
     "AMPLIFY_function_pbmiapp7e361dd1CustomMessage_deploymentBucketName": {
       "usedBy": [
         {

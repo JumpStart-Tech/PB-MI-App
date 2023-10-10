@@ -22,7 +22,8 @@
           "EMAILSUBJECT": "Verify your email",
           "EMAILMESSAGE": "Click this link to verify your email: ",
           "deploymentBucketName": "amplify-pbmiapp-dev-111826-deployment",
-          "s3Key": "amplify-builds/pbmiapp7e361dd1CustomMessage-78767467676e787a4545-build.zip"
+          "s3Key": "amplify-builds/pbmiapp7e361dd1CustomMessage-545154726d58534a7371-build.zip",
+          "currentEnvironment": "DEV"
         }
       }
     }

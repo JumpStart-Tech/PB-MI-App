@@ -39,7 +39,7 @@ export default function VerifyEmail({navigation, route}){
         }, [messageProps.seconds, navigation]);
 
     async function confirmSignUp(username, code) {
-        await Auth.confirmSignUp(username, code);
+        return Auth.confirmSignUp(username, code);
     }
 
     async function resendEmail(username){

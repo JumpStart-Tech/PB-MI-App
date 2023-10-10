@@ -39,7 +39,6 @@ const Registration = ({ navigation, route }) => {
         console.log('error signing in', error);
       }
     }
-    signIn('siri.suntichaiwakin@vanderbilt.edu', 'jackyjackychen123')
   }, [])
 
   return (

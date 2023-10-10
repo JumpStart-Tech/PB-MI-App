@@ -12,6 +12,7 @@ function useSignInControls(navigation){
             setPasswordError('');
             validateCreds(email, password)
                 .then(res => {
+					console.log(res);
                     if(res.status === 'Error'){
                         if(res.field === 'Email'){
                             console.log('email error');

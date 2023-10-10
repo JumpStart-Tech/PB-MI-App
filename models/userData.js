@@ -86,24 +86,20 @@ async function saveUserAuthInfo(email, password, name){
     
 }
 
-// ensures both email and password match an account when logging in
-//this function hasn't been upgraded; still uses the local data source, not Amplify
 async function validateCreds(email, password){
-    const response = await fetch(`http://localhost:3000/authData?email=${email.toLowerCase()}`); //will be able to be done with signUp() in Amplify
-    if(!response.ok) { // response.ok is false if the HTTP status code is 400 or higher
-        throw new Error(`HTTP error in validateCreds. status: ${response.status}`);
-    }
-    const responseArray = await response.json(); //the db query returns an array
-    if(responseArray.length == 0){
-        console.log(`User with email ${email} doesn't exist`);
-        return {status: 'Error', message: "Email doesn't exist.", field: 'Email'};
-    }
-    const responseObj = responseArray[0]; //array should always have 1 element at this point b/c only 1 account can be created per email
-    if(responseObj.password != password){
-        console.log('User entered incorrect password');
-        return {status: 'Error', message: 'Incorrect password.', field: 'Password'};
-    }
-    return {status: 'Success', message: 'User credentials authenticated', id: responseObj.id}
+	try{
+    	const response = await Auth.signIn(email, password);
+		console.log('response: ', response.attributes.sub);
+		return {status: 'Success', message: 'User credentials authenticated', id: response.attributes.sub}
+	}
+	catch(e){
+		switch (e.message) {
+			case 'User is not confirmed.':
+				return {status: 'Error', message: "User not confirmed. Check email for code", field: 'Password'};
+			default:
+				return {status: 'Error', message: "Incorrect user or password.", field: 'Password'};
+		}
+	}
 }
 
 // gets all patient data for a given therapist
